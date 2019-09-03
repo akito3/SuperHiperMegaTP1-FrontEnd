@@ -1,24 +1,24 @@
 # SuperHiperMegaTP1-FrontEnd
 
 
-#Project scafollding
+## Project scafollding
 
-##Clonar Project
+## Clonar Project
 
 git clone ...
 
-##Instalar angular-cli
+## Instalar angular-cli
 
 npm install @angular/cli
 
-##Instalar dependencias 
+## Instalar dependencias 
 
 npm install
 
-##Levantar el proyecto
+## Levantar el proyecto
 
 ng serve
 
-##Crear componentes con la ayuda de angular-cli(actualizando app.module.ts)
+## Crear componentes con la ayuda de angular-cli(actualizando app.module.ts)
 
 ng g c NombreDelComponente
