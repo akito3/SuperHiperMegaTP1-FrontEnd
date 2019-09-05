@@ -17,6 +17,7 @@ import { AppRoutes } from './app.routing';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarfichas.component';
 
 
 
@@ -38,7 +39,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    LoginComponent
+    LoginComponent,
+    ListarfichasComponent,
+    
   ],
   bootstrap: [AppComponent]
 })

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from '../app/layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { LoginComponent } from './login/login.component';
+import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarfichas.component';
 export const AppRoutes: Routes = [
     {
         path: '',
@@ -27,8 +28,13 @@ export const AppRoutes: Routes = [
             },
 
             {
-                path: 'components',
-                loadChildren: './components/components.module#ComponentsModule'
+                path: 'fichas-clinicas',
+                children : [
+                    {
+                        path : 'listar-fichas-clinicas',
+                        component : ListarfichasComponent
+                    }
+                ]
             },
             {
                 path: 'forms',
