@@ -38,7 +38,7 @@ export const AppRoutes: Routes = [
                 ]
             },
             {
-                path: 'listar-categorias',
+                path: 'categorias',
                 loadChildren: './categorias/categorias.module#CategoriasModule'
             },
             {

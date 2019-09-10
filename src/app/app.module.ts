@@ -1,3 +1,4 @@
+import { ListarCategoriasComponent } from './categorias/listar-categorias/listar-categorias.component';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -32,7 +33,7 @@ import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarficha
     FooterModule,
     FixedpluginModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
   ],
   declarations: [
     AppComponent,
@@ -41,6 +42,6 @@ import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarficha
     LoginComponent,
     ListarfichasComponent
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

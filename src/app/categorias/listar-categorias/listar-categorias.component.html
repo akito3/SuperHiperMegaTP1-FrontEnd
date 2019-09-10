@@ -8,15 +8,23 @@
                     <i class="material-icons">assignment</i>
                   </div>
                   <h4 class="card-title">Categorías</h4>
-                </div>
+                </div>      
                   <div class="card-body">
                       <div class="toolbar">
-                          <!--Here you can write extra buttons/actions for the toolbar              -->
-                        <button mat-raised-button class="fabButton natura-button-1" mat-fab color="primary" (click)="onClickAgregar()">
+                          <!--Here you can write extra buttons/actions for the toolbar-->
+                        <button mat-raised-button class="fabButton natura-button-1" mat-fab color="primary"  (click)="onClickAgregar()">
                             <mat-icon>add</mat-icon>
                         </button>
                      </div>             
                       <div class="material-datatables">
+                          <div class="row">
+                              <div class="col-md-3">
+                                  <mat-form-field>
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+                                    <mat-icon matSuffix>search</mat-icon>
+                                  </mat-form-field>
+                              </div>
+                            </div>
                         <mat-table [dataSource]="dataSource" matSort class="tabla-datos">
 
                           <!-- Columna Nombre -->
@@ -64,18 +72,21 @@
 <!--                             <button mat-icon-button [routerLink]="['editar/'+element.idCategoria]">
   openEdit
  -->          
- <button mat-raised-button type="button" class="btn btn-success ">
-  <i class="material-icons">edit</i>
-</button>
-<button mat-raised-button type="button" class="btn btn-danger ">
-  <i class="material-icons">close</i>
-</button>
+                          <button mat-raised-button type="button" class="btn btn-success ">
+                            <i class="material-icons">edit</i>
+                          </button>
+                          <button mat-raised-button type="button" class="btn btn-danger ">
+                            <i class="material-icons">close</i>
+                          </button>
                         </mat-cell> 
                       </ng-container>
                           <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
                           <mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></mat-row>
                       </mat-table>
-                      <mat-paginator id="pagina" class="tabla-datos" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+                      <div *ngIf="totalCategorias==0 | async" class="no-records">
+                          No existen Categorias
+                      </div>
+                      <mat-paginator id="pagina" class="tabla-datos" [pageSizeOptions]="[5, 10, 15, 50]" showFirstLastButtons></mat-paginator>
                       </div>
                   </div>
                   <!-- end content-->

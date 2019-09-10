@@ -24,6 +24,11 @@ export class ListarCategoriasComponent implements OnInit {
   @ViewChild(MatSort,  { static: false }) sort: MatSort;
   constructor(private router: Router, public dataService: CategoriasService) { }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
   ngOnInit() {
     this.getCategorias();
   }
@@ -37,5 +42,9 @@ export class ListarCategoriasComponent implements OnInit {
        this.dataSource.sort = this.sort;
        this.totalCategorias = response['totalDatos'];
        });
+   }
+
+   onClickAgregar(){
+    this.router.navigate(['dashboard/categorias/crear']);
    }
 }

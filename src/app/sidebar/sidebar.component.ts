@@ -123,7 +123,7 @@ export const ROUTES: RouteInfo[] = [{
     ]
 },
 {
-    path: './listar-categorias',
+    path: './categorias/listar',
     title: 'Categorías',
     type: 'link',
     icontype: 'category'
