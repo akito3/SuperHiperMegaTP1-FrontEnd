@@ -27,7 +27,7 @@ export class CategoriasService {
     agregarCategoria(categoria: Categoria): Observable<Categoria>{
       return this.httpClient.post<Categoria>(this.baseUrl , categoria);
     }
-    editar(categoria: Categoria): Observable<Categoria>{
+    editarCategoria(categoria: Categoria): Observable<Categoria>{
       return this.httpClient.put<Categoria>(this.baseUrl + categoria.idCategoria, categoria);
     }
     borrarCategoria(id: number) {
@@ -41,44 +41,4 @@ export class CategoriasService {
       return Promise.reject(error.message || error);
     }
 
-
-    public get(){
-      let url = this.baseUrl;
-      return this.httpClient.get(url)
-    }
-  
-    public post(data){
-      let url = this.baseUrl;
-      return this.httpClient.post(url,data)
-    }
-  
-    public put(data){
-      let url = this.baseUrl;
-      return this.httpClient.put(url,data)
-    }
-  
-    public delete(id){
-      let url = this.baseUrl + id;
-      return this.httpClient.delete(url)
-    }
-
-    getCategorias1() : Observable<Categoria> {
-      return this.httpClient.get<Categoria>(this.baseUrl);
-    }
-  
-    getUserById(id: number): Observable<Categoria> {
-      return this.httpClient.get<Categoria>(this.baseUrl + id);
-    }
-  
-    createCategorias(categoria: Categoria): Observable<Categoria> {
-      return this.httpClient.post<Categoria>(this.baseUrl, categoria);
-    }
-  
-    updateCategorias(categoria: Categoria): Observable<Categoria> {
-      return this.httpClient.put<Categoria>(this.baseUrl + categoria.idCategoria, categoria);
-    }
-  
-    deleteCategorias(id: number): Observable<Categoria> {
-      return this.httpClient.delete<Categoria>(this.baseUrl + id);
-    }
 }
