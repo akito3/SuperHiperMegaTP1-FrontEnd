@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { ListarCategoriasComponent } from './categorias/listar-categorias/listar-categorias.component';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from '../app/layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
@@ -37,6 +38,10 @@ export const AppRoutes: Routes = [
                 ]
             },
             {
+                path: 'listar-categorias',
+                loadChildren: './categorias/categorias.module#CategoriasModule'
+            },
+            {
                 path: 'forms',
                 loadChildren: './forms/forms.module#Forms'
             },
@@ -70,9 +75,7 @@ export const AppRoutes: Routes = [
             }
         ]
     }
-
-
-]
+];
 
 
 

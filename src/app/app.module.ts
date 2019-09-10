@@ -19,13 +19,12 @@ import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarfichas.component';
 
-
-
 @NgModule({
   imports: [
     CommonModule,
     BrowserAnimationsModule,
     FormsModule,
+    // tslint:disable-next-line: deprecation
     HttpModule,
     HttpClientModule,
     SidebarModule,
@@ -40,8 +39,7 @@ import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarficha
     AdminLayoutComponent,
     AuthLayoutComponent,
     LoginComponent,
-    ListarfichasComponent,
-    
+    ListarfichasComponent
   ],
   bootstrap: [AppComponent]
 })

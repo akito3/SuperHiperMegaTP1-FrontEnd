@@ -121,8 +121,13 @@ export const ROUTES: RouteInfo[] = [{
         { path: 'lock', title: 'Lock Screen Page', ab: 'LSP' },
         { path: 'user', title: 'User Page', ab: 'UP' }
     ]
-}
-];
+},
+{
+    path: './listar-categorias',
+    title: 'Categorías',
+    type: 'link',
+    icontype: 'category'
+}];
 @Component({
     selector: 'app-sidebar-cmp',
     templateUrl: 'sidebar.component.html',
