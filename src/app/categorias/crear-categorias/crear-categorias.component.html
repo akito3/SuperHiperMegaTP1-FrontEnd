@@ -1,3 +1,20 @@
-<p>
-  crear-categorias works!
-</p>
+<h2>Agregar Categoria</h2>
+<mat-dialog-content [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field class="example-full-width">
+    <input formControlName = "descripcion" matInput placeholder="Descripcion" type="text">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select formControlName = "flagVisible" placeholder="Visible">
+      <mat-option value="S">Si</mat-option>
+      <mat-option value="N">No</mat-option>
+    </mat-select>
+  </mat-form-field>
+<mat-form-field class="example-full-width">
+  <input formControlName = "posicion" matInput placeholder="Posicion" type="text">
+</mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="onSubmit()">Save</button>
+</mat-dialog-actions>
