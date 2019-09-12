@@ -123,6 +123,17 @@ export const ROUTES: RouteInfo[] = [{
     ]
 },
 {
+    path: './reservas',
+    title: 'Reservas',
+    type: 'sub',
+    icontype: 'image',
+    collapse: 'reservas',
+    children: [
+        { path: 'listar-reservas', title: 'Listar Reservas', ab: 'LRC' },
+
+    ]
+},
+{
     path: './categorias/listar',
     title: 'Categorías',
     type: 'link',
