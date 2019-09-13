@@ -1,20 +1,29 @@
-<h2>Agregar Categoria</h2>
-<mat-dialog-content [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field class="example-full-width">
-    <input formControlName = "descripcion" matInput placeholder="Descripcion" type="text">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select formControlName = "flagVisible" placeholder="Visible">
-      <mat-option value="S">Si</mat-option>
-      <mat-option value="N">No</mat-option>
-    </mat-select>
-  </mat-form-field>
-<mat-form-field class="example-full-width">
-  <input formControlName = "posicion" matInput placeholder="Posicion" type="text">
-</mat-form-field>
-</mat-dialog-content>
-
-<mat-dialog-actions>
-    <button class="mat-raised-button"(click)="close()">Close</button>
-    <button class="mat-raised-button mat-primary"(click)="onSubmit()">Save</button>
-</mat-dialog-actions>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">category</i>
+            </div>
+            <h4 class="card-title">Agregar Categoria</h4>
+          </div>
+          <div class="card-body ">
+            <form [formGroup] = 'form' (ngSubmit)="onSubmit()">
+              <p>
+                <mat-form-field class="example-full-width">
+                  <input formControlName = "descripcion" matInput placeholder="Descripcion" type="text">
+                </mat-form-field> 
+              </p>
+            <div class="card-footer ">
+              <button mat-raised-button class="btn" (click)="onClickListar()">Cancelar</button>  
+              <button mat-raised-button type="submit" [disabled]="form.invalid" class="btn btn-fill btn-rose">Guardar</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

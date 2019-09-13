@@ -1,0 +1,1 @@
+{"version":3,"file":"timeline.routing.js","sourceRoot":"","sources":["../../../../../src/app/timeline/timeline.routing.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,iBAAiB,EAAE,MAAM,sBAAsB,CAAC;AAEzD,MAAM,CAAC,IAAM,cAAc,GAAW;IAClC;QAEE,IAAI,EAAE,EAAE;QACR,QAAQ,EAAE,CAAE;gBACV,IAAI,EAAE,gBAAgB;gBACtB,SAAS,EAAE,iBAAiB;aAC/B,CAAC;KACL;CACA,CAAC"}

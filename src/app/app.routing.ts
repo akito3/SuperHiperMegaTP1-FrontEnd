@@ -42,6 +42,10 @@ export const AppRoutes: Routes = [
                 loadChildren: './categorias/categorias.module#CategoriasModule'
             },
             {
+                path: 'subcategorias',
+                loadChildren: './subcategorias/subcategorias.module#SubCategoriasModule'
+            },
+            {
                 path: 'forms',
                 loadChildren: './forms/forms.module#Forms'
             },
