@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
 import { CrearCategoriasComponent } from './crear-categorias/crear-categorias.component';
+import { EditarCategoriasComponent } from './editar-categorias/editar-categorias.component';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { CrearCategoriasComponent } from './crear-categorias/crear-categorias.co
         ReactiveFormsModule,
         MaterialModule
     ],
-    declarations: [ListarCategoriasComponent, CrearCategoriasComponent]
+    declarations: [ListarCategoriasComponent, CrearCategoriasComponent, EditarCategoriasComponent]
 })
 
 export class CategoriasModule { }

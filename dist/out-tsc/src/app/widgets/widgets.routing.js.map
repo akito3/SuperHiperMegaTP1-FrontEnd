@@ -1,0 +1,1 @@
+{"version":3,"file":"widgets.routing.js","sourceRoot":"","sources":["../../../../../src/app/widgets/widgets.routing.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,gBAAgB,EAAE,MAAM,qBAAqB,CAAC;AAEvD,MAAM,CAAC,IAAM,aAAa,GAAW;IACjC;QAEE,IAAI,EAAE,EAAE;QACR,QAAQ,EAAE,CAAE;gBACV,IAAI,EAAE,EAAE;gBACR,SAAS,EAAE,gBAAgB;aAC9B,CAAC;KACL;CACA,CAAC"}

@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { MatTableDataSource } from '@angular/material'; 
+import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/table';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { Categoria } from 'src/app/services/categoria';
@@ -14,15 +15,28 @@ declare const $: any;
   styleUrls: ['./listar-categorias.component.css']
 })
 export class ListarCategoriasComponent implements OnInit {
-  displayedColumns = ['idCategoria', 'descripcion', 'flagVisible', 'posicion', 'accion'];
+  displayedColumns = ['idCategoria', 'descripcion', 'accion'];
   dataSource: MatTableDataSource<Categoria>;
-  agregar_Categoria: any = {descripcion: null, flagVisible: null, posicion: null};
-  editar_Categoria: any = {descripcion: null, flagVisible: null, posicion: null};
-  borrar_Categoria: any = {descripcion: null, flagVisible: null, posicion: null};
   totalCategorias: number;
+
+
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort,  { static: false }) sort: MatSort;
-  constructor(private router: Router, public dataService: CategoriasService) { }
+
+
+  // MatPaginator Inputs
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+   // MatPaginator Output
+   pageEvent: PageEvent;
+  private pagination = {
+    inicio: 0,
+    cantidad: 10,
+  };
+  orderDir: any;
+  orderBy: any;
+  constructor(private router: Router, public dataService: CategoriasService) {}
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -34,17 +48,51 @@ export class ListarCategoriasComponent implements OnInit {
   }
 
   getCategorias() {
-    this.dataService.getCategorias()
+    this.dataService.getCategorias({
+      ...this.pagination,
+      orderBy: this.orderBy,
+      orderDir: this.orderDir, })
        .subscribe((response) => {
-      // this.data = response['lista']
        this.dataSource = new MatTableDataSource(response.lista);
-       this.dataSource.paginator = this.paginator;
-       this.dataSource.sort = this.sort;
        this.totalCategorias = response['totalDatos'];
        });
    }
 
-   onClickAgregar(){
+
+   get_page(event: { pageSize: number; pageIndex: number; }) {
+    this.pagination.cantidad = event.pageSize;
+    this.pagination.inicio = event.pageSize * event.pageIndex;
+    this. getCategorias();
+  }
+  sortBy(orderBy: any) {
+    if (this.orderBy !== orderBy || this.orderDir === 'null') {
+      this.orderBy = orderBy;
+      this.orderDir = 'asc';
+    } else if (this.orderDir === 'asc') {
+      this.orderDir = 'desc';
+    } else if (this.orderDir === 'desc') {
+      this.orderBy = null;
+      this.orderDir = null;
+    }
+  }
+   onClickAgregar() {
     this.router.navigate(['dashboard/categorias/crear']);
    }
+   onClickEditar(id: any) {
+    this.router.navigate(['dashboard/categorias/editar/' + id]);
+   }
+
+   onDeleteCategoria(id: number): void {
+    if (confirm('Esta seguro que desea borrar la Categoria?')) {
+      this.dataService.borrarCategoria(id).subscribe(() => {
+        this.getCategorias();
+        alert('Categoría eliminada correctamente');
+      }, (error) => {
+        alert('La categoría esta en uso');
+      });
+    }
+  }
+
+
+
 }
