@@ -9,13 +9,13 @@ import { CustomURLEncoder } from 'src/app/util/customUrlEncoder';
 @Injectable({
     providedIn: 'root'
 })
-export class FichasClinicasService {
+export class ReservasServices {
     constructor(private httpClient: HttpClient) {
     }
 
 
 
-    getFichasClinicas(): Observable<any> {
+    getReservas(fechaActual): Observable<any> {
 
         const headers = new HttpHeaders({
 
@@ -23,7 +23,9 @@ export class FichasClinicasService {
             'Accept': 'application/json',
 
         });
-        const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica'
+        const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"fechaDesdeCadena\":" + fechaActual + "}")
+
         return this.httpClient.get(url, { headers: headers })
 
 
@@ -155,27 +157,80 @@ export class FichasClinicasService {
 
     agregarFichaClinica(objeto) {
         const header = new HttpHeaders({
-            'Content-Type': "application/json",
-            'Accept': 'application/json',
-            'usuario' :'gustavo',
+            'Content-Type': "application/json;usuario :gustavo",
+            'Accept': 'application/json'
         });
 
         const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';
         let cuerpo = {};
         cuerpo["motivoConsulta"] = objeto["motivoConsulta"];
-      //  cuerpo["fecha"] = "20191012";
+        //  cuerpo["fecha"] = "20191012";
         cuerpo["diagnostico"] = objeto["diagnostico"];
         cuerpo["observacion"] = objeto["observacion"];
-        cuerpo["idCliente"] = {"idPersona" : objeto["idCliente"]};
-        cuerpo["idEmpleado"]  =  {"idPersona" : objeto["idEmpleado"]};
-        cuerpo["idTipoProducto"] = {"idTipoProducto" : objeto["idTipoProducto"]};
-        console.log("cuerpo",cuerpo);
-         return this.httpClient.post(url, cuerpo, { headers: header });
-        
-          
+        cuerpo["idCliente"] = { "idPersona": objeto["idCliente"] };
+        cuerpo["idEmpleado"] = { "idPersona": objeto["idEmpleado"] };
+        cuerpo["idTipoProducto"] = { "idTipoProducto": objeto["idTipoProducto"] };
+        console.log("cuerpo", cuerpo);
+        return this.httpClient.post(url, cuerpo, { headers: header });
+
+
     }
 
+    getReservasFiltradas(objeto) {
 
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idEmpleado\":{\"idPersona\":" + objeto["idFisioterapeuta"] + "}," + "\"fechaDesdeCadena\":" + objeto["fechadesde"] + ",\"fechaHastaCadena\":" + objeto["fechahasta"] + "}");
+        return this.httpClient.get(url, { params: params, headers: headers })
+
+    }
+
+    getAgendas(objeto) {
+
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/persona/' + objeto["idFisioterapeuta"]+"/agenda"
+        console.log("Los parametros enviados son " , objeto);
+        if(objeto["mostrarSoloLibres"]==false){
+            var params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("fecha",objeto["fecha"]);
+
+
+        }else{
+
+            var params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("fecha",objeto["fecha"]).set("disponible","S");
+
+        }
+        return this.httpClient.get(url, { params: params, headers: headers })
+
+
+
+    }
+
+    agregarReserva(objeto){
+
+
+
+        const header = new HttpHeaders({
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+            'usuario' :'gustavo',
+        });
+
+        const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
+    
+        console.log("cuerpo",objeto);
+        return this.httpClient.post(url, objeto, { headers: header });
+
+    }
 
 
 }

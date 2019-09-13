@@ -53,6 +53,17 @@ export const ROUTES: RouteInfo[] = [{
         { path: 'lock', title: 'Lock Screen Page', ab: 'LSP' },
         { path: 'user', title: 'User Page', ab: 'UP' }
     ]
+},
+{
+    path: './reservas',
+    title: 'Reservas',
+    type: 'sub',
+    icontype: 'image',
+    collapse: 'reservas',
+    children: [
+        { path: 'listar-reservas', title: 'Listar Reservas', ab: 'LRC' },
+
+    ]
 }];
 @Component({
     selector: 'app-sidebar-cmp',

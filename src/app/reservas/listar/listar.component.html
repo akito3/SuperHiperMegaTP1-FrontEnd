@@ -42,7 +42,8 @@
           <div class="col-md-12">
             <legend>Fecha Desde</legend>
             <mat-form-field>
-              <input matInput [matDatepicker]="picker" placeholder="Elige una Fecha" (click)="picker.open()">
+              <input matInput [matDatepicker]="picker" placeholder="Elige una Fecha" (click)="picker.open()"
+                (dateChange)="onChange($event.target.value,'fechadesde')">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -54,48 +55,23 @@
           <div class="col-md-12">
             <legend>Fecha Hasta</legend>
             <mat-form-field>
-              <input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha" (click)="picker.open()">
+              <input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha" (click)="picker.open()"
+                (dateChange)="onChange($event.target.value,'fechahasta')">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
           </div>
         </div>
       </div>
-      <div class="col-md-2">
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+          (click)="filtrarReservas()">Filtrar</button>
+        <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+          (click)="limpiar()">Limpiar</button>
 
-        <legend>Categoria</legend>
-
-        <div class="row">
-          <div class="col-md-12">
-            <mat-form-field>
-              <mat-select placeholder="Categorias" (selectionChange)="onChange($event.value, 'idCategoria')"
-                [(ngModel)]="parametros_busqueda.idCategoria" name="idCategoria">
-                <mat-option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">
-                  {{categoria.descripcion}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
       </div>
-      <div class="col-md-2">
-
-        <legend>Tipo de Producto</legend>
-
-        <div class="row">
-          <div class="col-md-12">
-            <mat-form-field>
-              <mat-select placeholder="Tipo de productos" (selectionChange)="onChange($event.value, 'idTipoProducto')"
-                [(ngModel)]="parametros_busqueda.idTipoProducto">
-                <mat-option *ngFor="let tipoProducto of tipoProductos" [value]="tipoProducto.idTipoProducto">
-                  {{tipoProducto.descripcion}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-
     </div>
     <div class="row">
       <div class="col-md-12">
@@ -104,31 +80,38 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title ">Listado de Fichas Clinicas</h4>
+            <h4 class="card-title ">Listado de Reservas</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
                   <tr>
+                    <th>Fecha </th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
                     <th>Fisioterapeuta</th>
-                    <th>Paciente</th>
-                    <th>Fecha Desde</th>
-                    <th>Fecha Hasta</th>
-                    <th>Tipo de Producto</th>
-                    <th>Categoria</th>
+                    <th>Cliente</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let ficha  of fichasClinicas">
-                    <td>{{ficha.idEmpleado.nombre}} {{ficha.idEmpleado.apellido}} </td>
-                    <td>{{ficha.idCliente.nombre}} {{ficha.idCliente.apellido}}</td>
-                    <td><span *ngIf="ficha.fechaDesdeCadena">{{ficha.fechaDesdeCadena}}</span><span
-                        *ngIf="!ficha.fechaDesdeCadena">No establecido</span></td>
-                    <td><span *ngIf="ficha.fechaHastaCadena">{{ficha.fechaHastaCadena}}</span><span
-                        *ngIf="!ficha.fechaHastaCadena">No establecido</span></td>
-                    <td>{{ficha.idTipoProducto.descripcion}}</td>
-                    <td>{{ficha.idTipoProducto.idCategoria.descripcion}}</td>
+                  <tr *ngFor="let reserva of reservas">
+                    <th>{{reserva.fecha}}</th>
+                    <th>{{reserva.horaInicio}}</th>
+                    <th>{{reserva.horaFin}}</th>
+                    <th>{{reserva.idEmpleado.nombreCompleto}}</th>
+                    <th>{{reserva.idCliente.nombreCompleto}}</th>
+                    <th><button mat-raised-button type="button" class="btn btn-success ">
+                        <i class="material-icons">edit</i>
+                      </button>
+                      <button mat-raised-button type="button" class="btn btn-danger ">
+                        <i class="material-icons">close</i>
+                      </button>
+                      <button mat-raised-button type="button" class="btn btn-danger ">
+                        <i class="material-icons">add</i>
+                      </button>
+                    </th>
 
 
 
@@ -143,6 +126,6 @@
 
       </div>
     </div>
-      <button mat-raised-button class="btn btn-primary" (click)="irAfichaComponent()" >Agregar Nuevo Paciente</button>
+    <button  mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" (click)="irAagregarReservaComponent()">Agregar Nueva Reserva</button>
   </div>
 </div>

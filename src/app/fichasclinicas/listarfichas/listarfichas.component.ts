@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FichasClinicasService } from '../services/fichasClinicas.services';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-listarfichas',
@@ -19,7 +20,9 @@ export class ListarfichasComponent implements OnInit {
 
   constructor(
     //Dependency injection
-    private fichasClinicasService: FichasClinicasService
+    private fichasClinicasService: FichasClinicasService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -116,6 +119,8 @@ export class ListarfichasComponent implements OnInit {
   public cargarListaFichasClinicas() {
     this.fichasClinicasService.getFichasClinicas().subscribe((response: any) => {
       this.fichasClinicas = response.lista;
+      console.log("CargarListaFichasClinicas ", this.fichasClinicas);
+
     }, (error: any) => {
       console.log('Error : ', error.message)
     })
@@ -127,6 +132,12 @@ export class ListarfichasComponent implements OnInit {
     }, (error: any) => {
       console.log('Error : ', error.message)
     })
+
+  }
+
+  irAfichaComponent(){
+    console.log('->')
+    this.router.navigate(['../agregar-nueva-ficha-clinica'],{relativeTo : this.route});
 
   }
 

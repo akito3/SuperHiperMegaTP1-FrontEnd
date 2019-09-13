@@ -19,6 +19,9 @@ import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarfichas.component';
+import { AgregarfichasComponent } from './fichasclinicas/agregarfichas/agregarfichas.component';
+import { ListarComponent } from './reservas/listar/listar.component';
+import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-reservas.component';
 
 @NgModule({
   imports: [
@@ -40,7 +43,10 @@ import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarficha
     AdminLayoutComponent,
     AuthLayoutComponent,
     LoginComponent,
-    ListarfichasComponent
+    ListarfichasComponent,
+    AgregarfichasComponent,
+    ListarComponent,
+    AgregarReservasComponent
   ],
   bootstrap: [AppComponent],
 })

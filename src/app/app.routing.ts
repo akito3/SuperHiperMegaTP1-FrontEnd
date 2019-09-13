@@ -5,6 +5,9 @@ import { AdminLayoutComponent } from '../app/layouts/admin/admin-layout.componen
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { LoginComponent } from './login/login.component';
 import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarfichas.component';
+import { AgregarfichasComponent } from './fichasclinicas/agregarfichas/agregarfichas.component';
+import { ListarComponent } from './reservas/listar/listar.component';
+import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-reservas.component';
 export const AppRoutes: Routes = [
     {
         path: '',
@@ -30,12 +33,36 @@ export const AppRoutes: Routes = [
 
             {
                 path: 'fichas-clinicas',
-                children : [
+                children: [
                     {
-                        path : 'listar-fichas-clinicas',
-                        component : ListarfichasComponent
+                        path: 'listar-fichas-clinicas',
+                        component: ListarfichasComponent
+                    },
+                    {
+                        path: 'agregar-nueva-ficha-clinica',
+                        component: AgregarfichasComponent
+
+
                     }
                 ]
+            },
+            {
+                path: 'reservas',
+                children: [
+                    {
+                        path: 'listar-reservas',
+                        component: ListarComponent
+                    },
+                    {
+                        path : 'agregar-reservas',
+                        component : AgregarReservasComponent
+
+                    }
+                   
+                ]
+
+
+
             },
             {
                 path: 'categorias',
