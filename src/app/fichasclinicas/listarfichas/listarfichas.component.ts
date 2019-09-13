@@ -137,7 +137,7 @@ export class ListarfichasComponent implements OnInit {
 
   irAfichaComponent(){
     console.log('->')
-    this.router.navigate(['../agregar-nueva-ficha-clinica'],{relativeTo : this.route});
+    this.router.navigate(['./../agregar-nueva-ficha-clinica',"null","null"],{relativeTo : this.route});
 
   }
 

@@ -39,7 +39,7 @@ export const AppRoutes: Routes = [
                         component: ListarfichasComponent
                     },
                     {
-                        path: 'agregar-nueva-ficha-clinica',
+                        path: 'agregar-nueva-ficha-clinica/:idEmpleado/:idCliente',
                         component: AgregarfichasComponent
 
 

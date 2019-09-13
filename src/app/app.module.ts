@@ -20,8 +20,9 @@ import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarfichas.component';
 import { AgregarfichasComponent } from './fichasclinicas/agregarfichas/agregarfichas.component';
-import { ListarComponent } from './reservas/listar/listar.component';
+import { ListarComponent, DialogOverviewExampleDialog } from './reservas/listar/listar.component';
 import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-reservas.component';
+
 
 @NgModule({
   imports: [
@@ -46,7 +47,13 @@ import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-re
     ListarfichasComponent,
     AgregarfichasComponent,
     ListarComponent,
-    AgregarReservasComponent
+    AgregarReservasComponent,
+    //AGREGAR AQUI EL DIALOG DE MATERIAL DESIGN
+    DialogOverviewExampleDialog,
+  ],
+  entryComponents:[
+    //AGREGAR COMO ENTRY POINT
+    DialogOverviewExampleDialog
   ],
   bootstrap: [AppComponent],
 })

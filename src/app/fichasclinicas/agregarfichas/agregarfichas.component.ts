@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FichasClinicasService } from '../services/fichasClinicas.services';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-agregarfichas',
@@ -14,17 +16,24 @@ export class AgregarfichasComponent implements OnInit {
   private pacientes: any[];
   private categorias: any[];
   private tipoProductos: any[];
-  constructor(private fichasClinicasService: FichasClinicasService) { }
+  private idFisioterapeuta = null;
+  public selectedFisioterapeuta = null;
+  public selectedPaciente = null;
+  constructor(private fichasClinicasService: FichasClinicasService, private router  : Router , private route : ActivatedRoute) { }
 
   ngOnInit() {
+    
     this.cargarComboBoxFisioterapeutas();
     this.cargarComboBoxPacientes();
     this.cargarComboBoxCategorias();
+    this.route.snapshot.paramMap.get("idEmpleado")=="null"? this.selectedFisioterapeuta = null : this.selectedFisioterapeuta =  parseInt(this.route.snapshot.paramMap.get("idEmpleado"));
+    this.route.snapshot.paramMap.get("idCliente")=="null"? this.selectedPaciente = null : this.selectedPaciente =  parseInt(this.route.snapshot.paramMap.get("idCliente"));
 
   }
   public cargarComboBoxFisioterapeutas() {
     this.fichasClinicasService.getFisioterapeutas().subscribe((response: any) => {
-      this.fisioterapeutas = response
+      this.fisioterapeutas = response;
+      console.log("Los fisioterapeuta son" , this.fisioterapeutas);
     }, error => {
       console.log('Error : ', error.message)
     })

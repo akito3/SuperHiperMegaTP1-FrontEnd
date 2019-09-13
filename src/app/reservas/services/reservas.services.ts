@@ -232,5 +232,36 @@ export class ReservasServices {
 
     }
 
+    modificarReserva(objeto){
+        const header = new HttpHeaders({
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+            'usuario' :'gustavo',
+        });
+
+        const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
+        return this.httpClient.put(url, objeto, { headers: header });
+
+
+
+
+
+    }
+
+    eliminarReserva(idReserva){
+        const header = new HttpHeaders({
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+            'usuario' :'gustavo',
+        });
+
+        const url: string = API_ENDPOINT + 'stock-pwfe/reserva/' + idReserva ;
+        return this.httpClient.delete(url,{ headers: header });
+
+
+
+     
+    }
+
 
 }

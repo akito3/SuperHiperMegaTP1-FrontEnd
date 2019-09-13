@@ -29,7 +29,7 @@ export class LoginService {
             pipe(
                 map(
                     (objeto) =>
-                        objeto['lista'].filter(elemento => elemento['usuarioLogin'] != null && elemento['usuarioLogin'] == usuario && elemento['cedula'] == password)
+                        objeto['lista'].filter(elemento => elemento['usuarioLogin'] != null && elemento['usuarioLogin'] == usuario)
                 ),
                 map((objeto: any) => {
                     if (objeto.length == 0) {

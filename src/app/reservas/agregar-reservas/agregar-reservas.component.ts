@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { ReservasServices } from '../services/reservas.services';
 import { MatSnackBar } from '@angular/material';
+import { Route, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-reservas',
@@ -17,9 +18,13 @@ export class AgregarReservasComponent implements OnInit {
   public observacion: string = null;
   public objetoaserenviado = null;
 
+  public defaultFisioterapeuta
+
   constructor(private reservasService: ReservasServices, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+
+    console.log("LOS PARAMETROS" , this.parametros_busqueda);
     this.pacientes = [];
     this.agendas = [];
     this.fisioterapeutas = [];

@@ -23,7 +23,7 @@
               <legend>Fisioterapeutas disponibles</legend>
 
               <mat-form-field>
-                <mat-select placeholder="Fisioterapeutas Disponibles" ngModel name="idFisioterapeuta">
+                <mat-select  placeholder="Fisioterapeutas Disponibles"   [(ngModel)]="selectedFisioterapeuta" name="idFisioterapeuta">
                   <mat-option *ngFor="let fisioterapeuta of fisioterapeutas" [value]="fisioterapeuta.idPersona">
                     {{fisioterapeuta.nombre}} {{fisioterapeuta.apellido}}
                   </mat-option>
@@ -33,7 +33,7 @@
             <div class="col-md-3">
               <legend>Clientes</legend>
               <mat-form-field>
-                <mat-select ngModel placeholder="Pacientes Disponibles" name="idPaciente">
+                <mat-select ngModel placeholder="Pacientes Disponibles" [(ngModel)]="selectedPaciente"  name="idPaciente" >
                   <mat-option *ngFor="let paciente of pacientes" [value]="paciente.idPersona">
                     {{paciente.nombre}} {{paciente.apellido}}
                   </mat-option>

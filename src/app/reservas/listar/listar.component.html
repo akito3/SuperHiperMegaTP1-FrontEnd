@@ -74,7 +74,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="!showSpinner">
         <div class="card">
           <div class="card-header card-header-icon card-header-rose">
             <div class="card-icon">
@@ -102,13 +102,14 @@
                     <th>{{reserva.horaFin}}</th>
                     <th>{{reserva.idEmpleado.nombreCompleto}}</th>
                     <th>{{reserva.idCliente.nombreCompleto}}</th>
-                    <th><button mat-raised-button type="button" class="btn btn-success ">
+                    <th><button mat-raised-button type="button" class="btn btn-success" (click)="abrirPopup(reserva.idReserva,reserva.observacion,reserva.flagAsistio)">
                         <i class="material-icons">edit</i>
                       </button>
-                      <button mat-raised-button type="button" class="btn btn-danger ">
+                      <button mat-raised-button type="button" class="btn btn-danger " (click)="abrirPopupEliminacion(reserva.idReserva)">
                         <i class="material-icons">close</i>
                       </button>
-                      <button mat-raised-button type="button" class="btn btn-danger ">
+                      
+                      <button mat-raised-button type="button" class="btn btn-danger" (click)="irAcrearFicha(reserva.idEmpleado.idPersona,reserva.idCliente.idPersona)">
                         <i class="material-icons">add</i>
                       </button>
                     </th>
@@ -124,6 +125,9 @@
         </div>
 
 
+      </div>
+      <div class="col-md-12" *ngIf="showSpinner" style="text-align: center">
+        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;"  mode="indeterminate"></mat-spinner>
       </div>
     </div>
     <button  mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" (click)="irAagregarReservaComponent()">Agregar Nueva Reserva</button>
