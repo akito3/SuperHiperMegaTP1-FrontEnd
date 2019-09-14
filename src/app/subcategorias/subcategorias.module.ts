@@ -8,6 +8,10 @@ import { ListarSubcategoriasComponent } from './listar-subcategorias/listar-subc
 import { CrearSubcategoriasComponent } from './crear-subcategorias/crear-subcategorias.component';
 import { EditarSubcategoriasComponent } from './editar-subcategorias/editar-subcategorias.component';
 
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntlCro } from '../categorias/listar-categorias/listar-categorias.component';
+import { MatAutocompleteModule } from '@angular/material';
+import { MdModule } from '../md/md.module';
 
 @NgModule({
     imports: [
@@ -15,9 +19,19 @@ import { EditarSubcategoriasComponent } from './editar-subcategorias/editar-subc
         RouterModule.forChild(SubCategoriasRoutes),
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        MatPaginatorModule,
+        MatAutocompleteModule,
+        MdModule
+
     ],
-    declarations: [ListarSubcategoriasComponent, CrearSubcategoriasComponent, EditarSubcategoriasComponent]
+    declarations: [ListarSubcategoriasComponent, CrearSubcategoriasComponent, EditarSubcategoriasComponent],
+    providers: [
+      {
+        provide: MatPaginatorIntl,
+        useClass: MatPaginatorIntlCro
+      },
+    ]
 })
 
 export class SubCategoriasModule { }

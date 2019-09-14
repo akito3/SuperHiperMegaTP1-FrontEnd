@@ -24,26 +24,21 @@
                                     <mat-icon matSuffix>search</mat-icon>
                                   </mat-form-field>
                                 </div>
-                              
-                                <div class="col-md-3">
-                                <mat-form-field>
-                                  <mat-select  placeholder="Estado"  disableRipple>
-                                    <mat-option (click)="ordenar('asc')">Ascendete</mat-option>
-                                    <mat-option  (click)="ordenar('desc')">Descendente</mat-option>
-                                  </mat-select>
-                                </mat-form-field>   
-                              </div>
                             </div>
-                        <mat-table [dataSource]="dataSource" matSort class="tabla-datos">
+                        <mat-table [dataSource]="dataSource">
                           <!-- Columna Nombre -->
                           <ng-container matColumnDef="idCategoria">
-                              <mat-header-cell *matHeaderCellDef mat-sort-header> Nro. </mat-header-cell>
+                              <mat-header-cell *matHeaderCellDef   > Nro. 
+                                  <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('idCategoria')">sort</i>
+                                </mat-header-cell>
                               <mat-cell *matCellDef="let element"> {{element.idCategoria}} </mat-cell>
                           </ng-container>
                       
                           <!-- Columna Apellido -->
                           <ng-container matColumnDef="descripcion">
-                              <mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </mat-header-cell>
+                              <mat-header-cell *matHeaderCellDef> Descripción 
+                              <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('descripcion')">sort</i>
+                            </mat-header-cell>
                               <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
                           </ng-container>
                       <ng-container matColumnDef="accion">
