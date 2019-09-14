@@ -12,14 +12,14 @@ export class CategoriasService {
   baseUrl = 'https://gy7228.myfoscam.org:8443/stock-pwfe/categoria/';
   constructor(private httpClient: HttpClient) { }
   private url_base = 'https://gy7228.myfoscam.org:8443/stock-pwfe/';
-  headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
+  headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json').set('usuario', 'gustavo');
   httpOptions = {
     headers: this.headers
   };
 
   getCategorias(parametro): Observable<ListaCategoria> {
     let separator = '?';
-    for (let e in parametro) {
+    for (const e in parametro) {
       if (parametro[e] == null) {continue; }
       this.baseUrl = this.baseUrl + separator + e + '=' + parametro[e];
       separator = '&';
@@ -37,8 +37,8 @@ export class CategoriasService {
       return this.httpClient.get<Categoria>(this.baseUrl + id);
     }
 
-    agregarCategoria(categoria: Categoria): Observable<Categoria>{
-      return this.httpClient.post<Categoria>(this.baseUrl , categoria);
+    agregarCategoria(categoria: Categoria): Observable<Categoria> {
+      return this.httpClient.post<Categoria>(this.baseUrl , categoria, this.httpOptions);
     }
 
     borrarCategoria(id: number) {
@@ -47,14 +47,34 @@ export class CategoriasService {
         .pipe(map(data => data));
     }
 
-    editarCategoria1(categoria: Categoria): Observable<Categoria> {
+    editarCategoria12(categoria: Categoria): Observable<Categoria> {
       return this.httpClient.put<Categoria>(this.baseUrl + categoria.idCategoria, categoria, this.httpOptions);
     }
 
 
-    editarCategoria(categoria: Categoria): Observable<Categoria>{
+    editarCategori1a(categoria: Categoria): Observable<Categoria> {
       const params = new HttpParams().set('Content-Type', 'application/json');
       const options = {params: params};
       return this.httpClient.put<Categoria>(this.baseUrl + categoria.idCategoria, categoria, options);
     }
+
+    editarCategoria(objeto) {
+    const header = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'usuario' : 'gustavo',
+    });
+    return this.httpClient.put(this.baseUrl, objeto, { headers: header });
+  }
+
+  eliminarCategoria(idCategoria) {
+    const header = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'usuario' : 'gustavo',
+    });
+
+    const url: string = this.baseUrl + idCategoria;
+    return this.httpClient.delete(url, { headers: header });
+  }
 }
