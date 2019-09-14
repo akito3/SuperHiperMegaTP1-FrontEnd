@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FichasClinicasService } from '../services/fichasClinicas.services';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -19,21 +20,26 @@ export class AgregarfichasComponent implements OnInit {
   private idFisioterapeuta = null;
   public selectedFisioterapeuta = null;
   public selectedPaciente = null;
-  constructor(private fichasClinicasService: FichasClinicasService, private router  : Router , private route : ActivatedRoute) { }
+
+  public observacion = null;
+  public motivoConsulta = null;
+  public diagnostico = null;
+
+  constructor(private fichasClinicasService: FichasClinicasService, private router: Router, private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    
+
     this.cargarComboBoxFisioterapeutas();
     this.cargarComboBoxPacientes();
     this.cargarComboBoxCategorias();
-    this.route.snapshot.paramMap.get("idEmpleado")=="null"? this.selectedFisioterapeuta = null : this.selectedFisioterapeuta =  parseInt(this.route.snapshot.paramMap.get("idEmpleado"));
-    this.route.snapshot.paramMap.get("idCliente")=="null"? this.selectedPaciente = null : this.selectedPaciente =  parseInt(this.route.snapshot.paramMap.get("idCliente"));
+    this.route.snapshot.paramMap.get("idEmpleado") == "null" ? this.selectedFisioterapeuta = null : this.selectedFisioterapeuta = parseInt(this.route.snapshot.paramMap.get("idEmpleado"));
+    this.route.snapshot.paramMap.get("idCliente") == "null" ? this.selectedPaciente = null : this.selectedPaciente = parseInt(this.route.snapshot.paramMap.get("idCliente"));
 
   }
   public cargarComboBoxFisioterapeutas() {
     this.fichasClinicasService.getFisioterapeutas().subscribe((response: any) => {
       this.fisioterapeutas = response;
-      console.log("Los fisioterapeuta son" , this.fisioterapeutas);
+      console.log("Los fisioterapeuta son", this.fisioterapeutas);
     }, error => {
       console.log('Error : ', error.message)
     })
@@ -78,25 +84,39 @@ export class AgregarfichasComponent implements OnInit {
     this.fichasClinicasService.agregarFichaClinica(
       {
         "motivoConsulta": formData.value['motivoConsulta'],
-        "diagnostico" : formData.value['diagnostico'],
-        "observacion" : formData.value["observacion"],
-        "idEmpleado" : formData.value["idFisioterapeuta"],
-        "idCliente" : formData.value["idPaciente"],
-        "fecha" : formData.value["fecha"],
-        "idTipoProducto" : formData.value["idTipoProducto"]
+        "diagnostico": formData.value['diagnostico'],
+        "observacion": formData.value["observacion"],
+        "idEmpleado": formData.value["idFisioterapeuta"],
+        "idCliente": formData.value["idPaciente"],
+        "fecha": formData.value["fecha"],
+        "idTipoProducto": formData.value["idTipoProducto"]
       }
 
     ).subscribe((response: any) => {
-      console.log("El response es ", response)
+      console.log("El response es ", response);
+      this.openSnackBar("Ficha clinica agregada con exito", "aviso");
+      this.diagnostico = null;
+      this.motivoConsulta= null;
+      this.observacion = null;
+
 
 
     }, (error: any) => {
-      console.log("El error es ", error.message)
+      console.log("El error es ", error.message);
+      this.openSnackBar(error.message, "Error al agregar ficha clinica");
+
+
 
 
     })
 
 
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 
