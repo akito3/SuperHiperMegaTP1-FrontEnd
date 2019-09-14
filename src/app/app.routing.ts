@@ -8,6 +8,7 @@ import { ListarfichasComponent } from './fichasclinicas/listarfichas/listarficha
 import { AgregarfichasComponent } from './fichasclinicas/agregarfichas/agregarfichas.component';
 import { ListarComponent } from './reservas/listar/listar.component';
 import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-reservas.component';
+import { ListarServiciosComponent } from './servicios/listar-servicios/listar-servicios.component';
 export const AppRoutes: Routes = [
     {
         path: '',
@@ -61,6 +62,20 @@ export const AppRoutes: Routes = [
                    
                 ]
 
+
+
+            },
+            {
+                path : 'servicios',
+                children : [
+                    {
+
+                        path: 'listar-servicios',
+                        component : ListarServiciosComponent,
+
+                    }
+
+                ]
 
 
             },

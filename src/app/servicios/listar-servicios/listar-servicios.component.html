@@ -42,7 +42,8 @@
           <div class="col-md-12">
             <legend>Fecha Desde</legend>
             <mat-form-field>
-              <input matInput [matDatepicker]="picker" placeholder="Elige una Fecha" (click)="picker.open()">
+              <input matInput [matDatepicker]="picker" placeholder="Elige una Fecha" (click)="picker.open()"
+                (dateChange)="onChange($event.target.value,'fechadesde')">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -50,16 +51,17 @@
         </div>
       </div>
       <div class="col-md-2">
-        <div class="row">
-          <div class="col-md-12">
-            <legend>Fecha Hasta</legend>
-            <mat-form-field>
-              <input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha" (click)="picker.open()">
-              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-              <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
+          <div class="row">
+              <div class="col-md-12">
+                <legend>Fecha Hasta</legend>
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha" (click)="picker.open()"
+                    (dateChange)="onChange($event.target.value,'fechahasta')">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
       </div>
       <div class="col-md-2">
 
@@ -98,31 +100,58 @@
 
     </div>
     <div class="row">
+      <div class="col-md-12">
+        <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+          (click)="filtrarServicios()">Filtrar</button>
+        <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+          (click)="limpiar()">Limpiar</button>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-12" *ngIf="!showSpinner">
         <div class="card">
           <div class="card-header card-header-icon card-header-rose">
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <h4 class="card-title ">Listado de Fichas Clinicas</h4>
+            <h4 class="card-title ">Listado Servicios</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
                   <tr>
-                    <th>Fisioterapeuta</th>
-                    <th>Paciente</th>
-                    <th>Fecha Desde</th>
-                    <th>Fecha Hasta</th>
-                    <th>Tipo de Producto</th>
+                    <th>Fecha</th>
+                    <th>Flag Estado</th>
+                    <th>Id Ficha</th>
+                    <th>Fecha Ficha</th>
+                    <th>Profesional</th>
+                    <th>Cliente</th>
                     <th>Categoria</th>
+                    <th>Subcategoria</th>
                     <th>Observacion</th>
+                    <th>Presupuesto</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr *ngFor="let servicio of servicios">
+                    <td>{{servicio.fechaHora}}</td>
+                    <td>{{servicio.flagEstado}}</td>
+                    <td>{{servicio.idFichaClinica.idFichaClinica}}</td>
+                    <td>{{servicio.idFichaClinica.fechaHora}}</td>
+                    <td>{{servicio.idEmpleado.nombreCompleto}}</td>
+                    <td>{{servicio.idFichaClinica.idCliente.nombreCompleto}}</td>
+                    <td>{{servicio.idFichaClinica.idTipoProducto.idCategoria.descripcion}}</td>
+                    <td>{{servicio.idFichaClinica.idTipoProducto.descripcion}}</td>
+                    <td>{{servicio.observacion}}</td>
+                    <td>{{servicio.presupuesto}}</td>
+                    <td>Acciones</td>
+
+
+
+
+
 
 
 

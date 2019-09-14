@@ -55,6 +55,17 @@ export const ROUTES: RouteInfo[] = [{
     ]
 },
 {
+    path: './servicios',
+    title: 'Servicios',
+    type: 'sub',
+    icontype: 'image',
+    collapse: 'servicios',
+    children: [
+        { path: 'listar-servicios', title: 'Listar Servicios', ab: 'LS' },
+     
+    ]
+},
+{
     path: './reservas',
     title: 'Reservas',
     type: 'sub',

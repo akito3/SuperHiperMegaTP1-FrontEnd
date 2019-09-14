@@ -22,6 +22,7 @@ import { ListarfichasComponent, DialogFichasClinicas } from './fichasclinicas/li
 import { AgregarfichasComponent } from './fichasclinicas/agregarfichas/agregarfichas.component';
 import { ListarComponent, DialogOverviewExampleDialog } from './reservas/listar/listar.component';
 import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-reservas.component';
+import { ListarServiciosComponent } from './servicios/listar-servicios/listar-servicios.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-re
     //AGREGAR AQUI EL DIALOG DE MATERIAL DESIGN
     DialogOverviewExampleDialog,
     DialogFichasClinicas,
+    ListarServiciosComponent,
   ],
   entryComponents:[
     //AGREGAR COMO ENTRY POINT
