@@ -79,7 +79,7 @@
               <label class="col-sm-1 col-form-label">Motivo</label>
               <div class="col-sm-10">
                 <mat-form-field class="example-full-width">
-                  <input matInput type="textarea" placeholder="Motivo" ngModel name="motivoConsulta">
+                  <input matInput type="textarea" placeholder="Motivo" [(ngModel)]="motivoConsulta"  name="motivoConsulta">
                 </mat-form-field>
               </div>
             </div>
@@ -87,7 +87,7 @@
               <label class="col-sm-1 col-form-label">Diagnostico</label>
               <div class="col-sm-10">
                 <mat-form-field class="example-full-width">
-                  <input matInput type="textarea" placeholder="Diagnostico" ngModel name="diagnostico">
+                  <input matInput type="textarea" placeholder="Diagnostico" [(ngModel)]="diagnostico"  ngModel name="diagnostico">
                 </mat-form-field>
               </div>
             </div>
@@ -97,15 +97,13 @@
               <label class="col-sm-1 col-form-label">Observacion</label>
               <div class="col-sm-10">
                 <mat-form-field class="example-full-width">
-                  <input matInput type="textarea" placeholder="Observacion" ngModel name="observacion">
+                  <input matInput type="textarea" placeholder="Observacion" [(ngModel)]="observacion" name="observacion">
                 </mat-form-field>
               </div>
             </div>
           </div>
           <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" type="submit">Agregar Nueva 
             Ficha</button>
-          <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" >Cancelar</button>
-
         </form>
       </div>
     </div>

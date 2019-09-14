@@ -98,7 +98,7 @@
 
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="!showSpinner">
         <div class="card">
           <div class="card-header card-header-icon card-header-rose">
             <div class="card-icon">
@@ -117,6 +117,8 @@
                     <th>Fecha Hasta</th>
                     <th>Tipo de Producto</th>
                     <th>Categoria</th>
+                    <th>Observacion</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -129,6 +131,13 @@
                         *ngIf="!ficha.fechaHastaCadena">No establecido</span></td>
                     <td>{{ficha.idTipoProducto.descripcion}}</td>
                     <td>{{ficha.idTipoProducto.idCategoria.descripcion}}</td>
+                    <td><span *ngIf="!ficha.observacion">Sin observacion</span><span
+                        *ngIf="ficha.observacion">{{ficha.observacion}}</span></td>
+                    <td><button mat-raised-button type="button" class="btn btn-success"
+                        (click)="abrirPopup(ficha.idFichaClinica,ficha.observacion)">
+                        <i class="material-icons">edit</i>
+                      </button>
+                    </td>
 
 
 
@@ -142,7 +151,11 @@
 
 
       </div>
+      <div class="col-md-12" *ngIf="showSpinner" style="text-align: center">
+        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;" mode="indeterminate">
+        </mat-spinner>
+      </div>
     </div>
-      <button mat-raised-button class="btn btn-primary" (click)="irAfichaComponent()" >Agregar Nueva Ficha</button>
+    <button mat-raised-button class="btn btn-primary" (click)="irAfichaComponent()">Agregar Nueva Ficha</button>
   </div>
 </div>

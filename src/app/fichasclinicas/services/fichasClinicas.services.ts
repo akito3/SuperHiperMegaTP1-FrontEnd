@@ -175,6 +175,21 @@ export class FichasClinicasService {
           
     }
 
+    modificarFichaClinica(objeto){
+
+        const header = new HttpHeaders({
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+            'usuario' :'gustavo',
+        });
+
+        const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';
+        return this.httpClient.put(url, objeto,{headers:header});
+
+
+
+
+    }
 
 
 
