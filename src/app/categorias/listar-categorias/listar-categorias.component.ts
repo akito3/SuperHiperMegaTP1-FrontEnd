@@ -118,7 +118,7 @@ export class ListarCategoriasComponent implements OnInit {
     // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       data: {
-        idReserva: idCategoria,
+        idCategoria: idCategoria,
         descripcion: descripcion,
         accion: 'eliminacion'
       },
@@ -184,7 +184,7 @@ export class DialogOverviewExampleDialog implements OnInit {
 
   save() {
     const objeto = {
-      'idReserva': this.data.idReserva,
+      'idCategoria': this.data.idCategoria,
       'descripcion': this.data.descripcion,
 
     };
@@ -199,7 +199,7 @@ export class DialogOverviewExampleDialog implements OnInit {
     });
   }
   eliminar() {
-    this.dataService.borrarCategoria(this.data.idReserva).subscribe((response: any) => {
+    this.dataService.borrarCategoria(this.data.idCategoria).subscribe((response: any) => {
     this.openSnackBar('Categoria eliminada con exito', 'Aviso');
     this.dialogRef.close('Eliminado');
     }, (error: any) => {

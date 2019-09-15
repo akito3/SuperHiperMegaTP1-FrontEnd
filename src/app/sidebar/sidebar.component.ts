@@ -46,6 +46,12 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'list_alt',
 },
 {
+    path: './excepciones/listar',
+    title: 'Configurar Excepciones',
+    type: 'link',
+    icontype: 'event_busy',
+},
+{
     path: './servicios/listar-servicios',
     title: 'Servicios',
     type: 'link',
