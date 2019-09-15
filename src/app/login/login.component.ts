@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
         data => {
           console.log(data);
           //faltaria pasar el user
+          localStorage.setItem('usuarioLogin', data[0]['usuarioLogin']);
           this.router.navigate(['../../dashboard'],{relativeTo : this.route});
         },
         error => {

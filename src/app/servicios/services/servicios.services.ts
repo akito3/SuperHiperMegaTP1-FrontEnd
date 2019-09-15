@@ -221,9 +221,10 @@ export class ServiciosService {
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : 'gustavo'
+            'usuario' : localStorage.getItem("usuarioLogin"),
 
         });
+        console.log("LOCALSTORAGE", localStorage.getItem("usuarioLogin"));
         const url: string = API_ENDPOINT + 'stock-pwfe/servicio';
         return this.httpClient.post(url,objeto,{headers : headers});
 
@@ -234,7 +235,7 @@ export class ServiciosService {
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : 'gustavo'
+            'usuario' :localStorage.getItem("usuarioLogin"),
 
         });
         const url: string = API_ENDPOINT + 'stock-pwfe/presentacionProducto';
@@ -254,7 +255,7 @@ export class ServiciosService {
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : 'gustavo'
+            'usuario' : localStorage.getItem("usuarioLogin"),
 
         });
 
@@ -270,7 +271,7 @@ export class ServiciosService {
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : 'gustavo'
+            'usuario' : localStorage.getItem("usuarioLogin"),
 
         });
         console.log("El objeto a enviar es ", objeto);
@@ -305,7 +306,7 @@ export class ServiciosService {
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : 'gustavo',
+            'usuario' : localStorage.getItem("usuarioLogin"),
 
         });
         const url: string = API_ENDPOINT + 'stock-pwfe/servicio/'+idServicio+"/detalle/"+idDetalle;
@@ -323,7 +324,7 @@ export class ServiciosService {
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : 'gustavo',
+            'usuario' : localStorage.getItem("usuarioLogin"),
 
         });
         const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';

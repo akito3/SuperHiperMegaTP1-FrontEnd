@@ -19,17 +19,6 @@
                             <input type="text" class="form-control" placeholder="Username" [(ngModel)]="username" name="username" required>
                           </div>
                         </div>
-                        <div class="form-group has-default">
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                <i class="material-icons">lock_outline</i>
-                              </span>
-                            </div>
-                            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password"type="password" name="password" required>
-
-                          </div>
-                        </div>
                         <div class="text-center">
                           <p *ngIf="hasError"  style="color: #F44336">{{errorMessage}}</p>
                           <button class="btn btn-primary btn-round mt-4" (click)="login()">Ingresar</button>

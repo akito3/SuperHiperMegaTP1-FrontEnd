@@ -222,7 +222,7 @@ export class ReservasServices {
         const header = new HttpHeaders({
             'Content-Type': "application/json",
             'Accept': 'application/json',
-            'usuario' :'gustavo',
+            'usuario' : localStorage.getItem("usuarioLogin"),
         });
 
         const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
@@ -236,7 +236,7 @@ export class ReservasServices {
         const header = new HttpHeaders({
             'Content-Type': "application/json",
             'Accept': 'application/json',
-            'usuario' :'gustavo',
+            'usuario' :localStorage.getItem("usuarioLogin"),
         });
 
         const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
@@ -252,7 +252,7 @@ export class ReservasServices {
         const header = new HttpHeaders({
             'Content-Type': "application/json",
             'Accept': 'application/json',
-            'usuario' :'gustavo',
+            'usuario' : localStorage.getItem("usuarioLogin"),
         });
 
         const url: string = API_ENDPOINT + 'stock-pwfe/reserva/' + idReserva ;

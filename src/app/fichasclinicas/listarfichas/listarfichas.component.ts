@@ -72,7 +72,7 @@ export class ListarfichasComponent implements OnInit {
 
     }, error => {
       console.log('Error', error.message)
-    }).add(()=>{
+    }).add(() => {
       this.showSpinner = false;
     })
   }
@@ -181,9 +181,9 @@ export class ListarfichasComponent implements OnInit {
 
   }
 
-  irAcrearServicio(idEmpleado,idPaciente){
-    console.log(idEmpleado + " " +  idPaciente);
-    this.router.navigate(['./../../servicios/crear-modificar-servicios/accion/',"crear",idEmpleado,idPaciente,"null"], { relativeTo: this.route });
+  irAcrearServicio(idEmpleado, idPaciente) {
+    console.log(idEmpleado + " " + idPaciente);
+    this.router.navigate(['./../../servicios/crear-modificar-servicios/accion/', "crear", idEmpleado, idPaciente, "null"], { relativeTo: this.route });
   }
 
 
@@ -220,7 +220,51 @@ export class ListarfichasComponent implements OnInit {
                 >
     </mat-form-field>
 
-    
+    <div class="row">
+      <div class="col-md-12" *ngIf="!showSpinnerpopup">
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title ">Listado de Servicios  Asociados a la ficha</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Presupuesto</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let servicio of servicios">
+                    <td>{{servicio.fechaHora}}</td>
+                    <td>{{servicio.presupuesto}}</td>
+                    <td><button mat-raised-button type="button" class="btn btn-info" (click)="abrirPopup(ficha.idFichaClinica,ficha.observacion)">
+                      Ver/Editar Servicio Asociado<i class="material-icons">edit</i>
+                    </button></td>
+       
+
+
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-12" *ngIf="showspinnerpopup" style="text-align: center">
+        <mat-spinner [style.display]="showspinerpopup ? 'block' : 'none'" style="margin:0 auto;"  mode="indeterminate"></mat-spinner>
+      </div>
+    </div>
+
+
 
 
  
@@ -238,6 +282,12 @@ export class ListarfichasComponent implements OnInit {
 
 export class DialogFichasClinicas implements OnInit {
 
+
+
+  public servicios: any[];
+  public showspinnerpopup = false;
+
+
   constructor(
     public dialogRef: MatDialogRef<DialogFichasClinicas>, private _snackBar: MatSnackBar, private fichasService: FichasClinicasService,
     //any -> asi podemos enviar un objeto cualquiero con cualquier propiedad
@@ -245,6 +295,19 @@ export class DialogFichasClinicas implements OnInit {
 
 
   ngOnInit() {
+    this.showspinnerpopup=true;
+    this.fichasService.getServiciosApartirDeFicha(this.data.idFicha).subscribe((response: any) => {
+      this.servicios = response.lista;
+      console.log("Servicios", this.servicios);
+
+    }, error => {
+      this.openSnackBar(error.message, "Error");
+      console.log("Error");
+
+    }).add(()=>{
+        this.showspinnerpopup = false;
+
+    })
 
   }
 
@@ -293,3 +356,5 @@ export class DialogFichasClinicas implements OnInit {
 
 
 }
+
+

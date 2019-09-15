@@ -142,9 +142,12 @@
                     <td>{{ficha.idTipoProducto.descripcion}}</td>
                     <td>{{ficha.idTipoProducto.idCategoria.descripcion}}</td>
                     <td>{{ficha.observacion}}</td>
-                    <td>                      <button mat-raised-button type="button" class="btn btn-danger" (click)="irAcrearServicio(ficha.idEmpleado.idPersona,ficha.idCliente.idPersona)">
+                    <td>                      <button mat-raised-button type="button" class="btn btn-info" (click)="abrirPopup(ficha.idFichaClinica,ficha.observacion)">
+                      Editar Ficha Clinica<i class="material-icons">edit</i>
+                    </button><button mat-raised-button type="button" class="btn btn-danger" (click)="irAcrearServicio(ficha.idEmpleado.idPersona,ficha.idCliente.idPersona)">
                         Crear Servicio<i class="material-icons">add</i>
                       </button></td>
+               
 
 
 
@@ -163,6 +166,9 @@
         </div>
 
 
+      </div>
+      <div class="col-md-12" *ngIf="showSpinner" style="text-align: center">
+        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;"  mode="indeterminate"></mat-spinner>
       </div>
     </div>
     <button mat-raised-button class="btn btn-primary" (click)="irAfichaComponent()">Agregar Nueva Ficha</button>

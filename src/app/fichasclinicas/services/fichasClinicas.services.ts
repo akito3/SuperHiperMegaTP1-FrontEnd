@@ -157,7 +157,7 @@ export class FichasClinicasService {
         const header = new HttpHeaders({
             'Content-Type': "application/json",
             'Accept': 'application/json',
-            'usuario' :'gustavo',
+            'usuario' : localStorage.getItem("usuarioLogin"),
         });
 
         const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';
@@ -180,14 +180,29 @@ export class FichasClinicasService {
         const header = new HttpHeaders({
             'Content-Type': "application/json",
             'Accept': 'application/json',
-            'usuario' :'gustavo',
+            'usuario' : localStorage.getItem("usuarioLogin"),
         });
 
         const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';
+        console.log("Objeto", objeto);
         return this.httpClient.put(url, objeto,{headers:header});
 
 
 
+
+    }
+
+    getServiciosApartirDeFicha(idFicha){
+
+        const header = new HttpHeaders({
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+            'usuario' : localStorage.getItem("usuarioLogin"),
+        });
+
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio';
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idFichaClinica\":{\"idFichaClinica\":" + idFicha + "}}")
+        return this.httpClient.get(url,{params : params , headers:header});
 
     }
 
