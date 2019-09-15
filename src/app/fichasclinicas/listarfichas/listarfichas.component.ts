@@ -181,6 +181,11 @@ export class ListarfichasComponent implements OnInit {
 
   }
 
+  irAcrearServicio(idEmpleado,idPaciente){
+    console.log(idEmpleado + " " +  idPaciente);
+    this.router.navigate(['./../../servicios/crear-modificar-servicios/accion/',"crear",idEmpleado,idPaciente,"null"], { relativeTo: this.route });
+  }
+
 
 
 

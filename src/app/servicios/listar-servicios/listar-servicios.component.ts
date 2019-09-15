@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from '../services/servicios.services';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-listar-servicios',
@@ -18,7 +19,8 @@ export class ListarServiciosComponent implements OnInit {
   private parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, 'fechadesde': null, 'fechahasta' : null };
 
   constructor(
-    private serviciosService: ServiciosService
+    private serviciosService: ServiciosService, private router : Router,
+    private route : ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -176,6 +178,18 @@ export class ListarServiciosComponent implements OnInit {
 
 
     })
+
+  }
+
+  irAcrearServicio(){
+
+    this.router.navigate(['./../crear-modificar-servicios/accion',"agregar"], { relativeTo: this.route });
+
+  }
+
+  irAmodificarServicio(idFichaClinica){
+
+    this.router.navigate(['./../crear-modificar-servicios/accion',"modificar","null","null",idFichaClinica], { relativeTo: this.route });
 
   }
 

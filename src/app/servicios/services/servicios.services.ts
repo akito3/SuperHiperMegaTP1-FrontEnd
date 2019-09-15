@@ -100,14 +100,15 @@ export class ServiciosService {
 
     }
 
-    getFichasClinicasPorFiltros(searchparams: any = null) {
+    getFichasClinicasFiltradoPorPacienteyFisioterapeuta(objeto) {
         const header = new HttpHeaders({
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         });
-        const url: string = API_ENDPOINT + 'stock-pwfe/categoria'
-
-        return this.httpClient.get(url, { headers: header });
+        console.log("ejecutando servicio")
+        const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica'
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idEmpleado\":{\"idPersona\":" + parseInt(objeto["idFisioterapeuta"]) + "},\"idCliente\":{\"idPersona\":" +parseInt(objeto["idPaciente"]) + "}}");
+        return this.httpClient.get(url, { headers: header, params : params });
 
     }
 
@@ -215,5 +216,122 @@ export class ServiciosService {
         return this.httpClient.get(url, { params: params, headers: headers })
     }
 
+    crearCabeceraServicios(objeto){
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'usuario' : 'gustavo'
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio';
+        return this.httpClient.post(url,objeto,{headers : headers});
+
+    }
+
+    getPresentaciones(idTipoProducto){
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'usuario' : 'gustavo'
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/presentacionProducto';
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idProducto\":{\"idTipoProducto\":" + idTipoProducto + "}}")
+
+        return this.httpClient.get(url,{headers : headers, params : params});
+
+
+
+
+
+    
+    }
+
+    getPrecio(idPresentacion){
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'usuario' : 'gustavo'
+
+        });
+
+        const url: string = API_ENDPOINT + 'stock-pwfe/existenciaProducto';
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idPresentacionProductoTransient\":" +  idPresentacion + "}")
+        return this.httpClient.get(url,{headers : headers, params : params});
+
+
+    }
+
+    agregarDetalleAsociado(objeto){
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'usuario' : 'gustavo'
+
+        });
+        console.log("El objeto a enviar es ", objeto);
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/'+ objeto["idServicio"]["idServicio"]+"/detalle";
+        return this.httpClient.post(url,objeto , {headers : headers});
+
+
+
+
+    }
+
+    getDetallesAsociados(idservicio){
+
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
+        });
+        console.log("idservicio",idservicio);
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/'+idservicio+"/detalle";
+        return this.httpClient.get(url, {headers : headers});
+
+
+
+
+    }
+
+    eliminarDetalleAsociado(idServicio, idDetalle){
+
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'usuario' : 'gustavo',
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/'+idServicio+"/detalle/"+idDetalle;
+        return this.httpClient.delete(url,{headers:headers});
+
+        
+
+
+    }
+
+    public getFichas(){
+
+
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'usuario' : 'gustavo',
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';
+        return this.httpClient.get(url,{headers:headers});
+
+
+
+
+    }
 
 }
