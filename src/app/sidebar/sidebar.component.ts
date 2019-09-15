@@ -25,7 +25,7 @@ export const ROUTES: RouteInfo[] = [{
     path: '/dashboard',
     title: 'Dashboard',
     type: 'link',
-    icontype: 'dashboard'
+    icontype: 'home_work'
 },
 {
     path: './categorias/listar',
@@ -43,19 +43,25 @@ export const ROUTES: RouteInfo[] = [{
     path: './fichas-clinicas/listar-fichas-clinicas',
     title: 'Fichas Clinicas',
     type: 'link',
-    icontype: 'image',
+    icontype: 'list_alt',
 },
 {
     path: './servicios/listar-servicios',
     title: 'Servicios',
     type: 'link',
-    icontype: 'image',
+    icontype: 'games',
 },
 {
     path: './reservas/listar-reservas',
     title: 'Reservas',
     type: 'link',
-    icontype: 'image',
+    icontype: 'recent_actors',
+},
+{
+    path: './reportes/generar',
+    title: 'Reportes',
+    type: 'link',
+    icontype: 'insert_chart_outlined',
 }];
 @Component({
     selector: 'app-sidebar-cmp',
