@@ -23,6 +23,8 @@ import { AgregarfichasComponent } from './fichasclinicas/agregarfichas/agregarfi
 import { ListarComponent, DialogOverviewExampleDialog } from './reservas/listar/listar.component';
 import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-reservas.component';
 import { ListarServiciosComponent } from './servicios/listar-servicios/listar-servicios.component';
+import { CrearModificarServiciosComponent, DialogCrearCabeceraServicio, DialogCrearDetalleAsociado } from './servicios/crear-modificar-servicios/crear-modificar-servicios.component';
+import { ListarDetallesAsociadosComponent, DialogAgregarNuevoDetalle, DialogEliminarDetalle } from './servicios/detalles/listar-detalles-asociados/listar-detalles-asociados.component';
 
 
 @NgModule({
@@ -53,11 +55,21 @@ import { ListarServiciosComponent } from './servicios/listar-servicios/listar-se
     DialogOverviewExampleDialog,
     DialogFichasClinicas,
     ListarServiciosComponent,
+    CrearModificarServiciosComponent,
+    DialogCrearCabeceraServicio,
+    DialogCrearDetalleAsociado,
+    ListarDetallesAsociadosComponent,
+    DialogAgregarNuevoDetalle,
+    DialogEliminarDetalle,
   ],
   entryComponents:[
     //AGREGAR COMO ENTRY POINT
     DialogOverviewExampleDialog,
-    DialogFichasClinicas
+    DialogFichasClinicas,
+    DialogCrearCabeceraServicio,
+    DialogCrearDetalleAsociado,
+    DialogAgregarNuevoDetalle,
+    DialogEliminarDetalle
   ],
   bootstrap: [AppComponent],
 })

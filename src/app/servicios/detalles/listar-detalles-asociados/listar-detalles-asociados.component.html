@@ -1,0 +1,128 @@
+<div class="main-content">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-2">
+        <legend>Categoria</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="Categorias" (selectionChange)="onChange($event.value, 'idCategoria')"
+                [(ngModel)]="parametros_busqueda.idCategoria" name="idCategoria">
+                <mat-option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">
+                  {{categoria.descripcion}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <legend>Tipo de Producto</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="Tipo de productos" (selectionChange)="onChange($event.value, 'idTipoProducto')"
+                [(ngModel)]="parametros_busqueda.idTipoProducto">
+                <mat-option *ngFor="let tipoProducto of tipoProductos" [value]="tipoProducto.idTipoProducto">
+                  {{tipoProducto.descripcion}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <legend>Tipo de Servicio(Presentacion</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="Tipo de Servicio(Presentacion)"
+                (selectionChange)="onChange($event.value, 'presentacionProducto')"
+                [(ngModel)]="parametros_busqueda.idTipoServicio">
+                <mat-option *ngFor="let presentacionProducto of presentacionProductos"
+                  [value]="presentacionProducto.idPresentacionProducto">
+                  {{presentacionProducto.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <legend>Precio Venta</legend>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Precio del Tipo de Servicio(Presentacion)" [(ngModel)]="precio" disabled>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <legend>Cantidad</legend>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Cantidad" [(ngModel)]="cantidad">
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12" *ngIf="!showSpinner">
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title ">Listado de Detalles Asociados</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <th>id detalle</th>
+                    <th>Presentacion(Nombre)</th>
+                    <th>precio unitario</th>
+                    <th>cantidad</th>
+                    <th>total</th>
+                    <th>acciones</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let detalle of detalles">
+                    <th>{{detalle.idServicioDetalle}}</th>
+                    <th>{{detalle.idPresentacionProducto.nombre}}</th>
+                    <th>No encuentro el precio unitario</th>
+                    <th>{{detalle.cantidad}}</th>
+                    <th>No encuentro el total</th>
+                    <th><button mat-raised-button type="button" class="btn btn-danger "
+                        (click)="abrirPopupEliminacion(detalle.idServicioDetalle)">
+                        Eliminar Detalle<i class="material-icons">close</i>
+                      </button></th>
+
+
+
+
+
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-12" *ngIf="showSpinner" style="text-align: center">
+        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;" mode="indeterminate">
+        </mat-spinner>
+      </div>
+    </div>
+    <button mat-raised-button class="btn btn-primary" (click)="abrirpopupagregardetalle()">Agregar Nuevo
+      Detalle</button>
+  </div>
+</div>

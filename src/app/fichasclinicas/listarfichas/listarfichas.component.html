@@ -126,7 +126,34 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr *ngFor="let ficha of fichasClinicas">
+                    <td>{{ficha.idEmpleado.nombreCompleto}}</td>
+                    <td>{{ficha.idCliente.nombreCompleto}}</td>
+                    <td><span *ngIf="ficha.fechaDesdeCadena">
+                        {{ficha.fechaDesdeCadena}}
+                      </span>
+                      <span *ngIf="!ficha.fechaDesdeCadena">
+                        No especificado
+                      </span>
+                    </td>
+                    <td><span *ngIf="ficha.fechaHastaCadena">
+                        {{ficha.fechaHastaCadena}}
+                      </span>
+                      <span *ngIf="!ficha.fechaHastaCadena">
+                        No especificado
+                      </span>
+                    </td>
+                    <td>{{ficha.idTipoProducto.descripcion}}</td>
+                    <td>{{ficha.idTipoProducto.idCategoria.descripcion}}</td>
+                    <td>{{ficha.observacion}}</td>
+                    <td>                      <button mat-raised-button type="button" class="btn btn-danger" (click)="irAcrearServicio(ficha.idEmpleado.idPersona,ficha.idCliente.idPersona)">
+                        Crear Servicio<i class="material-icons">add</i>
+                      </button></td>
+
+
+
+
+
 
 
 
