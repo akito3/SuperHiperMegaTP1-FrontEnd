@@ -70,6 +70,7 @@
               <table class="table">
                 <thead class="text-primary">
                   <tr>
+                    <th>id </th>
                     <th>Fecha </th>
                     <th>Hora Inicio</th>
                     <th>Hora Fin</th>
@@ -83,14 +84,14 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let reserva of reservas">
-                    <td>{{row.idHorarioExcepcion}}</td>
-                    <td>{{row.fecha}}</td>
-                    <td>{{row.horaApertura}}</td>
-                    <td>{{row.horaCierre}}</td>
-                    <td>{{row.idLocal.nombre}}</td>
-                    <td>{{row.idEmpleado.idPersona}}</td>
-                    <td>{{row.idEmpleado.nombreCompleto}}</td>
-                    <td>{{row.flagEsHabilitar}}</td>
+                    <td>{{reserva.idHorarioExcepcion}}</td>
+                    <td>{{reserva.fecha}}</td>
+                    <td>{{reserva.horaApertura}}</td>
+                    <td>{{reserva.horaCierre}}</td>
+                    <td>{{reserva.idLocal.nombre}}</td>
+                    <td>{{reserva.idEmpleado.idPersona}}</td>
+                    <td>{{reserva.idEmpleado.nombreCompleto}}</td>
+                    <td>{{reserva.flagEsHabilitar}}</td>
                     <th><button mat-raised-button type="button" class="btn btn-success" (click)="abrirPopup(reserva.idReserva,reserva.observacion,reserva.flagAsistio)">
                         <i class="material-icons">edit</i>
                       </button>

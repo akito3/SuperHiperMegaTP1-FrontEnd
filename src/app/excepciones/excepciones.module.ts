@@ -8,7 +8,7 @@ import { MatPaginator, MatSort, MatDialog, MatDialogRef, MatSnackBar, MAT_DIALOG
 
 import { MaterialModule } from '../material.module';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
-import { MatPaginatorIntlCro, DialogOverviewExampleDialog } from '../categorias/listar-categorias/listar-categorias.component';
+import { MatPaginatorIntlCro } from '../categorias/listar-categorias/listar-categorias.component';
 import { MatAutocompleteModule } from '@angular/material';
 import { MdModule } from '../md/md.module';
 import { ExcepcionesRoutes } from './excepciones.routing';
@@ -25,14 +25,14 @@ import { ConfigurarExcepcionesComponent } from './configurar-excepciones/configu
         MatAutocompleteModule,
         MdModule
     ],
-    declarations: [DialogOverviewExampleDialog, ConfigurarExcepcionesComponent],
+    declarations: [ConfigurarExcepcionesComponent],
     providers: [
         {
           provide: MatPaginatorIntl,
           useClass: MatPaginatorIntlCro
         },
     ],
-    entryComponents: [DialogOverviewExampleDialog]
+    entryComponents: []
 })
 
 export class ExcepcionesModule { }

@@ -47,7 +47,7 @@ export class ExcepcionesService {
           'usuario' : 'gustavo',
       });
 
-      const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
+      const url: string = API_ENDPOINT + 'stock-pwfe/horarioExcepcion';
 
       console.log('cuerpo', objeto);
       return this.httpClient.post(url, objeto, { headers: header });
@@ -61,7 +61,7 @@ export class ExcepcionesService {
           'usuario' : 'gustavo',
       });
 
-      const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
+      const url: string = API_ENDPOINT + 'stock-pwfe/horarioExcepcion';
       return this.httpClient.put(url, objeto, { headers: header });
 
 
@@ -94,7 +94,7 @@ export class ExcepcionesService {
         'Accept': 'application/json',
 
     });
-    const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
+    const url: string = API_ENDPOINT + 'stock-pwfe/horarioExcepcion';
     let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idEmpleado\":" + objeto["idFisioterapeuta"] + "}," + "\"fechaDesdeCadena\":" + objeto["fechadesde"] + ",\"fechaHastaCadena\":" + objeto["fechahasta"] + "}");
     return this.httpClient.get(url, { params: params, headers: headers })
 
