@@ -70,15 +70,13 @@
               <table class="table">
                 <thead class="text-primary">
                   <tr>
-                    <th>id </th>
+                    <th>Nro </th>
                     <th>Fecha </th>
                     <th>Hora Inicio</th>
                     <th>Hora Fin</th>
                     <th>Fisioterapeuta</th>
-                    <th>Cliente</th>
-                    <th>Hora Fin</th>
-                    <th>Fisioterapeuta</th>
-                    <th>Cliente</th>
+                    <th>Local</th>
+                    <th>Disponibilidad</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -88,9 +86,8 @@
                     <td>{{reserva.fecha}}</td>
                     <td>{{reserva.horaApertura}}</td>
                     <td>{{reserva.horaCierre}}</td>
-                    <td>{{reserva.idLocal.nombre}}</td>
-                    <td>{{reserva.idEmpleado.idPersona}}</td>
                     <td>{{reserva.idEmpleado.nombreCompleto}}</td>
+                    <td>{{reserva.idLocal.nombre}}</td>                 
                     <td>{{reserva.flagEsHabilitar}}</td>
                     <th><button mat-raised-button type="button" class="btn btn-success" (click)="abrirPopup(reserva.idReserva,reserva.observacion,reserva.flagAsistio)">
                         <i class="material-icons">edit</i>

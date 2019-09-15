@@ -12,7 +12,7 @@ import { MatPaginatorIntlCro } from '../categorias/listar-categorias/listar-cate
 import { MatAutocompleteModule } from '@angular/material';
 import { MdModule } from '../md/md.module';
 import { ExcepcionesRoutes } from './excepciones.routing';
-import { ConfigurarExcepcionesComponent } from './configurar-excepciones/configurar-excepciones.component';
+import { ConfigurarExcepcionesComponent, DialogOverviewExampleDialog } from './configurar-excepciones/configurar-excepciones.component';
 
 @NgModule({
     imports: [
@@ -25,14 +25,14 @@ import { ConfigurarExcepcionesComponent } from './configurar-excepciones/configu
         MatAutocompleteModule,
         MdModule
     ],
-    declarations: [ConfigurarExcepcionesComponent],
+    declarations: [ConfigurarExcepcionesComponent, DialogOverviewExampleDialog],
     providers: [
         {
           provide: MatPaginatorIntl,
           useClass: MatPaginatorIntlCro
         },
     ],
-    entryComponents: []
+    entryComponents: [DialogOverviewExampleDialog]
 })
 
 export class ExcepcionesModule { }
