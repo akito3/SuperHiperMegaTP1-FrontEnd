@@ -1,3 +1,97 @@
-<p>
-  listar-subcategorias works!
-</p>
+<div class="main-content">
+    <div class="container-fluid">
+  
+
+      <div class="row">
+        <div class="col-md-12">
+          <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+            (click)="filtrarReservas()">Filtrar</button>
+          <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+            (click)="limpiar()">Limpiar</button>
+  
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" *ngIf="!showSpinner">
+          <div class="card">
+            <div class="card-header card-header-icon card-header-rose">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title ">Listado de Reservas</h4>
+            </div>
+            <div class="card-body">
+                <div class="col-md-2">
+                    <div class="row">
+                      <div class="col-md-12">
+                          <input type="text" placeholder="Elija una categoría" aria-label="Number" (input)="get_categorias()"
+                         
+                           [(ngModel)]="parametros_busqueda.idCategoria" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" 
+                          (optionSelected)="seleccionar = $event.option.value;
+                            parametros_busqueda.idCategoria = $event.option.value.descripcion;
+                            getSubcategorias();">
+                          <mat-option *ngFor="let option of categoria" [value]="option">
+                            {{option.descripcion}}
+                          </mat-option>
+                        </mat-autocomplete>               
+                      </div>
+                    </div>
+                  </div>
+              <div class="table-responsive" *ngIf="seleccionar.idCategoria != null">
+                <table class="table">
+                  <thead class="text-primary">
+                    <tr>
+                      <th>Nro </th>
+                      <th>Descripcion</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let row of subcategoria; let i = index">
+                          <td *ngFor="let col of columns">
+                              {{ row[col.value] }}
+                          </td>
+                          <td class="text-right">
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-light btn-sm" (click)="openEdit(row)">
+                                      <i class="material-icons">
+                                          edit
+                                      </i>
+                                      Editar
+                                  </button>
+                                  <button type="button" class="btn btn-danger btn-sm" (click)="openDelete(row)">
+                                      <i class="material-icons">
+                                          delete
+                                      </i>
+                                      Borrar
+                                  </button>
+                              </div>
+                          </td>
+                      </tr>
+                      <tr *ngIf="subcategoria.length == 0" >
+                        <td class="text-center" colspan="3">
+                            La categoría seleccionada carece de subcategorías
+                        </td>
+                      </tr>
+                  </tbody>
+                </table>
+  
+
+              <mat-paginator [length]="totalDatos" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="get_page($event)"></mat-paginator>
+           
+
+
+              </div>
+            </div>
+          </div>
+  
+  
+        </div>
+        <div class="col-md-12" *ngIf="showSpinner" style="text-align: center">
+          <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;"  mode="indeterminate"></mat-spinner>
+        </div>
+      </div>
+      <button  mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button">Agregar Nueva Reserva</button>
+    </div>
+  </div>

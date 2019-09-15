@@ -40,41 +40,22 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'widgets'
 },
 {
-    path: './fichas-clinicas',
+    path: './fichas-clinicas/listar-fichas-clinicas',
     title: 'Fichas Clinicas',
-    type: 'sub',
+    type: 'link',
     icontype: 'image',
-    collapse: 'fichas',
-    children: [
-        { path: 'listar-fichas-clinicas', title: 'Listar Fichas Clinicas', ab: 'LFC' },
-        { path: 'timeline', title: 'Timeline Page', ab: 'TP' },
-        { path: 'login', title: 'Login Page', ab: 'LP' },
-        { path: 'register', title: 'Register Page', ab: 'RP' },
-        { path: 'lock', title: 'Lock Screen Page', ab: 'LSP' },
-        { path: 'user', title: 'User Page', ab: 'UP' }
-    ]
 },
 {
-    path: './servicios',
+    path: './servicios/listar-servicios',
     title: 'Servicios',
-    type: 'sub',
+    type: 'link',
     icontype: 'image',
-    collapse: 'servicios',
-    children: [
-        { path: 'listar-servicios', title: 'Listar Servicios', ab: 'LS' },
-     
-    ]
 },
 {
-    path: './reservas',
+    path: './reservas/listar-reservas',
     title: 'Reservas',
-    type: 'sub',
+    type: 'link',
     icontype: 'image',
-    collapse: 'reservas',
-    children: [
-        { path: 'listar-reservas', title: 'Listar Reservas', ab: 'LRC' },
-
-    ]
 }];
 @Component({
     selector: 'app-sidebar-cmp',

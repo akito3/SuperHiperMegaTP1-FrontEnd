@@ -3,7 +3,6 @@ import { MatPaginator, MatSort, MatDialog, MatDialogRef, MatSnackBar, MAT_DIALOG
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
-import { DataSource } from '@angular/cdk/table';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { Categoria } from 'src/app/services/categoria';
 import { MatPaginatorIntl } from '@angular/material';
@@ -19,12 +18,6 @@ export class ListarCategoriasComponent implements OnInit {
   displayedColumns = ['idCategoria', 'descripcion', 'accion'];
   dataSource: MatTableDataSource<Categoria>;
   totalCategorias: number;
-
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort,  { static: false }) sort: MatSort;
-
-
   // MatPaginator Inputs
   length = 100;
   pageSize = 10;
@@ -50,25 +43,16 @@ export class ListarCategoriasComponent implements OnInit {
     this.getCategorias();
   }
 
-  /*getCategorias() {
-    this.dataService.getCategorias({
-      ...this.pagination,
-      orderBy: this.orderBy,
-      orderDir: this.orderDir, })
-       .subscribe((response) => {
-       this.dataSource = new MatTableDataSource(response.lista);
-       this.totalCategorias = response['totalDatos'];
-       });
-   }*/
+
 
    getCategorias() {
-    this.dataService.getCategorias({
+    this.dataService.split({
       ...this.pagination,
       orderBy: this.orderBy,
       orderDir: this.orderDir,
     })
     .subscribe((response) => {
-      this.dataSource = new MatTableDataSource(response.lista);
+      this.dataSource = new MatTableDataSource(response['lista']);
       this.totalCategorias = response['totalDatos'];
     });
   }
@@ -80,6 +64,7 @@ export class ListarCategoriasComponent implements OnInit {
     this.getCategorias();
   }
 
+
   ordenar(orderBy: any) {
     if (this.orderBy !== orderBy || this.orderDir === 'null') {
       this.orderBy = orderBy;
@@ -90,7 +75,6 @@ export class ListarCategoriasComponent implements OnInit {
       this.orderBy = null;
       this.orderDir = null;
     }
-
     this.getCategorias();
   }
 
@@ -215,7 +199,7 @@ export class DialogOverviewExampleDialog implements OnInit {
     });
   }
   eliminar() {
-    this.dataService.eliminarCategoria(this.data.idReserva).subscribe((response: any) => {
+    this.dataService.borrarCategoria(this.data.idReserva).subscribe((response: any) => {
     this.openSnackBar('Categoria eliminada con exito', 'Aviso');
     this.dialogRef.close('Eliminado');
     }, (error: any) => {
@@ -235,8 +219,6 @@ export class DialogOverviewExampleDialog implements OnInit {
   }
 
 }
-
-
 
 export class MatPaginatorIntlCro extends MatPaginatorIntl {
   itemsPerPageLabel = 'Items por página';
