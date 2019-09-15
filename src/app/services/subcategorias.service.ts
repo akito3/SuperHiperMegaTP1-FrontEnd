@@ -6,17 +6,31 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SubcategoriasService {
 
-  private url_base = 'https://gy7228.myfoscam.org:8443/stock-pwfe/';
+  base_path = 'https://gy7228.myfoscam.org:8443/stock-pwfe/';
 
   constructor(private http: HttpClient) { }
 
-  public all() {
-    const url = this.url_base + 'tipoProducto';
+  getSubcategoria() {
+    const url = this.base_path + 'tipoProducto';
     return this.http.get(url);
   }
 
-  public getCat(like) {
-    let url = this.url_base + 'categoria?like=S';
+  agregarSubcategoria(data) {
+    const url = this.base_path + 'tipoProducto';
+    return this.http.post(url, data);
+  }
+
+  modificarSubcategoria(data) {
+    const url = this.base_path + 'tipoProducto';
+    return this.http.put(url, data);
+  }
+
+  borrarSubcategoria(id) {
+    const url = this.base_path + 'tipoProducto/' + id;
+    return this.http.delete(url);
+  }
+  getCategoria(like) {
+    let url = this.base_path + 'categoria?like=S';
     if (like.length > 0) {
       url = url + '&ejemplo=' + encodeURIComponent(JSON.stringify({
         descripcion: like
@@ -25,9 +39,9 @@ export class SubcategoriasService {
     return this.http.get(url);
   }
 
-  public get(filters) {
+  split(filters) {
     let separator = '?';
-    let url = this.url_base + 'tipoProducto';
+    let url = this.base_path + 'tipoProducto';
     for (const k in filters) {
       if (filters[k] === null) continue;
       url = url + separator + k + '=' + filters[k];
@@ -36,18 +50,4 @@ export class SubcategoriasService {
     return this.http.get(url);
   }
 
-  public post(data) {
-    const url = this.url_base + 'tipoProducto';
-    return this.http.post(url, data);
-  }
-
-  public put(data) {
-    const url = this.url_base + 'tipoProducto';
-    return this.http.put(url, data);
-  }
-
-  public delete(id) {
-    const url = this.url_base + 'tipoProducto/' + id;
-    return this.http.delete(url);
-  }
 }

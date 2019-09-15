@@ -1,38 +1,38 @@
-import { SubCategoriasRoutes } from './subcategorias.routing';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
-import { ListarSubcategoriasComponent, DialogOverviewExampleDialog } from './listar-subcategorias/listar-subcategorias.component';
-import { CrearSubcategoriasComponent } from './crear-subcategorias/crear-subcategorias.component';
-import { EditarSubcategoriasComponent } from './editar-subcategorias/editar-subcategorias.component';
+import { MatPaginator, MatSort, MatDialog, MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
+
+
+import { MaterialModule } from '../material.module';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginatorIntlCro } from '../categorias/listar-categorias/listar-categorias.component';
 import { MatAutocompleteModule } from '@angular/material';
 import { MdModule } from '../md/md.module';
+import { ExcepcionesRoutes } from './excepciones.routing';
+import { ConfigurarExcepcionesComponent, DialogOverviewExampleDialog } from './configurar-excepciones/configurar-excepciones.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(SubCategoriasRoutes),
+        RouterModule.forChild(ExcepcionesRoutes),
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
         MatPaginatorModule,
         MatAutocompleteModule,
         MdModule
-
     ],
-    declarations: [DialogOverviewExampleDialog, ListarSubcategoriasComponent, CrearSubcategoriasComponent, EditarSubcategoriasComponent],
+    declarations: [ConfigurarExcepcionesComponent, DialogOverviewExampleDialog],
     providers: [
-      {
-        provide: MatPaginatorIntl,
-        useClass: MatPaginatorIntlCro
-      },
+        {
+          provide: MatPaginatorIntl,
+          useClass: MatPaginatorIntlCro
+        },
     ],
     entryComponents: [DialogOverviewExampleDialog]
 })
 
-export class SubCategoriasModule { }
+export class ExcepcionesModule { }

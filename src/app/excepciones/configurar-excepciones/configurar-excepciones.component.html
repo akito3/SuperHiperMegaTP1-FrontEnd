@@ -10,7 +10,6 @@
             <h4 class="card-title ">Listado de Reservas</h4>
           </div>
           <div class="card-body">
-            <br>
               <div class="row">
                   <div class="col-md-2">
             
@@ -30,23 +29,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-2">
-            
-                    <legend>Paciente</legend>
-            
-                    <div class="row">
-                      <div class="col-md-12">
-                        <mat-form-field>
-                          <mat-select placeholder="Pacientes Disponibles" (selectionChange)="onChange($event.value, 'idPaciente')"
-                            [(ngModel)]="parametros_busqueda.idPaciente" name="idPaciente">
-                            <mat-option *ngFor="let paciente of pacientes" [value]="paciente.idPersona">
-                              {{ paciente.nombre }} {{paciente.apellido}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                    </div>
-                  </div>
+
                   <div class="col-md-2">
                     <div class="row">
                       <div class="col-md-12">
@@ -65,7 +48,7 @@
                       <div class="col-md-12">
                         <legend>Fecha Hasta</legend>
                         <mat-form-field>
-                          <br><input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha" (click)="picker.open()"
+                         <br> <input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha" (click)="picker.open()"
                             (dateChange)="onChange($event.target.value,'fechahasta')">
                           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                           <mat-datepicker #picker2></mat-datepicker>
@@ -80,48 +63,44 @@
                       (click)="filtrarReservas()">Filtrar</button>
                     <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
                       (click)="limpiar()">Limpiar</button>
-                      <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
-                      (click)="irAagregarReservaComponent()">Agregar Nueva Reserva</button>
-            
+                      <button  mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" (click)="irAagregarReservaComponent()">Agregar Nueva Reserva</button>
                   </div>
                 </div>
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
                   <tr>
-                    <th>Id Ficha </th>
-                    <th>Fecha</th>
-                    <th>Categoria</th>
-                    <th>Sub Categoria</th>
+                    <th>Nro </th>
+                    <th>Fecha </th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th>Fisioterapeuta</th>
+                    <th>Local</th>
+                    <th>Disponibilidad</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let ficha of fichas">
-                    <ng-container *ngIf="!idFicha">
+                  <tr *ngFor="let reserva of reservas">
+                    <td>{{reserva.idHorarioExcepcion}}</td>
+                    <td>{{reserva.fecha}}</td>
+                    <td>{{reserva.horaApertura}}</td>
+                    <td>{{reserva.horaCierre}}</td>
+                    <td>{{reserva.idEmpleado.nombreCompleto}}</td>
+                    <td>{{reserva.idLocal.nombre}}</td>                 
+                    <td>{{reserva.flagEsHabilitar}}</td>
+                    <th><button mat-raised-button type="button" class="btn btn-success" (click)="abrirPopup(reserva.idReserva,reserva.observacion,reserva.flagAsistio)">
+                        <i class="material-icons">edit</i>
+                      </button>
+                      <button mat-raised-button type="button" class="btn btn-danger " (click)="abrirPopupEliminacion(reserva.idReserva)">
+                        <i class="material-icons">close</i>
+                      </button>
+                      
+                      <button mat-raised-button type="button" class="btn btn-danger" (click)="irAcrearFicha(reserva.idEmpleado.idPersona,reserva.idCliente.idPersona)">
+                        <i class="material-icons">add</i>
+                      </button>
+                    </th>
 
-                      <td>{{ficha.idFichaClinica}}</td>
-                      <td>{{ficha.fechaHora}}</td>
-                      <td>{{ficha.idTipoProducto.idCategoria.descripcion}}</td>
-                      <td>{{ficha.idTipoProducto.descripcion}}</td>
-                      <td><button mat-raised-button type="button" class="btn btn-success"
-                          (click)="mostrarcrearficha(ficha.idFichaClinica,ficha.observacion)">
-                          Crear Cabecera Servicio<i class="material-icons">add</i>
-                        </button></td>
-
-                    </ng-container>
-                    <ng-container *ngIf="idFicha && ficha.idFichaClinica==idFicha">
-
-                        <td>{{ficha.idFichaClinica}}</td>
-                        <td>{{ficha.fechaHora}}</td>
-                        <td>{{ficha.idTipoProducto.idCategoria.descripcion}}</td>
-                        <td>{{ficha.idTipoProducto.descripcion}}</td>
-                        <td><button mat-raised-button type="button" class="btn btn-success"
-                            (click)="mostrarcrearficha(ficha.idFichaClinica,ficha.observacion)">
-                            Crear Cabecera Servicio<i class="material-icons">add</i>
-                          </button></td>
-  
-                      </ng-container>
 
 
                   </tr>
@@ -135,8 +114,7 @@
 
       </div>
       <div class="col-md-12" *ngIf="showSpinner" style="text-align: center">
-        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;" mode="indeterminate">
-        </mat-spinner>
+        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;"  mode="indeterminate"></mat-spinner>
       </div>
     </div>
   </div>

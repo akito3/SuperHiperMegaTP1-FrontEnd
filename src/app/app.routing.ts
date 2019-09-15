@@ -106,12 +106,12 @@ export const AppRoutes: Routes = [
                 loadChildren: './subcategorias/subcategorias.module#SubCategoriasModule'
             },
             {
-                path: 'forms',
-                loadChildren: './forms/forms.module#Forms'
+                path: 'reportes',
+                loadChildren: './reportes/reportes.module#ReportesModule'
             },
             {
-                path: 'tables',
-                loadChildren: './tables/tables.module#TablesModule'
+                path: 'excepciones',
+                loadChildren: './excepciones/excepciones.module#ExcepcionesModule'
             },
             {
                 path: 'maps',

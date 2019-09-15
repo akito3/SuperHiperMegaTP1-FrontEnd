@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 //Menu Items
 export var ROUTES = [{
-        path: '/dashboard',
-        title: 'Dashboard',
+        path: '/pages/login',
+        title: 'Login',
         type: 'link',
-        icontype: 'dashboard'
+        icontype: 'person'
     }, {
         path: './components',
         title: 'Components',
