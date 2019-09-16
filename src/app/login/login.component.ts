@@ -11,6 +11,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class LoginComponent implements OnInit {
   public username: string = "";
   public password: string = "";
+  public hasError = false;
+  public showSpinner = false;
+  public errorMessage = "Usuario invalido, el usuario es el mismo que la propiedad usuarioLogin"
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -22,6 +25,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.showSpinner = true;
+
     this.loginService.loginUsuario(this.username, this.password)
       .pipe(first())
       .subscribe(
@@ -32,8 +37,13 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['../../dashboard'],{relativeTo : this.route});
         },
         error => {
+          this.hasError = true;
           console.log('Error ! ', error.message)
-        });
+        }).add(()=>{
+            //teardown
+            this.showSpinner = false;
+
+        })
 
   }
 

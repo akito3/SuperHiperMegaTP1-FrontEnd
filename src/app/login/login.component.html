@@ -20,11 +20,11 @@
                           </div>
                         </div>
                         <div class="text-center">
-                          <p *ngIf="hasError"  style="color: #F44336">{{errorMessage}}</p>
+                          <p *ngIf="hasError"  style="color: #F44336; font-size: 10px">{{errorMessage}}</p>
                           <button class="btn btn-primary btn-round mt-4" (click)="login()">Ingresar</button>
                         </div>
                       </form>
-                      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+                      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin: 0 auto"></mat-spinner>
                     </div>
                   </div>
                 </div>
@@ -35,41 +35,3 @@
       </div>
     </div>
     
-<!--<div style="height:100vh;">
-      <div style="display: flex; flex:1; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-           
-          
-                  <div style="flex: 1; display: flex; width: 100% ; background-image: url('./assets/img/hos.jpg'); background-size:cover;"></div>
-                  <mat-card class="example-full-width" style="width: 60%; position: absolute; z-index: 1;">
-                     <mat-card-header style="justify-content: center">
-                           <p class="inicio">INICIAR SESIÓN</p>
-                     </mat-card-header>
-                     <mat-card-content>
-                     <form class="example-form">
-                        <table class="example-full-width" cellspacing="0" style="width: 100%">
-                           <tr>
-                           <td>
-                              <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
-                              </mat-form-field>
-                           </td>
-                           </tr>
-                           <tr>
-                           <td><mat-form-field class="example-full-width">
-                           <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required>
-                           </mat-form-field></td>
-                        </tr></table>
-                     </form>
-                     
-                     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-                    
-   
-                     </mat-card-content>
-                     <mat-card-actions style="text-align: center">
-                           <p *ngIf="hasError"  style="color: #F44336">{{errorMessage}}</p>
-                     <button  mat-raised-button (click)="login()" style="background-color: rgb(180, 51, 51); color: #FFFFFF" >Ingresar</button>
-                     </mat-card-actions>
-                  </mat-card>
-          </div>
-      
-   </div>-->
