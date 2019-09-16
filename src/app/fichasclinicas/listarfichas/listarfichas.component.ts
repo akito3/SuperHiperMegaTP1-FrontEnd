@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FichasClinicasService } from '../services/fichasClinicas.services';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Route } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 
 @Component({
@@ -18,7 +18,7 @@ export class ListarfichasComponent implements OnInit {
   private tipoProductos: any[];
   private showSpinner = false;
 
-  private parametros_busqueda = { 'idFisioterapeuta': undefined, 'idPaciente': undefined }
+  private parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, "fechadesde" : null , "fechahasta" : null , "idTipoProducto" : null }
 
   constructor(
     //Dependency injection
@@ -41,13 +41,13 @@ export class ListarfichasComponent implements OnInit {
     if (nombre == "idFisioterapeuta") {
       this.parametros_busqueda["idFisioterapeuta"] = dato;
       console.log(this.parametros_busqueda)
-      this.getFichasPorFisioterapeuta(this.parametros_busqueda["idFisioterapeuta"])
+      //this.getFichasPorFisioterapeuta(this.parametros_busqueda["idFisioterapeuta"])
 
     } else if (nombre == "idPaciente") {
       console.log('paciente')
       this.parametros_busqueda["idPaciente"] = dato;
       console.log(this.parametros_busqueda);
-      this.getFichasPorPaciente(this.parametros_busqueda["idPaciente"])
+      //this.getFichasPorPaciente(this.parametros_busqueda["idPaciente"])
 
 
 
@@ -58,7 +58,19 @@ export class ListarfichasComponent implements OnInit {
     } else if (nombre == "idTipoProducto") {
       this.parametros_busqueda["idTipoProducto"] = dato;
       console.log(this.parametros_busqueda)
-      this.getFichasPorTipoProducto(this.parametros_busqueda["idTipoProducto"])
+      //this.getFichasPorTipoProducto(this.parametros_busqueda["idTipoProducto"])
+
+
+    }else if(nombre =="fechadesde"){
+      console.log("se cambio fechadesde")
+      this.parametros_busqueda["fechadesde"] = (new Date(dato)).toISOString().slice(0, 10).replace(/-/g, "");;
+
+
+
+    }else if(nombre =="fechahasta"){
+      console.log("se cambio fechahasta");
+      this.parametros_busqueda["fechahasta"] = (new Date(dato)).toISOString().slice(0, 10).replace(/-/g, "");;
+
 
 
     }
@@ -100,10 +112,7 @@ export class ListarfichasComponent implements OnInit {
     }, error => {
       console.log('Error', error.message)
     }).add(() => {
-
       this.showSpinner = false;
-
-
     })
   }
 
@@ -169,6 +178,8 @@ export class ListarfichasComponent implements OnInit {
       data: {
         idFicha: idFicha,
         observacion: observacion,
+        route : this.route,
+        router : this.router
       },
     }).afterClosed().subscribe((response) => {
       //y si reinicializamos
@@ -184,6 +195,25 @@ export class ListarfichasComponent implements OnInit {
   irAcrearServicio(idEmpleado, idPaciente) {
     console.log(idEmpleado + " " + idPaciente);
     this.router.navigate(['./../../servicios/crear-modificar-servicios/accion/', "crear", idEmpleado, idPaciente, "null"], { relativeTo: this.route });
+  }
+
+  public filtrarResultados(){
+    this.fichasClinicasService.filtrar(this.parametros_busqueda).subscribe((response : any)=>{
+        this.fichasClinicas = response.lista
+        console.log("FICHAS FILTRADAS", this.fichasClinicas);
+
+    },error =>{
+        console.log("error" ,error.message);
+    })
+
+
+  }
+
+  public limpiar(){
+    this.parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, "fechadesde" : null , "fechahasta" : null , "idTipoProducto" : null };
+    this.cargarListaFichasClinicas();
+
+
   }
 
 
@@ -243,7 +273,7 @@ export class ListarfichasComponent implements OnInit {
                   <tr *ngFor="let servicio of servicios">
                     <td>{{servicio.fechaHora}}</td>
                     <td>{{servicio.presupuesto}}</td>
-                    <td><button mat-raised-button type="button" class="btn btn-info" (click)="abrirPopup(ficha.idFichaClinica,ficha.observacion)">
+                    <td><button mat-raised-button type="button" class="btn btn-info" (click)="irAverEditarFicha(data.idFicha)">
                       Ver/Editar Servicio Asociado<i class="material-icons">edit</i>
                     </button></td>
        
@@ -290,6 +320,8 @@ export class DialogFichasClinicas implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogFichasClinicas>, private _snackBar: MatSnackBar, private fichasService: FichasClinicasService,
+    private router: Router,
+    private route: ActivatedRoute,
     //any -> asi podemos enviar un objeto cualquiero con cualquier propiedad
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -353,6 +385,11 @@ export class DialogFichasClinicas implements OnInit {
     this.dialogRef.close("cancelado")
   }
 
+  irAverEditarFicha(idFicha){
+    this.data.router.navigate(['./../../servicios/crear-modificar-servicios/accion',"modificar","null","null",idFicha], { relativeTo: this.data.route });
+    this.dialogRef.close("redireccionado")
+
+  }
 
 
 }

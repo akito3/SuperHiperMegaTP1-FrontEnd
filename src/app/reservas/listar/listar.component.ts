@@ -122,6 +122,15 @@ export class ListarComponent implements OnInit {
 
   }
 
+  limpiar(){
+
+   //reiniciamos la pagina
+   this.ngOnInit(); 
+
+
+
+  }
+
   public irAagregarReservaComponent() {
 
     this.router.navigate(['../agregar-reservas'], { relativeTo: this.route });

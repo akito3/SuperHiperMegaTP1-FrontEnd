@@ -87,7 +87,7 @@
                       <div class="col-md-12">
                         <legend>Fecha Desde</legend>
                         <mat-form-field>
-                          <br><input matInput [matDatepicker]="picker" placeholder="Elige una Fecha" (click)="picker.open()">
+                          <br><input matInput [matDatepicker]="picker" placeholder="Elige una Fecha" (click)="picker.open()" (dateChange)="onChange($event.value, 'fechadesde')">
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -99,7 +99,7 @@
                       <div class="col-md-12">
                         <legend>Fecha Hasta</legend>
                         <mat-form-field>
-                         <br><input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha" (click)="picker.open()">
+                         <br><input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha" (click)="picker.open()" (dateChange)="onChange($event.value, 'fechahasta')">
                           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                           <mat-datepicker #picker2></mat-datepicker>
                         </mat-form-field>
@@ -111,6 +111,14 @@
               <div class="row">
                   <button mat-raised-button class="btn btn-primary" (click)="irAfichaComponent()">Agregar Nueva Ficha</button>
               </div></div>
+              <div class="col-md-2">
+                <div class="row">
+                    <button mat-raised-button class="btn btn-primary" (click)="filtrarResultados()">Filtrar</button>
+                </div></div>
+                <div class="col-md-2">
+                  <div class="row">
+                      <button mat-raised-button class="btn btn-primary" (click)="limpiar()">Limpiar</button>
+                  </div></div>
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">

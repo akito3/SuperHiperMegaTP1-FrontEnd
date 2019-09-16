@@ -206,6 +206,25 @@ export class FichasClinicasService {
 
     }
 
+    filtrar(objeto){
+        const header = new HttpHeaders({
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+            'usuario' : localStorage.getItem("usuarioLogin"),
+        });
+
+        const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idEmpleado\":{\"idPersona\":" + (objeto["idFisioterapeuta"]!=null ? parseInt(objeto["idFisioterapeuta"]) : null) + "}, \"idCliente\":{\"idPersona\": "+ (objeto["idPaciente"]!=null ? parseInt(objeto["idPaciente"]) : null) +"}, \"idTipoProducto\":"+ "{\"idTipoProducto\":" + (objeto["idTipoProducto"]!=null ? parseInt(objeto["idTipoProducto"]) : null) +"},\"fechaDesdeCadena\":" + (objeto["fechadesde"]!=null ? objeto["fechadesde"] : null) +"},\"fechahasta\" : " + (objeto["fechahasta"]!=null ? objeto["fechahasta"] : null)+"}}");
+        return this.httpClient.get(url,{params : params , headers:header});
+
+
+
+
+
+
+
+    }
+
 
 
 }

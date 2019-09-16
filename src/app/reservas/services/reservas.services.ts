@@ -185,7 +185,7 @@ export class ReservasServices {
 
         });
         const url: string = API_ENDPOINT + 'stock-pwfe/reserva';
-        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idEmpleado\":{\"idPersona\":" + objeto["idFisioterapeuta"] + "}," + "\"fechaDesdeCadena\":" + objeto["fechadesde"] + ",\"fechaHastaCadena\":" + objeto["fechahasta"] + "}");
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idEmpleado\":{\"idPersona\":" + (objeto["idFisioterapeuta"]!=null? parseInt(objeto["idFisioterapeuta"]):null) + "}," + "\"fechaDesdeCadena\":" + (objeto["fechadesde"]!=null? objeto["fechadesde"] : null) + ",\"fechaHastaCadena\":" + (objeto["fechahasta"]!=null?objeto['fechahasta']:null) + "},\"idCliente\":"+ "{\"idPersona\":"+ (objeto["idPaciente"]!=null?parseInt(objeto["idPaciente"]):null)+"}}");
         return this.httpClient.get(url, { params: params, headers: headers })
 
     }
