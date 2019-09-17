@@ -64,7 +64,7 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'recent_actors',
 },
 {
-    path: './reportes/generar',
+    path: './reportes',
     title: 'Reportes',
     type: 'link',
     icontype: 'insert_chart_outlined',

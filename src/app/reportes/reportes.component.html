@@ -1,0 +1,208 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title ">Listado Servicios</h4>
+          </div>
+          <br>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <legend>Fisioterapeutas</legend>
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field>
+                      <mat-select placeholder="Fisioterapeutas Disponibles"
+                        (selectionChange)="onChange($event.value, 'idFisioterapeuta')"
+                        [(ngModel)]="parametros_busqueda.idFisioterapeuta" name="idFisioterapeuta">
+                        <mat-option *ngFor="let fisioterapeuta of fisioterapeutas" [value]="fisioterapeuta.idPersona">
+                          {{fisioterapeuta.nombre}} {{fisioterapeuta.apellido}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+
+                <legend>Paciente</legend>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field>
+                      <mat-select placeholder="Pacientes Disponibles"
+                        (selectionChange)="onChange($event.value, 'idPaciente')"
+                        [(ngModel)]="parametros_busqueda.idPaciente" name="idPaciente">
+                        <mat-option *ngFor="let paciente of pacientes" [value]="paciente.idPersona">
+                          {{ paciente.nombre }} {{paciente.apellido}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="row">
+                  <div class="col-md-12">
+                    <legend>Fecha Desde</legend>
+                    <mat-form-field>
+                      <br> <input matInput [matDatepicker]="picker" placeholder="Elige una Fecha"
+                        (click)="picker.open()" (dateChange)="onChange($event.target.value,'fechadesde')">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="row">
+                  <div class="col-md-12">
+                    <legend>Fecha Hasta</legend>
+                    <mat-form-field>
+                      <br> <input matInput [matDatepicker]="picker2" placeholder="Elige una Fecha"
+                        (click)="picker.open()" (dateChange)="onChange($event.target.value,'fechahasta')">
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="parametros_busqueda.mostrarConDetalles">
+                <legend>Presentacion Producto</legend>
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field>
+                      <mat-select placeholder="Presentaciones  Disponibles"
+                        (selectionChange)="onChange($event.value, 'idpresentacionproducto')"
+                        [(ngModel)]="parametros_busqueda.idpresentacionproducto" name="idpresentacionproducto">
+                        <mat-option *ngFor="let presentacion of presentaciones" [value]="presentacion.idPresentacionProducto">
+                          {{ presentacion.nombre}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" [checked]="parametros_busqueda.mostrarConDetalles"
+                      (click)="onChange($event,'mostrarConDetalles')">Mostrar Con Detalles?
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+                    (click)="filtrarReportes()" *ngIf="parametros_busqueda.mostrarConDetalles">Filtrar</button>
+                  <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+                    (click)="filtrarServicios()" *ngIf="!parametros_busqueda.mostrarConDetalles">Filtrar</button>
+                  <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+                    (click)="limpiar()">Limpiar</button>
+                  <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+                    (click)="importarAexcelDetallado()" *ngIf="parametros_busqueda.mostrarConDetalles">Exportar Con Detalles a
+                    EXCEL</button>
+                  <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
+                    (click)="importarAexcelSinDetallar()" *ngIf="!parametros_busqueda.mostrarConDetalles">Exportar Sin Detalles a
+                    EXCEL</button>
+
+                  <button mat-raised-button class="btn btn-primary" (click)="irAfichaComponent()">Agregar Nueva
+                    Ficha</button>
+
+                </div>
+              </div>
+            </div>
+            <ng-container *ngIf="parametros_busqueda.mostrarConDetalles">
+
+              <div class="table-responsive" *ngIf="!showSpinner">
+                <table class="table">
+                  <thead class="text-primary">
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Profesional</th>
+                      <th>Cliente</th>
+                      <th>Subcategoria(Descripcion)</th>
+                      <th>Presupuesto</th>
+                      <th>Precio Venta Unitario</th>
+                      <th>Cantidad</th>
+                      <th>Precio Total</th>
+                      <th>Nombre Presentacion</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let servicio of serviciosDetallados">
+                      <td>{{servicio.idServicio.fechaHora}}</td>
+                      <td>{{servicio.idServicio.idEmpleado.nombreCompleto}}</td>
+                      <td>{{servicio.idServicio.idFichaClinica.idCliente.nombreCompleto}}</td>
+                      <td>{{servicio.idServicio.idFichaClinica.idTipoProducto.descripcion}}</td>
+                      <td>{{servicio.idServicio.presupuesto}}</td>
+                      <td>{{servicio.precioVenta}}</td>
+                      <td>{{servicio.cantidad}}</td>
+                      <td>{{servicio.cantidad *  servicio.precioVenta}}</td>
+                      <td>{{servicio.idPresentacionProducto.nombre}}</td>
+
+
+
+
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!parametros_busqueda.mostrarConDetalles">
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="text-primary">
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Flag Estado</th>
+                      <th>Id Ficha</th>
+                      <th>Fecha Ficha</th>
+                      <th>Profesional</th>
+                      <th>Cliente</th>
+                      <th>Categoria</th>
+                      <th>Subcategoria</th>
+                      <th>Observacion</th>
+                      <th>Presupuesto</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let servicio of servicios">
+                      <td>{{servicio.fechaHora}}</td>
+                      <td>{{servicio.flagEstado}}</td>
+                      <td>{{servicio.idFichaClinica.idFichaClinica}}</td>
+                      <td>{{servicio.idFichaClinica.fechaHora}}</td>
+                      <td>{{servicio.idEmpleado.nombreCompleto}}</td>
+                      <td>{{servicio.idFichaClinica.idCliente.nombreCompleto}}</td>
+                      <td>{{servicio.idFichaClinica.idTipoProducto.idCategoria.descripcion}}</td>
+                      <td>{{servicio.idFichaClinica.idTipoProducto.descripcion}}</td>
+                      <td>{{servicio.observacion}}</td>
+                      <td>{{servicio.presupuesto}}</td>
+                      <td><button mat-raised-button type="button" class="btn btn-success"
+                          (click)="irAmodificarServicio(servicio.idFichaClinica.idFichaClinica)">
+                          Ver/Editar Servicio<i class="material-icons">edit</i></button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-container>
+
+            <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin: 0 auto"></mat-spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

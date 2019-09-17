@@ -29,6 +29,21 @@ export class ServiciosService {
 
     }
 
+
+    getServiciosReportes(): Observable<any> {
+
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio?detalle=S'
+        return this.httpClient.get(url, { headers: headers })
+
+
+    }
+
     getFisioterapeutas(): Observable<any> {
 
         const headers = new HttpHeaders({
@@ -107,8 +122,8 @@ export class ServiciosService {
         });
         console.log("ejecutando servicio")
         const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica'
-        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idEmpleado\":{\"idPersona\":" + parseInt(objeto["idFisioterapeuta"]) + "},\"idCliente\":{\"idPersona\":" +parseInt(objeto["idPaciente"]) + "}}");
-        return this.httpClient.get(url, { headers: header, params : params });
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idEmpleado\":{\"idPersona\":" + parseInt(objeto["idFisioterapeuta"]) + "},\"idCliente\":{\"idPersona\":" + parseInt(objeto["idPaciente"]) + "}}");
+        return this.httpClient.get(url, { headers: header, params: params });
 
     }
 
@@ -202,88 +217,96 @@ export class ServiciosService {
         const url: string = API_ENDPOINT + 'stock-pwfe/servicio';
 
         console.log("objeto", objeto);
-        var params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() });
-        if (objeto["fechadesde"] && objeto["fechahasta"]) {
-            params = params.set("ejemplo", "{\"fechaDesdeCadena\":" + "\"" + objeto["fechadesde"] + "\" , \"fechaHastaCadena\": " + "\"" + objeto["fechahasta"] + "\"}");
-
-        } else if (objeto["idPaciente"]) {
-
-            params = params.set("ejemplo", "{\"idFichaClinica\" : " + "{\"idCliente\" :{\"idPersona\":" + parseInt(objeto["idPaciente"]) + "}}}");
-        } else if (objeto["idFisioterapeuta"]) {
-            params = params.set("ejemplo", "{\"idEmpleado\":{\"idPersona\":" + parseInt(objeto["idFisioterapeuta"]) + "}}}");
-
-        }
+        var params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() })
+            .set("ejemplo", "{\"fechaDesdeCadena\":" + (objeto["fechadesde"] != null ? objeto["fechadesde"] : null) + ",\"fechaHastaCadena\":" + (objeto["fechahasta"] != null ? objeto["fechahasta"] : null) + ",\"idFichaClinica\":" + "{\"idCliente\":" + "{\"idPersona\":" + (objeto["idPaciente"] != null ? parseInt(objeto["idPaciente"]) : null) + "}},\"idEmpleado\":" + "{\"idPersona\":" + (objeto["idFisioterapeuta"] != null ? parseInt(objeto["idFisioterapeuta"]) : null) + "}}");
         return this.httpClient.get(url, { params: params, headers: headers })
     }
 
-    crearCabeceraServicios(objeto){
+    crearCabeceraServicios(objeto) {
         const headers = new HttpHeaders({
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : localStorage.getItem("usuarioLogin"),
+            'usuario': localStorage.getItem("usuarioLogin"),
 
         });
         console.log("LOCALSTORAGE", localStorage.getItem("usuarioLogin"));
         const url: string = API_ENDPOINT + 'stock-pwfe/servicio';
-        return this.httpClient.post(url,objeto,{headers : headers});
+        return this.httpClient.post(url, objeto, { headers: headers });
 
     }
 
-    getPresentaciones(idTipoProducto){
+    getPresentaciones(idTipoProducto) {
         const headers = new HttpHeaders({
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' :localStorage.getItem("usuarioLogin"),
+            'usuario': localStorage.getItem("usuarioLogin"),
 
         });
         const url: string = API_ENDPOINT + 'stock-pwfe/presentacionProducto';
         let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idProducto\":{\"idTipoProducto\":" + idTipoProducto + "}}")
 
-        return this.httpClient.get(url,{headers : headers, params : params});
+        return this.httpClient.get(url, { headers: headers, params: params });
 
 
 
 
 
-    
+
     }
 
-    getPrecio(idPresentacion){
+    getPresentacionesTotal() {
+
         const headers = new HttpHeaders({
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : localStorage.getItem("usuarioLogin"),
+            'usuario': localStorage.getItem("usuarioLogin"),
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/presentacionProducto';
+        return this.httpClient.get(url, { headers: headers });
+
+
+
+
+    }
+
+    getPrecio(idPresentacion) {
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'usuario': localStorage.getItem("usuarioLogin"),
 
         });
 
         const url: string = API_ENDPOINT + 'stock-pwfe/existenciaProducto';
-        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idPresentacionProductoTransient\":" +  idPresentacion + "}")
-        return this.httpClient.get(url,{headers : headers, params : params});
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idPresentacionProductoTransient\":" + idPresentacion + "}")
+        return this.httpClient.get(url, { headers: headers, params: params });
 
 
     }
 
-    agregarDetalleAsociado(objeto){
+    agregarDetalleAsociado(objeto) {
         const headers = new HttpHeaders({
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : localStorage.getItem("usuarioLogin"),
+            'usuario': localStorage.getItem("usuarioLogin"),
 
         });
         console.log("El objeto a enviar es ", objeto);
-        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/'+ objeto["idServicio"]["idServicio"]+"/detalle";
-        return this.httpClient.post(url,objeto , {headers : headers});
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/' + objeto["idServicio"]["idServicio"] + "/detalle";
+        return this.httpClient.post(url, objeto, { headers: headers });
 
 
 
 
     }
 
-    getDetallesAsociados(idservicio){
+    getDetallesAsociados(idservicio) {
 
         const headers = new HttpHeaders({
 
@@ -291,48 +314,68 @@ export class ServiciosService {
             'Accept': 'application/json',
 
         });
-        console.log("idservicio",idservicio);
-        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/'+idservicio+"/detalle";
-        return this.httpClient.get(url, {headers : headers});
+        console.log("idservicio", idservicio);
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/' + idservicio + "/detalle";
+        return this.httpClient.get(url, { headers: headers });
 
 
 
 
     }
 
-    eliminarDetalleAsociado(idServicio, idDetalle){
+    eliminarDetalleAsociado(idServicio, idDetalle) {
 
         const headers = new HttpHeaders({
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : localStorage.getItem("usuarioLogin"),
+            'usuario': localStorage.getItem("usuarioLogin"),
 
         });
-        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/'+idServicio+"/detalle/"+idDetalle;
-        return this.httpClient.delete(url,{headers:headers});
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio/' + idServicio + "/detalle/" + idDetalle;
+        return this.httpClient.delete(url, { headers: headers });
 
-        
+
 
 
     }
 
-    public getFichas(){
+    public getFichas() {
 
 
         const headers = new HttpHeaders({
 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'usuario' : localStorage.getItem("usuarioLogin"),
+            'usuario': localStorage.getItem("usuarioLogin"),
 
         });
         const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';
-        return this.httpClient.get(url,{headers:headers});
+        return this.httpClient.get(url, { headers: headers });
 
 
 
 
     }
+
+    public filtrarReportes(objeto) {
+
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'usuario': localStorage.getItem("usuarioLogin"),
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/servicio';
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("detalle", "S")
+            .set("ejemplo", "{\"idServicio\":{\"idFichaClinica\":{\"idCliente\":{\"idPersona\":" + (objeto["idPaciente"] != null ? parseInt(objeto["idPaciente"]) : null) + "}},\"idEmpleado\":{\"idPersona\":" + (objeto["idFisioterapeuta"] != null ? parseInt(objeto["idFisioterapeuta"]) : null) + "},\"fechaDesdeCadena\":" + (objeto["fechadesde"] != null ? objeto["fechadesde"] : null) + ",\"fechaHastaCadena\":" + (objeto["fechaHastaCadena"] != null ? objeto["fechadesde"] : null) + "},\"idPresentacionProducto\":" + "{\"idPresentacionProducto\":" + (objeto["idpresentacionproducto"] != null ? parseInt(objeto["idpresentacionproducto"]) : null) + "}}");
+        return this.httpClient.get(url, { headers: headers, params: params });
+
+
+
+    }
+
+
 
 }

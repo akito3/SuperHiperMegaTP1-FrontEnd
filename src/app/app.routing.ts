@@ -11,6 +11,7 @@ import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-re
 import { ListarServiciosComponent } from './servicios/listar-servicios/listar-servicios.component';
 import { CrearModificarServiciosComponent } from './servicios/crear-modificar-servicios/crear-modificar-servicios.component';
 import { ListarDetallesAsociadosComponent } from './servicios/detalles/listar-detalles-asociados/listar-detalles-asociados.component';
+import { ReportesComponent } from './reportes/reportes.component';
 export const AppRoutes: Routes = [
     {
         path: '',
@@ -32,6 +33,12 @@ export const AppRoutes: Routes = [
             {
                 path: '',
                 loadChildren: './dashboard/dashboard.module#DashboardModule'
+            },
+            {
+
+                path : 'reportes',
+                component : ReportesComponent,
+
             },
 
             {
@@ -104,10 +111,6 @@ export const AppRoutes: Routes = [
             {
                 path: 'subcategorias',
                 loadChildren: './subcategorias/subcategorias.module#SubCategoriasModule'
-            },
-            {
-                path: 'reportes',
-                loadChildren: './reportes/reportes.module#ReportesModule'
             },
             {
                 path: 'excepciones',

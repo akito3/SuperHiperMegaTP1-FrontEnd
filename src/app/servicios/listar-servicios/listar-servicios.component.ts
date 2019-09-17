@@ -187,6 +187,12 @@ export class ListarServiciosComponent implements OnInit {
 
   }
 
+  limpiar(){
+    this.parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, 'fechadesde': null, 'fechahasta' : null };
+    this.ngOnInit();
+
+  }
+
   irAmodificarServicio(idFichaClinica){
 
     this.router.navigate(['./../crear-modificar-servicios/accion',"modificar","null","null",idFichaClinica], { relativeTo: this.route });

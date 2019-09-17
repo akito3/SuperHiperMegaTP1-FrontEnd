@@ -25,6 +25,7 @@ import { AgregarReservasComponent } from './reservas/agregar-reservas/agregar-re
 import { ListarServiciosComponent } from './servicios/listar-servicios/listar-servicios.component';
 import { CrearModificarServiciosComponent, DialogCrearCabeceraServicio, DialogCrearDetalleAsociado } from './servicios/crear-modificar-servicios/crear-modificar-servicios.component';
 import { ListarDetallesAsociadosComponent, DialogAgregarNuevoDetalle, DialogEliminarDetalle } from './servicios/detalles/listar-detalles-asociados/listar-detalles-asociados.component';
+import { ReportesComponent } from './reportes/reportes.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { ListarDetallesAsociadosComponent, DialogAgregarNuevoDetalle, DialogElim
     ListarDetallesAsociadosComponent,
     DialogAgregarNuevoDetalle,
     DialogEliminarDetalle,
+    ReportesComponent,
   ],
   entryComponents:[
     //AGREGAR COMO ENTRY POINT
