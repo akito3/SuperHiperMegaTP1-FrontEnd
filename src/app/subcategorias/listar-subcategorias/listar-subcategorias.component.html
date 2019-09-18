@@ -43,10 +43,10 @@
                       <tr *ngFor="let sub of subcategoria">
                           <th>{{sub.idTipoProducto}}</th>
                           <th>{{sub.descripcion}}</th>
-                          <th><button mat-raised-button type="button" class="btn btn-success" (click)="abrirPopup(sub.idTipoProducto,sub.descripcion)">
+                          <th><button mat-raised-button type="button" class="btn btn-success" data-toggle="modal" data-target="#abrirPopup" (click)="abrirPopup(sub.idTipoProducto,sub.descripcion)">
                               <i class="material-icons">edit</i>
                             </button>
-                            <button mat-raised-button type="button" class="btn btn-danger " (click)="abrirPopupEliminar(sub.idTipoProducto, sub.descripcion)">
+                            <button mat-raised-button type="button" class="btn btn-danger "  data-toggle="modal" data-target="#abrirPopupEliminar" (click)="abrirPopupEliminar(sub.idTipoProducto, sub.descripcion)">
                               <i class="material-icons">close</i>
                             </button>
                           </th>     
@@ -88,8 +88,8 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="agregar(false)">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="agregar(true)" 
+        <button mat-raised-button class="btn btn-secondary" (click)="agregar(false)">Cancelar</button>
+        <button  mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" (click)="agregar(true)" 
           [disabled]="nueva.descripcion == null || nueva.descripcion.length == 0">Guardar</button>
       </div>
     </div>
