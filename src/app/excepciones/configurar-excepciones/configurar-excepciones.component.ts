@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from '@angular/
 import { ExcepcionesService } from 'src/app/services/excepciones.service';
 import { ModalFisioterapeutasComponent } from 'src/app/util/modal-fisioterapeutas/modal-fisioterapeutas.component';
 
+declare const $: any;
 @Component({
   selector: 'app-configurar-excepciones',
   templateUrl: './configurar-excepciones.component.html',
