@@ -86,14 +86,12 @@ export class ProductosService {
 
   editProducto(producto: Productos): Observable<Productos> {
     console.log("editProducto");
-    this.cuerpo["idPresentacionProducto"] = producto.idPresentacionProducto;
-    this.cuerpo["nombre"] = producto.nombre;
-    this.cuerpo["descripcion"] = producto.descripcion;
-    this.cuerpo["idProducto"] =   producto.idProducto  ;
+
     const params = new HttpParams().set('Content-Type', 'application/json');
     const options = { params: params };
+    console.log("producto: ", producto);
+    this.cuerpo = JSON.stringify(producto);
     console.log("cuerpo: ", this.cuerpo);
-    console.log("prducto: ", producto);
     return this.httpClient.put<Productos>(this.baseUrl, this.cuerpo, { headers: this.header } );
   }
 

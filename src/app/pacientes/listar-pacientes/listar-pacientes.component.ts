@@ -27,7 +27,7 @@ export class ListarPacientesComponent implements OnInit {
 
   // MatPaginator Inputs
   length = 100;
-  pageSize = 10;
+  pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   // MatPaginator Output
   private count: Number = 0;
@@ -35,7 +35,7 @@ export class ListarPacientesComponent implements OnInit {
   // MatPaginator Output
   private pagination = {
     inicio: 0,
-    cantidad: 10,
+    cantidad: 5,
   };
 
   // Filtros

@@ -36,7 +36,7 @@ export class ListarProductosComponent implements OnInit {
   pageEvent: PageEvent;
   private pagination = {
     inicio: 0,
-    cantidad: 10,
+    cantidad: 5,
   };
 
   // Filtros

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 
-import { Productos } from '../../services/productos/productos';
+import { Productos, IdProducto, IdTipoProducto } from '../../services/productos/productos';
 import { ProductosService } from '../../services/productos/productos.service';
 
 @Component({
@@ -28,14 +28,23 @@ export class EditarProductosComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("onSubmit");
+    console.log("onSubmit()");
     console.log(this.form.value);
 
     
     if (this.form.valid) {
       console.log('if my log');
       console.log(this.form.value);
-      this.servicioEditar.editProducto(this.form.value).subscribe( response => { console.log('Producto editado'); 
+      let producto :Productos = new Productos(null, null, null, null);
+      producto.descripcion = this.form.get('descripcion').value;
+      producto.nombre = this.form.get('nombre').value;
+      producto.idPresentacionProducto = this.form.get('idPresentacionProducto').value;
+      let tipoIdProducto : IdTipoProducto = new IdTipoProducto(  Number(this.form.get('idTipoProducto').value ) )
+      let idProducto:number = Number( this.form.get('idProducto').value);
+      producto.idProducto = new IdProducto( idProducto , tipoIdProducto );
+
+      console.log("producto: ", producto);
+      this.servicioEditar.editProducto(producto).subscribe( response => { console.log('Producto editado'); 
         swal({
             title: 'Guardado',
             text: 'El Producto se ha editado correctamente',
@@ -82,6 +91,8 @@ export class EditarProductosComponent implements OnInit {
       nombre: new FormControl(producto.nombre),
       descripcion: new FormControl(producto.descripcion),
       idProducto: new FormControl(producto.idProducto.idProducto),
+      idPresentacionProducto: new FormControl(producto.idPresentacionProducto),
+      idTipoProducto : new FormControl(producto.idProducto.idTipoProducto.idTipoProducto),
 
     });
     console.log("formulario cargado");
