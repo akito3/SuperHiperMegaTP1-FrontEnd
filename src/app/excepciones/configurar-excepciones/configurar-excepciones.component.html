@@ -11,6 +11,15 @@
           </div>
           <div class="card-body">
               <div class="row">
+                  <div class="col-md-8">
+                    <mat-paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                      (page)="get_page($event)">
+                    </mat-paginator>
+                  </div>
+                </div>
+          </div>
+          <div class="card-body">
+              <div class="row">
                   <div class="col-md-2">
             
                     <legend>Fisioterapeutas</legend>
@@ -64,7 +73,7 @@
                       (click)="filtrarReservas()">Filtrar</button>
                     <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
                       (click)="limpiar()">Limpiar</button>
-                      <button  mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" (click)="irAagregarReservaComponent()">Agregar Nueva Reserva</button>
+                      <button  mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"  data-toggle="modal" data-target="#modalExcepcionAdd">Agregar Nueva Excepcion</button>
                   </div>
                 </div>
             <div class="table-responsive">
@@ -90,33 +99,184 @@
                     <td>{{reserva.idEmpleado.nombreCompleto}}</td>
                     <td>{{reserva.idLocal.nombre}}</td>                 
                     <td>{{reserva.flagEsHabilitar}}</td>
-                    <th><button mat-raised-button type="button" class="btn btn-success" (click)="abrirPopup(reserva.idReserva,reserva.observacion,reserva.flagAsistio)">
+                    <th><button mat-raised-button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal" (click)="editar(reserva)">
                         <i class="material-icons">edit</i>
                       </button>
-                      <button mat-raised-button type="button" class="btn btn-danger " (click)="abrirPopupEliminacion(reserva.idReserva)">
+                      <button mat-raised-button type="button" class="btn btn-danger " data-toggle="modal" data-target="#deleteModal" (click)="eliminar(reserva)">
                         <i class="material-icons">close</i>
                       </button>
-                      
-                      <button mat-raised-button type="button" class="btn btn-danger" (click)="irAcrearFicha(reserva.idEmpleado.idPersona,reserva.idCliente.idPersona)">
-                        <i class="material-icons">add</i>
-                      </button>
                     </th>
-
-
-
                   </tr>
                 </tbody>
               </table>
-
             </div>
           </div>
         </div>
-
-
       </div>
       <div class="col-md-12" *ngIf="showSpinner" style="text-align: center">
         <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;"  mode="indeterminate"></mat-spinner>
       </div>
+      <div *ngIf="totalCategorias==0 | async" class="no-records">
+        No existen Categorias
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalExcepcionAdd" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Nueva Excepción</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="modalAgregarExcepcion(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker2" placeholder="Fecha" [(ngModel)]="objetoAgregar.fechaCadena"
+              (click)="picker2.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+            <mat-select placeholder="Disponibilidad" [(ngModel)]="objetoAgregar.flagEsHabilitar">
+              <mat-option value="S">Sí</mat-option>
+              <mat-option value="N">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput type="time"
+              placeholder="Horario de apertura" [(ngModel)]="objetoAgregar.horaAperturaCadena"
+              pattern="[0-9]{2}:[0-9]{2}">
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput type="time"
+              placeholder="Horario de cierre" [(ngModel)]="objetoAgregar.horaCierreCadena"
+              pattern="[0-9]{2}:[0-9]{2}">
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+            <mat-select placeholder="Fisioterapeuta" [(ngModel)]="objetoAgregar.idEmpleado.idPersona">
+              <mat-option *ngFor="let fisioterapeuta of fisioterapeutas" [value]="fisioterapeuta.idPersona">
+                {{fisioterapeuta.nombre}} {{fisioterapeuta.apellido}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+            <input [disabled]='objetoAgregar.flagEsHabilitar !== "S"' matInput type="number"
+              placeholder="Intérvalo minutos" [(ngModel)]="objetoAgregar.intervaloMinutos">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button  mat-raised-button (click)="modalAgregarExcepcion(false)">Cancelar</button>
+        <button  mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" (click)="modalAgregarExcepcion(true)" [disabled]="objetoAgregar.fechaCadena == null || objetoAgregar.fechaCadena.length == 0 ||
+        objetoAgregar.idEmpleado.idPersona == null || objetoAgregar.idEmpleado.idPersona.length == 0 ||
+        objetoAgregar.flagEsHabilitar == null || objetoAgregar.flagEsHabilitar.length == 0">Guardar</button>
+      </div>
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar horario de excepción {{objetoEditar.idHorarioExcepcion}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeEdit(false)">
+            <span aria-hidden="false">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker3" placeholder="Fecha" [(ngModel)]="objetoEditar.fechaCadena"
+                (click)="picker3.open()">
+              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <!-- <input class="form-control" placeholder="¿Está habilitado?" [(ngModel)]="objetoEditar.flagEsHabilitar"> -->
+            <mat-form-field>
+              <mat-select placeholder="¿Está habilitado?" [(ngModel)]="objetoEditar.flagEsHabilitar">
+                <mat-option value="S">Sí</mat-option>
+                <mat-option value="N">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input [disabled]='objetoEditar.flagEsHabilitar !== "S"' matInput type="time"
+                placeholder="Horario de apertura" [(ngModel)]="objetoEditar.horaAperturaCadena"
+                pattern="[0-9]{2}:[0-9]{2}">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input [disabled]='objetoEditar.flagEsHabilitar !== "S"' matInput type="time"
+                placeholder="Horario de cierre" [(ngModel)]="objetoEditar.horaCierreCadena" pattern="[0-9]{2}:[0-9]{2}">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <!-- <input matInput type="number" placeholder="ID del empleado"
+                  [(ngModel)]="objetoEditar.idEmpleado.idPersona"> -->
+              <mat-select placeholder="Empleado" [(ngModel)]="objetoEditar.idEmpleado.idPersona">
+                <mat-option *ngFor="let empleado of fisioterapeutas" [value]="empleado.idPersona">{{empleado.idPersona}}.
+                  {{empleado.nombreCompleto}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input [disabled]='objetoEditar.flagEsHabilitar !== "S"' matInput type="number"
+                placeholder="Intérvalo minutos" [(ngModel)]="objetoEditar.intervaloMinutos">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeEdit(false)">Cerrar</button>
+          <button type="button" class="btn btn-primary" (click)="closeEdit(true)" [disabled]="objetoEditar.fechaCadena == null || objetoEditar.fechaCadena.length == 0 ||
+              objetoEditar.idEmpleado.idPersona == null || objetoEditar.idEmpleado.idPersona.length == 0 ||
+              objetoEditar.flagEsHabilitar == null || objetoEditar.flagEsHabilitar.length == 0">Guardar
+            Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="false">
+      <div class="modal-dialog modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Borrar horario de excepción</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" click="closeDelete(false)">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              ¿Está seguro de querer borrar el horario de excepción {{objetoEliminar.idHorarioExcepcion}}?
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeDelete(false)">Cerrar</button>
+            <button type="button" class="btn btn-primary" (click)="closeDelete(true)">Borrar</button>
+          </div>
+        </div>
+      </div>
+    </div>

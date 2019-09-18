@@ -95,9 +95,9 @@
                   <tr *ngFor="let detalle of detalles">
                     <th>{{detalle.idServicioDetalle}}</th>
                     <th>{{detalle.idPresentacionProducto.nombre}}</th>
-                    <th>No encuentro el precio unitario</th>
+                    <th>{{detalle.precioVenta}}</th>
                     <th>{{detalle.cantidad}}</th>
-                    <th>No encuentro el total</th>
+                    <th>{{detalle.precioVenta * detalle.cantidad}}</th>
                     <th><button mat-raised-button type="button" class="btn btn-danger "
                         (click)="abrirPopupEliminacion(detalle.idServicioDetalle)">
                         Eliminar Detalle<i class="material-icons">close</i>
