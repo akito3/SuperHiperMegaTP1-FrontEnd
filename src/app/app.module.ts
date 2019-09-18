@@ -26,6 +26,8 @@ import { ListarServiciosComponent } from './servicios/listar-servicios/listar-se
 import { CrearModificarServiciosComponent, DialogCrearCabeceraServicio, DialogCrearDetalleAsociado } from './servicios/crear-modificar-servicios/crear-modificar-servicios.component';
 import { ListarDetallesAsociadosComponent, DialogAgregarNuevoDetalle, DialogEliminarDetalle } from './servicios/detalles/listar-detalles-asociados/listar-detalles-asociados.component';
 import { ReportesComponent } from './reportes/reportes.component';
+import { ModalFisioterapeutasComponent } from './util/modal-fisioterapeutas/modal-fisioterapeutas.component';
+import { ModalClientesComponent } from './util/modal-clientes/modal-clientes.component';
 
 
 @NgModule({
@@ -63,6 +65,8 @@ import { ReportesComponent } from './reportes/reportes.component';
     DialogAgregarNuevoDetalle,
     DialogEliminarDetalle,
     ReportesComponent,
+    ModalFisioterapeutasComponent,
+    ModalClientesComponent,
   ],
   entryComponents:[
     //AGREGAR COMO ENTRY POINT
@@ -71,7 +75,9 @@ import { ReportesComponent } from './reportes/reportes.component';
     DialogCrearCabeceraServicio,
     DialogCrearDetalleAsociado,
     DialogAgregarNuevoDetalle,
-    DialogEliminarDetalle
+    DialogEliminarDetalle,
+    ModalFisioterapeutasComponent,
+    ModalClientesComponent,
   ],
   bootstrap: [AppComponent],
 })

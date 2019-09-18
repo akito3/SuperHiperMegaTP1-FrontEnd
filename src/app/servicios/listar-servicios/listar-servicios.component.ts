@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from '../services/servicios.services';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { MatDialog } from '@angular/material';
+import { ModalClientesComponent } from '../../util/modal-clientes/modal-clientes.component';
+import { ModalFisioterapeutasComponent } from 'src/app/util/modal-fisioterapeutas/modal-fisioterapeutas.component';
 @Component({
   selector: 'app-listar-servicios',
   templateUrl: './listar-servicios.component.html',
@@ -16,11 +18,11 @@ export class ListarServiciosComponent implements OnInit {
   private tipoProductos: any[];
   private showSpinner = false;
   private servicios: any[];
-  private parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, 'fechadesde': null, 'fechahasta' : null };
+  private parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, 'fechadesde': null, 'fechahasta': null };
 
   constructor(
-    private serviciosService: ServiciosService, private router : Router,
-    private route : ActivatedRoute
+    private serviciosService: ServiciosService, private router: Router,
+    private route: ActivatedRoute, private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -68,8 +70,8 @@ export class ListarServiciosComponent implements OnInit {
 
     }
   }
-  
-    public getFichasPorPaciente(idPaciente) {
+
+  public getFichasPorPaciente(idPaciente) {
     this.showSpinner = true;
     this.serviciosService.getFichasPorPaciente(idPaciente).subscribe((response: any) => {
       this.fichasClinicas = response.lista;
@@ -165,15 +167,15 @@ export class ListarServiciosComponent implements OnInit {
     //  this.router.navigate(['./../agregar-nueva-ficha-clinica', "null", "null"], { relativeTo: this.route });
 
   }
-  filtrarServicios(){
+  filtrarServicios() {
     console.log("Filtrando")
-    this.serviciosService.getServiciosFiltrado(this.parametros_busqueda).subscribe((response : any)=>{
-        console.log("Response" , response.lista);
-        this.servicios = response.lista
+    this.serviciosService.getServiciosFiltrado(this.parametros_busqueda).subscribe((response: any) => {
+      console.log("Response", response.lista);
+      this.servicios = response.lista
 
 
-    },(error : any)=>{
-      console.log("Error" , error.message);
+    }, (error: any) => {
+      console.log("Error", error.message);
 
 
 
@@ -181,21 +183,51 @@ export class ListarServiciosComponent implements OnInit {
 
   }
 
-  irAcrearServicio(){
+  public abrirModalClientes(){
+    this.dialog.open(ModalClientesComponent, {
+      data: {
+          clientes : this.pacientes
+      }
+    }).afterClosed().subscribe((a) => {
+          this.parametros_busqueda["idPaciente"]=parseInt(a);
+          console.log(this.parametros_busqueda);
 
-    this.router.navigate(['./../crear-modificar-servicios/accion',"agregar"], { relativeTo: this.route });
+    })
+
+
 
   }
 
-  limpiar(){
-    this.parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, 'fechadesde': null, 'fechahasta' : null };
+  public abrirModalFisioterapeutas(){
+    this.dialog.open(ModalFisioterapeutasComponent, {
+      data: {
+          fisioterapeutas : this.fisioterapeutas
+      }
+    }).afterClosed().subscribe((a) => {
+          this.parametros_busqueda["idFisioterapeuta"]=parseInt(a);
+          console.log(this.parametros_busqueda);
+
+    })
+
+
+
+  }
+
+  irAcrearServicio() {
+
+    this.router.navigate(['./../crear-modificar-servicios/accion', "agregar"], { relativeTo: this.route });
+
+  }
+
+  limpiar() {
+    this.parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, 'fechadesde': null, 'fechahasta': null };
     this.ngOnInit();
 
   }
 
-  irAmodificarServicio(idFichaClinica){
+  irAmodificarServicio(idFichaClinica) {
 
-    this.router.navigate(['./../crear-modificar-servicios/accion',"modificar","null","null",idFichaClinica], { relativeTo: this.route });
+    this.router.navigate(['./../crear-modificar-servicios/accion', "modificar", "null", "null", idFichaClinica], { relativeTo: this.route });
 
   }
 
