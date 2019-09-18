@@ -206,7 +206,7 @@ export class DialogOverviewExampleDialog implements OnInit {
 
 
     }, (error: any) => {
-      this.openSnackBar(error.message, 'Aviso');
+      this.openSnackBar("Intentelo nuevamente", 'Aviso');
       this.dialogRef.close('error');
     });
   }
@@ -215,7 +215,7 @@ export class DialogOverviewExampleDialog implements OnInit {
     this.openSnackBar('Categoria eliminada con exito', 'Aviso');
     this.dialogRef.close('Eliminado');
     }, (error: any) => {
-      this.openSnackBar(error.message, 'Aviso');
+      this.openSnackBar('La categoria esta en uso, no se puede eliminar', 'Aviso');
       this.dialogRef.close('error');
     });
   }

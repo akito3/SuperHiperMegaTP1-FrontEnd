@@ -18,6 +18,10 @@ declare const $: any;
 })
 export class ListarSubcategoriasComponent implements OnInit {
 
+
+  constructor(private dataService: SubcategoriasService, private router: Router,
+  private route: ActivatedRoute, public dialog: MatDialog,  private _snackBar: MatSnackBar) { }
+
   private showSpinner = null;
   private categoria: any[] = [];
 
@@ -53,11 +57,12 @@ export class ListarSubcategoriasComponent implements OnInit {
       idCategoria : null
     }
   };
-
-
-  constructor(private dataService: SubcategoriasService, private router: Router,
-  private route: ActivatedRoute, public dialog: MatDialog,  private _snackBar: MatSnackBar) { }
-
+  private idCategoria1: any = {
+    idCategoria: null,
+    descripcion: null,
+    flagVisible: null,
+    posible: null
+  };
   ngOnInit() {
     this.getSubcategorias();
     this.get_categorias();
@@ -117,14 +122,22 @@ export class ListarSubcategoriasComponent implements OnInit {
       duration: 2000,
     });
   }
-  abrirPopup(idTipoProducto, descripcion) {
-    console.log(idTipoProducto + ' ' + descripcion);
+  abrirPopup(idTipoProducto, descripcion, flagVisible, idCategoria, posicion) {
+    console.log(idTipoProducto + ' ' + descripcion, flagVisible, idCategoria, posicion);
     // le pasamos la clase del componente y los datos
     // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       data: {
         idTipoProducto: idTipoProducto,
         descripcion: descripcion,
+        flagVisible: flagVisible,
+        idCategoria: {
+          idCategoria: idCategoria.idCategoria,
+          descripcion: idCategoria.descripcion,
+          flagVisible: idCategoria.flagVisible,
+          posible: idCategoria.posicion
+        },
+        posicion: posicion,
         accion: 'modificacion'
       },
     }).afterClosed().subscribe((response) => {
@@ -233,15 +246,24 @@ export class DialogOverviewExampleDialog implements OnInit {
     const objeto = {
       'idTipoProducto': this.data.idTipoProducto,
       'descripcion': this.data.descripcion,
+      'flagVisible' : this.data.flagVisible,
+      idCategoria: {
+        'idCategoria': this.data.idCategoria.idCategoria,
+        'descripcion': this.data.idCategoria.descripcion,
+        'flagVisible' : this.data.idCategoria.flagVisible,
+        'posicion' : this.data.idCategoria.posicion
+      },
+      'posicion' : this.data.posicion,
 
     };
+    console.log("objeto" , objeto);
     this.dataService.modificarSubcategoria(objeto).subscribe((response: any) => {
       this.openSnackBar('Tipo de Producto modificada con exito', 'Aviso');
       this.dialogRef.close('modificado');
 
 
     }, (error: any) => {
-      this.openSnackBar(error.message, 'Aviso');
+      this.openSnackBar("Intentelo nuevamente", 'Aviso');
       this.dialogRef.close('error');
 
 
@@ -257,7 +279,7 @@ export class DialogOverviewExampleDialog implements OnInit {
 
 
     }, (error: any) => {
-      this.openSnackBar(error.message, 'Aviso');
+      this.openSnackBar('Tipo de Producto en uso, No se puede eliminar', 'Aviso');
       this.dialogRef.close('error');
 
 

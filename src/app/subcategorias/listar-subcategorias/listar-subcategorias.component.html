@@ -43,7 +43,7 @@
                       <tr *ngFor="let sub of subcategoria">
                           <th>{{sub.idTipoProducto}}</th>
                           <th>{{sub.descripcion}}</th>
-                          <th><button mat-raised-button type="button" class="btn btn-success" data-toggle="modal" data-target="#abrirPopup" (click)="abrirPopup(sub.idTipoProducto,sub.descripcion)">
+                          <th><button mat-raised-button type="button" class="btn btn-success" data-toggle="modal" data-target="#abrirPopup" (click)="abrirPopup(sub.idTipoProducto,sub.descripcion, sub.flagVisible, sub.idCategoria, sub.posicion)">
                               <i class="material-icons">edit</i>
                             </button>
                             <button mat-raised-button type="button" class="btn btn-danger "  data-toggle="modal" data-target="#abrirPopupEliminar" (click)="abrirPopupEliminar(sub.idTipoProducto, sub.descripcion)">
