@@ -44,7 +44,7 @@
                       <ng-container matColumnDef="accion">
                         <mat-header-cell *matHeaderCellDef>   Acción </mat-header-cell>  
                         <mat-cell *matCellDef="let element">   
-                          <button mat-raised-button type="button" class="btn btn-success "(click)="abrirPopup(element.idCategoria,element.descripcion)">
+                          <button mat-raised-button type="button" class="btn btn-success "(click)="abrirPopup(element.idCategoria,element.descripcion,element.flagVisible,element.posicion)">
                             <i class="material-icons">edit</i>
                           </button>
                           <button mat-raised-button type="button" class="btn btn-danger "  (click)="abrirPopupEliminar(element.idCategoria, element.descripcion)">

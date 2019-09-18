@@ -95,7 +95,7 @@ export class ListarCategoriasComponent implements OnInit {
       });
     }
   }
-  abrirPopup(idCategoria, descripcion) {
+  abrirPopup(idCategoria, descripcion,flagVisible,posicion) {
     console.log(idCategoria + ' ' + descripcion);
     // le pasamos la clase del componente y los datos
     // tslint:disable-next-line: no-use-before-declare
@@ -103,6 +103,8 @@ export class ListarCategoriasComponent implements OnInit {
       data: {
         idCategoria: idCategoria,
         descripcion: descripcion,
+        flagVisible : flagVisible,
+        posicion : posicion,
         accion: 'modificacion'
       },
     }).afterClosed().subscribe((response) => {
@@ -193,8 +195,11 @@ export class DialogOverviewExampleDialog implements OnInit {
     const objeto = {
       'idCategoria': this.data.idCategoria,
       'descripcion': this.data.descripcion,
+      'posicion' : this.data.posicion,
+      'flagVisible' : this.data.flagVisible
 
     };
+    console.log("objeto" , objeto)
     this.dataService.editarCategoria(objeto).subscribe((response: any) => {
       this.openSnackBar('Categoría modificada con exito', 'Aviso');
       this.dialogRef.close('modificado');
