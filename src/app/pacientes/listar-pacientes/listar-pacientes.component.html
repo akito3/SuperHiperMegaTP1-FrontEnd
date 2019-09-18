@@ -1,0 +1,247 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-2">
+        <legend>Tipo Filtro</legend>
+        <mat-form-field>
+          <mat-label>Seleccione una opción</mat-label>
+          <mat-select [(value)]="tipoBusqueda" (selectionChange)="onChange()">
+            <mat-option>Ninguno</mat-option>
+            <mat-option value="apellido">Apellido</mat-option>
+            <mat-option value="nombre">Nombre</mat-option>
+            <mat-option value="like">Like</mat-option>
+            <mat-option value="fisioterapeutas">Fisioterapeutas</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-2" *ngIf="tipoBusqueda === 'nombre' || tipoBusqueda === 'like'">
+        <legend>Nombre</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <input matInput placeholder="Nombre" type="text" [(ngModel)]="nombreBusqueda">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2" *ngIf="tipoBusqueda === 'apellido'">
+        <legend>Cantidad</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <input matInput placeholder="Cantidad" min="3" type="number" [(ngModel)]="cantidadBusqueda">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2" *ngIf="tipoBusqueda === 'apellido'">
+        <legend>Ordenar</legend>
+        <mat-form-field>
+          <mat-label>Seleccione una opción</mat-label>
+          <mat-select [(value)]="ordernarBusqueda">
+            <mat-option value="desc">Descendente</mat-option>
+            <mat-option value="asc">Ascendente</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-2"
+        *ngIf="tipoBusqueda == 'nombre' || tipoBusqueda == 'apellido' || tipoBusqueda == 'like' || tipoBusqueda == 'fisioterapeutas'">
+        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" (click)="onClickFiltro()">
+          <i class="material-icons">search</i>
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon" color="accent">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Pacientes</h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar">
+              <!--Here you can write extra buttons/actions for the toolbar-->
+              <button mat-raised-button class="fabButton natura-button-1" mat-fab color="primary"
+                (click)="onClickAgregar()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div class="material-datatables">
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+                    <mat-icon matSuffix>search</mat-icon>
+                  </mat-form-field>
+                </div>
+              </div>
+              <mat-table [dataSource]="dataSource" matSort class="tabla-datos">
+
+                <!-- Columna idPersona -->
+
+                <ng-container matColumnDef="idPersona">
+                  <mat-header-cell *matHeaderCellDef   > Id. 
+                      <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('idPersona')">sort</i>
+                    </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.idPersona}} </mat-cell>
+              </ng-container>
+
+                <!-- <ng-container matColumnDef="idPersona">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.idPersona}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Nombre -->
+                <ng-container matColumnDef="nombre">
+                  <mat-header-cell *matHeaderCellDef   > Nombre. 
+                      <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('nombre')">sort</i>
+                    </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="nombre">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre </mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.nombre}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Apellido -->
+                <ng-container matColumnDef="apellido">
+                    <mat-header-cell *matHeaderCellDef   > Apellido. 
+                        <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('apellido')">sort</i>
+                      </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.apellido}} </mat-cell>
+                  </ng-container>
+
+
+                <!-- <ng-container matColumnDef="apellido">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.apellido}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Email -->
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef   > Email. 
+                        <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('email')">sort</i>
+                      </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                  </ng-container>
+
+
+                <!-- <ng-container matColumnDef="email">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Telefono -->
+                <ng-container matColumnDef="telefono">
+                    <mat-header-cell *matHeaderCellDef   > Telefono. 
+                        <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('telefono')">sort</i>
+                      </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.telefono}} </mat-cell>
+                  </ng-container>
+
+
+                <!-- <ng-container matColumnDef="telefono">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.telefono}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Ruc -->
+                <ng-container matColumnDef="ruc">
+                    <mat-header-cell *matHeaderCellDef   > Ruc. 
+                        <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('ruc')">sort</i>
+                      </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.ruc}} </mat-cell>
+                  </ng-container>
+
+                <!-- <ng-container matColumnDef="ruc">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Ruc</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.ruc}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Cedula -->
+                <ng-container matColumnDef="cedula">
+                    <mat-header-cell *matHeaderCellDef   > Cedula. 
+                        <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('cedula')">sort</i>
+                      </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.cedula}} </mat-cell>
+                  </ng-container>
+
+                <!-- <ng-container matColumnDef="cedula">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Cedula</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.cedula}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Tipo Persona -->
+                <ng-container matColumnDef="tipoPersona">
+                    <mat-header-cell *matHeaderCellDef   > Tipo. 
+                        <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('tipoPersona')">sort</i>
+                      </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.tipoPersona}} </mat-cell>
+                  </ng-container>
+
+                <!-- <ng-container matColumnDef="tipoPersona">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.tipoPersona}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna fechaNacimiento -->
+                <ng-container matColumnDef="fechaNacimiento">
+                    <mat-header-cell *matHeaderCellDef   > Nacimiento. 
+                        <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('fechaNacimiento')">sort</i>
+                      </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.fechaNacimiento}} </mat-cell>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="fechaNacimiento">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Nacimiento</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.fechaNacimiento}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Acciones -->
+                <ng-container matColumnDef="accion">
+                  <mat-header-cell *matHeaderCellDef>Acción</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <button mat-raised-button type="button" class="btn btn-success " (click)="onClickEditar(element.idPersona)">
+                      <i class="material-icons">edit</i>
+                    </button>
+                    <button mat-raised-button type="button" class="btn btn-danger " (click)="onClickBorrar(element.idPersona)">
+                      <i class="material-icons">close</i>
+                    </button>
+                  </mat-cell>
+                </ng-container>
+
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></mat-row>
+              </mat-table>
+              <div *ngIf="totalPacientes==0 | async" class="no-records">
+                No existen Pacientes
+              </div>
+              <!-- <mat-paginator id="pagina" class="tabla-datos" [pageSizeOptions]="[5, 10, 15, 50]" showFirstLastButtons>
+              </mat-paginator> -->
+              <mat-paginator [length]="totalPacientes" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="get_page($event)"></mat-paginator>
+
+            </div>
+          </div>
+          <!-- end content-->
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
+  </div>
+</div>

@@ -106,6 +106,14 @@ export const AppRoutes: Routes = [
                 loadChildren: './subcategorias/subcategorias.module#SubCategoriasModule'
             },
             {
+                path: 'pacientes',
+                loadChildren: './pacientes/pacientes.module#PacientesModule'
+            },
+            {
+                path: 'productos',
+                loadChildren: './productos/productos.module#ProductosModule'
+            },
+            {
                 path: 'excepciones',
                 loadChildren: './excepciones/excepciones.module#ExcepcionesModule'
             },

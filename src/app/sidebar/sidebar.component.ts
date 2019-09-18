@@ -40,6 +40,18 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'widgets'
 },
 {
+    path: './pacientes/listar',
+    title: 'Pacientes',
+    type: 'link',
+    icontype: 'accessibility'
+},
+{
+    path: './productos/listar',
+    title: 'Productos',
+    type: 'link',
+    icontype: 'accessible'
+},
+{
     path: './fichas-clinicas/listar-fichas-clinicas',
     title: 'Fichas Clinicas',
     type: 'link',

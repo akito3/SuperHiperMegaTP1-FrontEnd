@@ -1,0 +1,52 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">accessibility</i>
+            </div>
+            <h4 class="card-title">Agregar Producto</h4>
+          </div>
+          <div class="card-body ">
+            <form [formGroup]='form' (ngSubmit)="onSubmit()">
+
+              <!-- Nombre -->
+              <mat-form-field class="example-full-width">
+                <input formControlName="nombre" matInput placeholder="Nombre" type="text">
+              </mat-form-field>
+
+              <!-- IdPresentacionProducto -->
+              <!-- <mat-form-field class="example-full-width">
+                <input formControlName="idPresentacionProducto" matInput placeholder="IdPresentacionProducto" type="text">
+              </mat-form-field> -->
+
+              <!-- Descripcion -->
+              <mat-form-field class="example-full-width">
+                <input formControlName="descripcion" matInput placeholder="Descripcion" type="text">
+              </mat-form-field>
+
+              <!-- IdProducto -->
+              <mat-form-field class="example-full-width">
+                <input formControlName="idProducto" matInput placeholder="IdProducto" type="email">
+              </mat-form-field>
+
+              <!-- IdTipoProducto -->
+              <mat-form-field class="example-full-width">
+                <input formControlName="idTipoProducto" matInput placeholder="IdTipoProducto" type="email">
+              </mat-form-field>
+
+
+              <div class="card-footer ">
+                <button mat-raised-button class="btn" (click)="onClickListar()">Cancelar</button>
+                <button mat-raised-button type="submit" [disabled]="form.invalid"
+                  class="btn btn-fill btn-rose">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

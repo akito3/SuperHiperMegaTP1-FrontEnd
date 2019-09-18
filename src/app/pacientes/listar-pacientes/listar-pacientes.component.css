@@ -1,0 +1,22 @@
+.icono1, .icono2, .icono3 {
+  width: 10px;
+  height: 18.35px;
+  color: rgb(114, 114, 114);
+}
+
+.natura-button-3 {
+  height: 50px;
+  bottom: 10px;
+}
+
+.fabButton {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 1;
+  background-color: #9c27b0;
+}
+
+.icon {
+  color: rgb(255, 64, 129);
+}

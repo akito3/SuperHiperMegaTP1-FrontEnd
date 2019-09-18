@@ -1,0 +1,195 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-2">
+        <legend>Tipo Filtro</legend>
+        <mat-form-field>
+          <mat-label>Seleccione una opción</mat-label>
+          <mat-select [(value)]="tipoBusqueda" (selectionChange)="onChange()">
+            <mat-option>Ninguno</mat-option>
+            <mat-option value="idProducto">idProducto</mat-option>
+            <mat-option value="idTipoProducto">idTipoProducto</mat-option>
+            <mat-option value="like">Like</mat-option>
+            <!-- <mat-option value="fisioterapeutas">Fisioterapeutas</mat-option> -->
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-2" *ngIf="tipoBusqueda === 'nombre' || tipoBusqueda === 'like'">
+        <legend>Nombre</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <input matInput placeholder="Nombre" type="text" [(ngModel)]="nombreBusqueda">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2" *ngIf="tipoBusqueda === 'idProducto' || tipoBusqueda === 'idTipoProducto'">
+        <legend>ID</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <input matInput placeholder="id" type="text" [(ngModel)]="idBusqueda">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-2" *ngIf="tipoBusqueda === 'apellido'">
+        <legend>Cantidad</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <input matInput placeholder="Cantidad" min="3" type="number" [(ngModel)]="cantidadBusqueda">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="col-md-2" *ngIf="tipoBusqueda === 'apellido'">
+        <legend>Ordenar</legend>
+        <mat-form-field>
+          <mat-label>Seleccione una opción</mat-label>
+          <mat-select [(value)]="ordernarBusqueda">
+            <mat-option value="desc">Descendente</mat-option>
+            <mat-option value="asc">Ascendente</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> -->
+
+      <div class="col-md-2"
+        *ngIf="tipoBusqueda == 'nombre' || tipoBusqueda == 'idProducto' || tipoBusqueda == 'like' || tipoBusqueda == 'idTipoProducto'">
+        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" (click)="onClickFiltro()">
+          <i class="material-icons">search</i>
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon" color="accent">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Productos</h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar">
+              <!--Here you can write extra buttons/actions for the toolbar-->
+              <button mat-raised-button class="fabButton natura-button-1" mat-fab color="primary"
+                (click)="onClickAgregar()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div class="material-datatables">
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+                    <mat-icon matSuffix>search</mat-icon>
+                  </mat-form-field>
+                </div>
+              </div>
+              <mat-table [dataSource]="dataSource" matSort class="tabla-datos">
+
+                <!-- Columna idPresentacionProducto -->
+                <ng-container matColumnDef="idPresentacionProducto">
+                  <mat-header-cell *matHeaderCellDef   > IdPresentacion 
+                      <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('idPresentacionProducto')">sort</i>
+                    </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.idPresentacionProducto}} </mat-cell>
+              </ng-container>
+
+
+                <!-- <ng-container matColumnDef="idPresentacionProducto">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.idPresentacionProducto}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Nombre -->
+                <ng-container matColumnDef="nombre">
+                  <mat-header-cell *matHeaderCellDef   > Nombre 
+                      <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('nombre')">sort</i>
+                    </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+              </ng-container>
+
+                <!-- <ng-container matColumnDef="nombre">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre </mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.nombre}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna idProducto -->
+                <ng-container matColumnDef="idProducto">
+                  <mat-header-cell *matHeaderCellDef   > IdProducto 
+                      <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('idProducto')">sort</i>
+                    </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.idProducto.idProducto }} </mat-cell>
+              </ng-container>
+
+               <!-- Columna idTipoProducto -->
+               <ng-container matColumnDef="idTipoProducto">
+                <mat-header-cell *matHeaderCellDef   > idTipoProducto 
+                    <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('idTipoProducto')">sort</i>
+                  </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.idProducto.idTipoProducto.idTipoProducto}} </mat-cell>
+            </ng-container>
+                <!-- <ng-container matColumnDef="idProducto">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>idProducto</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.idProducto.idProducto}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna descripcion -->
+                <ng-container matColumnDef="descripcion">
+                  <mat-header-cell *matHeaderCellDef   > Descripcion 
+                      <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('descripcion')">sort</i>
+                    </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+              </ng-container>
+
+                <!-- <ng-container matColumnDef="descripcion">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>descripcion</mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.descripcion}}</mat-cell>
+                </ng-container> -->
+
+                <!-- Columna Acciones -->
+                <ng-container matColumnDef="accion">
+                  <mat-header-cell *matHeaderCellDef>Acción</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <button mat-raised-button type="button" class="btn btn-success "
+                      (click)="onClickEditar(element.idPresentacionProducto)">
+                      <i class="material-icons">edit</i>
+                    </button>
+                    <button mat-raised-button type="button" class="btn btn-danger "
+                      (click)="onClickBorrar(element.idPresentacionProducto)">
+                      <i class="material-icons">close</i>
+                    </button>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></mat-row>
+              </mat-table>
+              <div *ngIf="totalPacientes==0 | async" class="no-records">
+                No existen Pacientes
+              </div>
+              <mat-paginator [length]="totalCategorias" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="get_page($event)"></mat-paginator>
+            </div>
+          </div>
+          <!-- end content-->
+        </div>
+        <!--  end card  -->
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
+  </div>
+</div>
