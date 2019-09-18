@@ -13,18 +13,11 @@ import { CrearModificarServiciosComponent } from './servicios/crear-modificar-se
 import { ListarDetallesAsociadosComponent } from './servicios/detalles/listar-detalles-asociados/listar-detalles-asociados.component';
 import { ReportesComponent } from './reportes/reportes.component';
 export const AppRoutes: Routes = [
+
     {
         path: '',
-        component: AuthLayoutComponent
-    },
-    {
-        path: 'pages',
-        children: [
-            {
-                path: 'login',
-                component: LoginComponent
-            }
-        ]
+        pathMatch: 'full',
+        component: LoginComponent
     },
     {
         path: 'dashboard',
@@ -36,8 +29,8 @@ export const AppRoutes: Routes = [
             },
             {
 
-                path : 'reportes',
-                component : ReportesComponent,
+                path: 'reportes',
+                component: ReportesComponent,
 
             },
 
@@ -64,37 +57,37 @@ export const AppRoutes: Routes = [
                         component: ListarComponent
                     },
                     {
-                        path : 'agregar-reservas',
-                        component : AgregarReservasComponent
+                        path: 'agregar-reservas',
+                        component: AgregarReservasComponent
 
                     }
-                   
+
                 ]
 
 
 
             },
             {
-                path : 'servicios',
-                children : [
+                path: 'servicios',
+                children: [
                     {
 
                         path: 'listar-servicios',
-                        component : ListarServiciosComponent,
+                        component: ListarServiciosComponent,
 
                     },
                     {
-                        path :'crear-modificar-servicios/accion/:accion/:idEmpleado/:idPaciente/:idFichaClinica',
-                        component : CrearModificarServiciosComponent,
+                        path: 'crear-modificar-servicios/accion/:accion/:idEmpleado/:idPaciente/:idFichaClinica',
+                        component: CrearModificarServiciosComponent,
 
                     },
                     {
                         path: 'detalles',
-                        children : [
+                        children: [
 
                             {
-                                path:'listar-detalles-asociados/:idservicio',
-                                component : ListarDetallesAsociadosComponent
+                                path: 'listar-detalles-asociados/:idservicio',
+                                component: ListarDetallesAsociadosComponent
 
                             }
                         ]

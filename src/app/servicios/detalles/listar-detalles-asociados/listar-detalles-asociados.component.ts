@@ -3,6 +3,7 @@ import { ServiciosService } from '../../services/servicios.services';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { FichasClinicasService } from 'src/app/fichasclinicas/services/fichasClinicas.services';
 import { ActivatedRoute } from '@angular/router';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-listar-detalles-asociados',
@@ -67,6 +68,20 @@ export class ListarDetallesAsociadosComponent implements OnInit {
       this.detalles = response;
 
       console.log("detalles asociados", this.detalles)
+      var Servicio = this.serviciosServices;
+      this.detalles.forEach(function(elemento){
+            Servicio.getPrecio(elemento.idPresentacionProducto.idPresentacionProducto).subscribe((response :  any)=>{
+                  elemento["precioVenta"] = response.lista[0].precioVenta;
+                //  console.log("precio venta",  response.lista[0].precioVenta);
+                
+
+            },error =>{
+                console.log("ERROR", error.message);
+
+            })
+
+
+      });
 
     }, error => {
       console.log("error", error.message)
@@ -143,7 +158,11 @@ export class ListarDetallesAsociadosComponent implements OnInit {
       },
     }).afterClosed().subscribe((response) => {
       //y si reinicializamos
-      if (response == "modificado") {
+      if (response == "agregado") {
+        console.log("reinicializamos");
+        this.parametros_busqueda = {};
+        this.precio = null;
+        this.cantidad = 0;
         this.ngOnInit();
 
       }
