@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FichasClinicasService } from '../services/fichasClinicas.services';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
+import { ModalClientesComponent } from 'src/app/util/modal-clientes/modal-clientes.component';
+import { ModalFisioterapeutasComponent } from 'src/app/util/modal-fisioterapeutas/modal-fisioterapeutas.component';
 
 @Component({
   selector: 'app-listarfichas',
@@ -35,6 +37,34 @@ export class ListarfichasComponent implements OnInit {
     this.cargarComboBoxPacientes();
     this.cargarComboBoxCategorias();
 
+  }
+
+
+  public abrirModalClientes(){
+    this.dialog.open(ModalClientesComponent, {
+      data: {
+          clientes : this.pacientes
+      }
+    }).afterClosed().subscribe((a) => {
+          this.parametros_busqueda["idPaciente"]=parseInt(a);
+          console.log(this.parametros_busqueda);
+
+    })
+
+
+
+  }
+
+  public abrirModalFisioterapeutas(){
+    this.dialog.open(ModalFisioterapeutasComponent, {
+      data: {
+          fisioterapeutas : this.fisioterapeutas
+      }
+    }).afterClosed().subscribe((a) => {
+          this.parametros_busqueda["idFisioterapeuta"]=parseInt(a);
+          console.log(this.parametros_busqueda);
+
+    })
   }
 
   public onChange(dato, nombre) {
@@ -215,6 +245,8 @@ export class ListarfichasComponent implements OnInit {
 
 
   }
+
+  
 
 
 

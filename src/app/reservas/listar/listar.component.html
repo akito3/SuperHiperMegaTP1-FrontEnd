@@ -19,7 +19,7 @@
                       <div class="col-md-12">
                         <mat-form-field>
                           <mat-select placeholder="Fisioterapeutas Disponibles"
-                            (selectionChange)="onChange($event.value, 'idFisioterapeuta')"
+                            (selectionChange)="onChange($event.value, 'idFisioterapeuta')" (click)="abrirModalFisioterapeutas()"
                             [(ngModel)]="parametros_busqueda.idFisioterapeuta" name="idFisioterapeuta">
                             <mat-option *ngFor="let fisioterapeuta of fisioterapeutas" [value]="fisioterapeuta.idPersona">
                               {{fisioterapeuta.nombre}} {{fisioterapeuta.apellido}}
@@ -36,7 +36,7 @@
                     <div class="row">
                       <div class="col-md-12">
                         <mat-form-field>
-                          <mat-select placeholder="Pacientes Disponibles" (selectionChange)="onChange($event.value, 'idPaciente')"
+                          <mat-select placeholder="Pacientes Disponibles" (selectionChange)="onChange($event.value, 'idPaciente')" (click)="abrirModalClientes()"
                             [(ngModel)]="parametros_busqueda.idPaciente" name="idPaciente">
                             <mat-option *ngFor="let paciente of pacientes" [value]="paciente.idPersona">
                               {{ paciente.nombre }} {{paciente.apellido}}

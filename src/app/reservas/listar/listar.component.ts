@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReservasServices } from '../services/reservas.services';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
+import { ModalFisioterapeutasComponent } from 'src/app/util/modal-fisioterapeutas/modal-fisioterapeutas.component';
+import { ModalClientesComponent } from 'src/app/util/modal-clientes/modal-clientes.component';
 @Component({
   selector: 'app-listar',
   templateUrl: './listar.component.html',
@@ -33,6 +35,36 @@ export class ListarComponent implements OnInit {
     this.cargarListaReservas();
     this.cargarComboBoxFisioterapeutas();
     this.cargarComboBoxPacientes();
+
+
+  }
+
+  public abrirModalClientes() {
+    this.dialog.open(ModalClientesComponent, {
+      data: {
+        clientes: this.pacientes
+      }
+    }).afterClosed().subscribe((a) => {
+      this.parametros_busqueda["idPaciente"] = parseInt(a);
+      console.log(this.parametros_busqueda);
+
+    })
+
+
+
+  }
+
+  public abrirModalFisioterapeutas() {
+    this.dialog.open(ModalFisioterapeutasComponent, {
+      data: {
+        fisioterapeutas: this.fisioterapeutas
+      }
+    }).afterClosed().subscribe((a) => {
+      this.parametros_busqueda["idFisioterapeuta"] = parseInt(a);
+      console.log(this.parametros_busqueda);
+
+    })
+
 
 
   }
@@ -76,9 +108,9 @@ export class ListarComponent implements OnInit {
       console.log("Error al obtener reservas", error.message);
 
 
-    }).add(()=>{
+    }).add(() => {
 
-        this.showSpinner = false
+      this.showSpinner = false
 
 
     })
@@ -112,9 +144,9 @@ export class ListarComponent implements OnInit {
       console.log("Error al filtrar ", error.message)
 
 
-    }).add(()=>{
+    }).add(() => {
 
-        this.showSpinner = false
+      this.showSpinner = false
 
 
     })
@@ -122,10 +154,10 @@ export class ListarComponent implements OnInit {
 
   }
 
-  limpiar(){
+  limpiar() {
 
-   //reiniciamos la pagina
-   this.ngOnInit(); 
+    //reiniciamos la pagina
+    this.ngOnInit();
 
 
 
@@ -178,8 +210,8 @@ export class ListarComponent implements OnInit {
   }
 
 
-  irAcrearFicha(idEmpleado,idCliente){
-    this.router.navigate(['./../../fichas-clinicas/agregar-nueva-ficha-clinica',idEmpleado,idCliente],{relativeTo : this.route});
+  irAcrearFicha(idEmpleado, idCliente) {
+    this.router.navigate(['./../../fichas-clinicas/agregar-nueva-ficha-clinica', idEmpleado, idCliente], { relativeTo: this.route });
   }
 
 

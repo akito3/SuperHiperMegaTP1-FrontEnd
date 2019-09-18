@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { ExcepcionesService } from 'src/app/services/excepciones.service';
+import { ModalFisioterapeutasComponent } from 'src/app/util/modal-fisioterapeutas/modal-fisioterapeutas.component';
 
 @Component({
   selector: 'app-configurar-excepciones',
@@ -31,6 +32,19 @@ export class ConfigurarExcepcionesComponent implements OnInit {
     this.parametros_busqueda = { 'idFisioterapeuta': null, 'fechadesde': null, 'fechahasta': null };
     this.cargarListaReservas();
     this.cargarComboBoxFisioterapeutas();
+  }
+
+
+  public abrirModalFisioterapeutas(){
+    this.dialog.open(ModalFisioterapeutasComponent, {
+      data: {
+          fisioterapeutas : this.fisioterapeutas
+      }
+    }).afterClosed().subscribe((a) => {
+          this.parametros_busqueda["idFisioterapeuta"]=parseInt(a);
+          console.log(this.parametros_busqueda);
+
+    })
   }
 
   public onChange(dato, nombre) {
