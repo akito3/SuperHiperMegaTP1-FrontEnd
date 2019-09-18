@@ -11,6 +11,7 @@
             <mat-option value="idProducto">idProducto</mat-option>
             <mat-option value="idTipoProducto">idTipoProducto</mat-option>
             <mat-option value="like">Like</mat-option>
+            <mat-option value="obtenerPrecio">Obtener precios</mat-option>
             <!-- <mat-option value="fisioterapeutas">Fisioterapeutas</mat-option> -->
           </mat-select>
         </mat-form-field>
@@ -28,7 +29,7 @@
         </div>
       </div>
 
-      <div class="col-md-2" *ngIf="tipoBusqueda === 'idProducto' || tipoBusqueda === 'idTipoProducto'">
+      <div class="col-md-2" *ngIf="tipoBusqueda === 'idProducto' || tipoBusqueda === 'idTipoProducto' || tipoBusqueda === 'obtenerPrecio'">
         <legend>ID</legend>
         <div class="row">
           <div class="col-md-12">
@@ -64,7 +65,7 @@
       </div> -->
 
       <div class="col-md-2"
-        *ngIf="tipoBusqueda == 'nombre' || tipoBusqueda == 'idProducto' || tipoBusqueda == 'like' || tipoBusqueda == 'idTipoProducto'">
+        *ngIf="tipoBusqueda == 'nombre' || tipoBusqueda == 'idProducto' || tipoBusqueda == 'like' || tipoBusqueda == 'idTipoProducto' || tipoBusqueda == 'obtenerPrecio'">
         <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" (click)="onClickFiltro()">
           <i class="material-icons">search</i>
           <div class="ripple-container"></div>

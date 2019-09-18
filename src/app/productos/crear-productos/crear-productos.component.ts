@@ -15,17 +15,21 @@ import { stringify } from '@angular/compiler/src/util';
 export class CrearProductosComponent implements OnInit {
   form: FormGroup;
   producto : Productos;
+  objeto_a_enviar=null;
+
+
   constructor(private formBuilder: FormBuilder,
     private servicioAgregar: ProductosService,
     private router: Router) { }
   ngOnInit() {
     console.log("ngOnInit");
     this.form = this.formBuilder.group({
-      nombre: new FormControl(''),
-      // idPresentacionProducto: new FormControl(''),
-      descripcion: new FormControl(''),
+
+      codigo: new FormControl(''),
       idProducto: new FormControl(''),
-      idTipoProducto: new FormControl('')
+      flagServicio: new FormControl(''),
+      nombre: new FormControl(''),
+      precioVenta: new FormControl(''),
     } );
     console.log("form: ", this.form);
     console.log("fin de ngOnInit");
@@ -33,26 +37,29 @@ export class CrearProductosComponent implements OnInit {
 
   onSubmit() {
     console.log("onSubmit: ");
-    console.log("producto: ", this.producto);
-    this.producto = new Productos( null,null,null,null);
-    // this.producto.idPresentacionProducto = Number(this.form.get('idPresentacionProducto').value);
-    console.log("this.form.get('descripcion').value: ", this.form.get('descripcion').value);
-    this.producto.descripcion = this.form.get('descripcion').value;
 
-    console.log("this.form.get('nombre').value", this.form.get('nombre').value);
-    this.producto.nombre = this.form.get('nombre').value;
-    let idProducto : number = Number(this.form.get('idProducto').value);
+    let entrada = this.form;
+    var objeto = {
+      "codigo":entrada.get('codigo').value,
+      "flagServicio": entrada.get('flagServicio').value,
+      // "descripcion": this.producto.descripcion,
+      "idProducto": {
+        "idProducto": entrada.get('idProducto').value,
+      },
+      "nombre": entrada.get('nombre').value,
+      "existenciaProducto":{
+        "precioVenta":entrada.get('precioVenta').value
+        // "idTipoProducto" : {
+          // "idTipoProducto" : this.producto.idProducto.idTipoProducto.idTipoProducto
+        }
+      // }
+      // "idCliente": {
+      //   "idPersona": idPaciente
+      // },
+    }
     
-    console.log("id.Producto.idProducto: ", idProducto);
-    let numberIdTipoProducto =  Number(this.form.get('idTipoProducto').value)
-    let tipoIdProducto: IdTipoProducto =  new IdTipoProducto( numberIdTipoProducto);
-    
-    console.log("tipoIdProducto: ", tipoIdProducto );
-    this.producto.idProducto =   new IdProducto(idProducto , tipoIdProducto );
-    console.log("this.producto.idProducto", this.producto.idProducto);
-    console.log("producto: ", this.producto);
-    // this.form.
-    this.servicioAgregar.createProducto(this.producto)
+    this.objeto_a_enviar = objeto;
+    this.servicioAgregar.createProducto(this.objeto_a_enviar)
       .subscribe(data => {
         console.log('producto agregado');
         swal({

@@ -25,8 +25,8 @@ export class ListarProductosComponent implements OnInit {
   // dataSourceEP: MatTableDataSource<IdProducto>;
   totalProductos: number;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  // @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  // @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   // MatPaginator Inputs
   length = 100;
@@ -66,7 +66,7 @@ export class ListarProductosComponent implements OnInit {
 
   
   getProductos() {
-    console.log(" listar-productos getCategorias")
+    console.log(" listar-productos getProductos")
    this.dataService.split({
      ...this.pagination,
      orderBy: this.orderBy,
@@ -84,7 +84,7 @@ export class ListarProductosComponent implements OnInit {
     
     let valor: any;
 
-    if (this.tipoBusqueda === 'idProducto' || this.tipoBusqueda === 'idTipoProducto') { valor = { id : this.idBusqueda}; } 
+    if (this.tipoBusqueda === 'idProducto' || this.tipoBusqueda === 'idTipoProducto' || this.tipoBusqueda === 'obtenerPrecio') { valor = { id : this.idBusqueda}; } 
     else if (this.tipoBusqueda === 'nombre' || this.tipoBusqueda === 'like') {valor = {nombre: this.nombreBusqueda};}
 
     if (this.tipoBusqueda === 'nombre'   || this.tipoBusqueda === 'like' ||  this.tipoBusqueda === 'idTipoProducto') {
@@ -100,8 +100,9 @@ export class ListarProductosComponent implements OnInit {
       let dataSource : MatTableDataSource<IdProducto> = new MatTableDataSource(response.lista);
       let totalProductos :number  = response['totalDatos'];
       let arrayProductos = new Array<Productos>() ;
+      let producto = new Productos(null, null, null, null,null,null,null);
       for (const k in response.lista) {
-        let producto = new Productos(null, null, null, null);
+        
         producto.idProducto = new IdProducto(response.lista[k].idProducto, new IdTipoProducto(response.lista[k].idTipoProducto.idTipoProducto));
         arrayProductos.push(producto);
       }
@@ -109,10 +110,26 @@ export class ListarProductosComponent implements OnInit {
       this.totalProductos = totalProductos;
       });
     }
-    // else if(this.tipoBusqueda ==='existenciaProducto')  
-    // {
-
-    // }
+    else if(this.tipoBusqueda ==='obtenerPrecio')  
+    {
+      console.log("existenciaProducto");
+      this.dataServiceId.getExistenciaProductoFiltro({tipo: this.tipoBusqueda, valor: valor}).subscribe(response => {
+      console.log("response: ", response);
+      console.log("response.lista", response.lista);
+      console.log("response['totalDatos']", response['totalDatos']);
+      let cantidad_elementos :number = response.lista.length;
+      // let dataSource : MatTableDataSource<IdProducto> = new MatTableDataSource(response.lista);
+      // let totalProductos :number  = response['totalDatos'];
+      // let arrayProductos = new Array<Productos>() ;
+      // for (const k in response.lista) {
+      //   let producto = new Productos(null, null, null, null);
+      //   producto.idProducto = new IdProducto(response.lista[k].idProducto, new IdTipoProducto(response.lista[k].idTipoProducto.idTipoProducto));
+      //   arrayProductos.push(producto);
+      // }
+      // this.dataSource = new MatTableDataSource(arrayProductos);
+      // this.totalProductos = totalProductos;
+      });
+    }
        
      else {
       this.getProductos();

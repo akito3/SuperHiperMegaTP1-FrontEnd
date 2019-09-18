@@ -35,13 +35,13 @@ export class EditarProductosComponent implements OnInit {
     if (this.form.valid) {
       console.log('if my log');
       console.log(this.form.value);
-      let producto :Productos = new Productos(null, null, null, null);
+      let producto :Productos = new Productos(null, null, null, null,null,null,null);
       producto.descripcion = this.form.get('descripcion').value;
       producto.nombre = this.form.get('nombre').value;
       producto.idPresentacionProducto = this.form.get('idPresentacionProducto').value;
-      let tipoIdProducto : IdTipoProducto = new IdTipoProducto(  Number(this.form.get('idTipoProducto').value ) )
+      // let tipoIdProducto : IdTipoProducto = new IdTipoProducto(  Number(this.form.get('idTipoProducto').value ) )
       let idProducto:number = Number( this.form.get('idProducto').value);
-      producto.idProducto = new IdProducto( idProducto , tipoIdProducto );
+      producto.idProducto = new IdProducto( idProducto , null );
 
       console.log("producto: ", producto);
       this.servicioEditar.editProducto(producto).subscribe( response => { console.log('Producto editado'); 
@@ -92,7 +92,11 @@ export class EditarProductosComponent implements OnInit {
       descripcion: new FormControl(producto.descripcion),
       idProducto: new FormControl(producto.idProducto.idProducto),
       idPresentacionProducto: new FormControl(producto.idPresentacionProducto),
-      idTipoProducto : new FormControl(producto.idProducto.idTipoProducto.idTipoProducto),
+      codigo : new FormControl(producto.codigo),
+      precioVenta: new FormControl(producto.existenciaProducto.precioVenta),
+      flagServicio : new FormControl(producto.flagServicio)
+
+      // idTipoProducto : new FormControl(producto.idProducto.idTipoProducto.idTipoProducto),
 
     });
     console.log("formulario cargado");

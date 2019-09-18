@@ -29,9 +29,7 @@ export class ListarPacientesComponent implements OnInit {
   length = 100;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  // MatPaginator Output
-  private count: Number = 0;
-  private data: any[] = [];
+
   // MatPaginator Output
   private pagination = {
     inicio: 0,
@@ -57,20 +55,10 @@ export class ListarPacientesComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     console.log("listar-pacientes ngOnInit");
-    console.log("orderBy: ", this.orderBy);
-    console.log("orderDir: ", this.orderDir);
     this.getPacientes();
   }
 
-  // getPacientes() {
-  //   this.dataService.getPacientes()
-  //     .subscribe((response) => {
-  //       this.dataSource = new MatTableDataSource(response.lista);
-  //       this.totalPacientes = response['totalDatos'];
-  //     });
-  // }
   get_page(event) {
     console.log("get_page")
     this.ordenar(this.orderBy);

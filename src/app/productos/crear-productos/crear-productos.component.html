@@ -12,6 +12,12 @@
           <div class="card-body ">
             <form [formGroup]='form' (ngSubmit)="onSubmit()">
 
+              <!-- Codigo -->
+              <mat-form-field class="example-full-width">
+                <input formControlName="codigo" matInput placeholder="Codigo" type="text">
+              </mat-form-field>
+
+
               <!-- Nombre -->
               <mat-form-field class="example-full-width">
                 <input formControlName="nombre" matInput placeholder="Nombre" type="text">
@@ -22,9 +28,9 @@
                 <input formControlName="idPresentacionProducto" matInput placeholder="IdPresentacionProducto" type="text">
               </mat-form-field> -->
 
-              <!-- Descripcion -->
+              <!-- FlagServicio -->
               <mat-form-field class="example-full-width">
-                <input formControlName="descripcion" matInput placeholder="Descripcion" type="text">
+                <input formControlName="flagServicio" matInput placeholder="FlagServicio" type="text">
               </mat-form-field>
 
               <!-- IdProducto -->
@@ -32,9 +38,9 @@
                 <input formControlName="idProducto" matInput placeholder="IdProducto" type="email">
               </mat-form-field>
 
-              <!-- IdTipoProducto -->
+              <!-- PrecioVenta -->
               <mat-form-field class="example-full-width">
-                <input formControlName="idTipoProducto" matInput placeholder="IdTipoProducto" type="email">
+                <input formControlName="precioVenta" matInput placeholder="PrecioVenta" type="email">
               </mat-form-field>
 
 

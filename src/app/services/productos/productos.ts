@@ -1,6 +1,9 @@
 export class Productos {
     constructor (
         public idPresentacionProducto:number,
+        public codigo :number,
+        public flagServicio:String,
+        public existenciaProducto : ExistenciaProducto,
         public nombre: string,
         public idProducto: IdProducto,
         public descripcion: string,
@@ -17,6 +20,12 @@ export class IdProducto {
 export class IdTipoProducto{
     constructor(
         public idTipoProducto :number,
+    ){}
+}
+
+export class ExistenciaProducto{
+    constructor(
+        public precioVenta:number,
     ){}
 }
 

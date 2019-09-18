@@ -9,11 +9,10 @@ import { map } from 'rxjs/operators';
 })
 export class PacientesService {
   private baseUrl = 'https://gy7228.myfoscam.org:8443/stock-pwfe/persona';
-  private header = new HttpHeaders({
-    'Content-Type': "application/json",
-    'Accept': 'application/json',
-    'usuario' : localStorage.getItem("usuarioLogin"),
-});
+  header = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json').set('usuario', localStorage.getItem("usuarioLogin"));
+  httpOptions = {
+    headers: this.header
+  };
   private cuerpo = {};
   constructor(private httpClient: HttpClient) { }
   
@@ -21,7 +20,7 @@ export class PacientesService {
     let params = new HttpParams();
     params = params.append('size', '1000');
     params = params.append('page', '0');
-    return this.httpClient.get<ListaPacientes>(this.baseUrl,  { headers: this.header });
+    return this.httpClient.get<ListaPacientes>(this.baseUrl,  { headers: this.header   });
   }
 
   getPacientesFiltro(parametro: any): Observable<ListaPacientes> {
@@ -50,7 +49,7 @@ export class PacientesService {
     } else if (parametro.tipo === 'fisioterapeutas') {
       params = params.append('ejemplo', '{"soloUsuariosDelSistema":true}');
     }
-
+    
     console.log("argumento: ",argumento);
     console.log("params: ", params);
     console.log("URL: ", this.baseUrl);
@@ -98,7 +97,7 @@ export class PacientesService {
     console.log("cuerpo: ", this.cuerpo);
     console.log("producto: ", paciente);
     // console.log("form: ", form);
-    return this.httpClient.post<Pacientes>(this.baseUrl, this.cuerpo, { headers: this.header });
+    return this.httpClient.post<Pacientes>(this.baseUrl, this.cuerpo, this.httpOptions);
   }
 
   editPaciente(paciente: Pacientes) {
