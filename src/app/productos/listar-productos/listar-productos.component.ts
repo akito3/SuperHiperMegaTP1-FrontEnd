@@ -19,7 +19,7 @@ declare const $: any;
   styleUrls: ['./listar-productos.component.css']
 })
 export class ListarProductosComponent implements OnInit {
-  displayedColumns = ['nombre',   'descripcion', 'idPresentacionProducto', 'idProducto', 'idTipoProducto', 'accion' ];
+  displayedColumns = ['nombre',  'codigo',  'idPresentacionProducto', 'idProducto', 'flagServicio' , 'accion' ];
   dataSource: MatTableDataSource<Productos>;
   dataSourceIdProductos: MatTableDataSource<IdProducto>;
   // dataSourceEP: MatTableDataSource<IdProducto>;
@@ -75,6 +75,7 @@ export class ListarProductosComponent implements OnInit {
    .subscribe((response) => {
      this.dataSource = new MatTableDataSource(response['lista']);
      this.dataSourceIdProductos = new MatTableDataSource(response['lista']);
+     console.log("productos: ", response['lista']);
      this.totalProductos = response['totalDatos'];
    });
  }
@@ -87,13 +88,23 @@ export class ListarProductosComponent implements OnInit {
     if (this.tipoBusqueda === 'idProducto' || this.tipoBusqueda === 'idTipoProducto' || this.tipoBusqueda === 'obtenerPrecio') { valor = { id : this.idBusqueda}; } 
     else if (this.tipoBusqueda === 'nombre' || this.tipoBusqueda === 'like') {valor = {nombre: this.nombreBusqueda};}
 
-    if (this.tipoBusqueda === 'nombre'   || this.tipoBusqueda === 'like' ||  this.tipoBusqueda === 'idTipoProducto') {
+    if (this.tipoBusqueda === 'nombre'   || this.tipoBusqueda === 'like' ) {
       this.dataService.getProductosFiltro({tipo: this.tipoBusqueda, valor: valor}).subscribe(response => {
         this.dataSource = new MatTableDataSource(response.lista);
         this.totalProductos = response['totalDatos'];
 
       });
     }
+    else if (this.tipoBusqueda === 'idTipoProducto'){
+
+      this.dataService.getProductosByIdTipoProducto(valor.id).subscribe(response => {
+      console.log("response.lista", response.lista);
+      console.log("total datos: ", response['totalDatos']);
+        this.dataSource = new MatTableDataSource(response.lista);
+        this.totalProductos = response['totalDatos'];
+
+    });
+  }
     else if ( this.tipoBusqueda === 'idProducto') {
       this.dataServiceId.getIdProductoFiltro({tipo: this.tipoBusqueda, valor: valor}).subscribe(response => {
       let cantidad_elementos :number = response.lista.length;
@@ -118,22 +129,13 @@ export class ListarProductosComponent implements OnInit {
       console.log("response.lista", response.lista);
       console.log("response['totalDatos']", response['totalDatos']);
       let cantidad_elementos :number = response.lista.length;
-      // let dataSource : MatTableDataSource<IdProducto> = new MatTableDataSource(response.lista);
-      // let totalProductos :number  = response['totalDatos'];
-      // let arrayProductos = new Array<Productos>() ;
-      // for (const k in response.lista) {
-      //   let producto = new Productos(null, null, null, null);
-      //   producto.idProducto = new IdProducto(response.lista[k].idProducto, new IdTipoProducto(response.lista[k].idTipoProducto.idTipoProducto));
-      //   arrayProductos.push(producto);
-      // }
-      // this.dataSource = new MatTableDataSource(arrayProductos);
-      // this.totalProductos = totalProductos;
+
       });
     }
-       
-     else {
+    else {
       this.getProductos();
     }
+    // console.log("lista: ",this.dataSource);
   }
 
   onChange() {

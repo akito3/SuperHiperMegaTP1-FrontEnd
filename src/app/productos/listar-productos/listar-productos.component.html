@@ -8,10 +8,10 @@
           <mat-label>Seleccione una opción</mat-label>
           <mat-select [(value)]="tipoBusqueda" (selectionChange)="onChange()">
             <mat-option>Ninguno</mat-option>
-            <mat-option value="idProducto">idProducto</mat-option>
-            <mat-option value="idTipoProducto">idTipoProducto</mat-option>
+            <mat-option value="idTipoProducto">Presentaciones por tipo</mat-option>
+            <mat-option value="idProducto">Producto por tipo</mat-option>
             <mat-option value="like">Like</mat-option>
-            <mat-option value="obtenerPrecio">Obtener precios</mat-option>
+            <!-- <mat-option value="obtenerPrecio">Obtener precios</mat-option> -->
             <!-- <mat-option value="fisioterapeutas">Fisioterapeutas</mat-option> -->
           </mat-select>
         </mat-form-field>
@@ -111,11 +111,6 @@
               </ng-container>
 
 
-                <!-- <ng-container matColumnDef="idPresentacionProducto">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{element.idPresentacionProducto}}</mat-cell>
-                </ng-container> -->
-
                 <!-- Columna Nombre -->
                 <ng-container matColumnDef="nombre">
                   <mat-header-cell *matHeaderCellDef   > Nombre 
@@ -123,11 +118,6 @@
                     </mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
               </ng-container>
-
-                <!-- <ng-container matColumnDef="nombre">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre </mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{element.nombre}}</mat-cell>
-                </ng-container> -->
 
                 <!-- Columna idProducto -->
                 <ng-container matColumnDef="idProducto">
@@ -137,24 +127,29 @@
                   <mat-cell *matCellDef="let element"> {{element.idProducto.idProducto }} </mat-cell>
               </ng-container>
 
+              <!-- Columna flagServicio -->
+              <ng-container matColumnDef="flagServicio">
+                <mat-header-cell *matHeaderCellDef   > flagServicio 
+                    <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('flagServicio')">sort</i>
+                  </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.flagServicio }} </mat-cell>
+            </ng-container>
+
                <!-- Columna idTipoProducto -->
-               <ng-container matColumnDef="idTipoProducto">
+               <!-- <ng-container matColumnDef="idTipoProducto">
                 <mat-header-cell *matHeaderCellDef   > idTipoProducto 
                     <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('idTipoProducto')">sort</i>
                   </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{ element.idProducto.idTipoProducto.idTipoProducto}} </mat-cell>
-            </ng-container>
-                <!-- <ng-container matColumnDef="idProducto">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>idProducto</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{element.idProducto.idProducto}}</mat-cell>
-                </ng-container> -->
+            </ng-container>  -->
 
-                <!-- Columna descripcion -->
-                <ng-container matColumnDef="descripcion">
-                  <mat-header-cell *matHeaderCellDef   > Descripcion 
-                      <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('descripcion')">sort</i>
+
+                <!-- Columna codigo -->
+                <ng-container matColumnDef="codigo">
+                  <mat-header-cell *matHeaderCellDef   > codigo 
+                      <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('codigo')">sort</i>
                     </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+                  <mat-cell *matCellDef="let element"> {{element.codigo}} </mat-cell>
               </ng-container>
 
                 <!-- <ng-container matColumnDef="descripcion">

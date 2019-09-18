@@ -92,11 +92,23 @@ export class ProductosService {
     return this.httpClient.get<Productos>(this.baseUrl + '/' + idPresentacionProducto);
   }
 
+  getProductosByIdTipoProducto(tipoProducto: number): Observable<ListaProductos> {
+    console.log("getProductosByIdTipoProducto");
+    let argumento = '{"idProducto":{"idTipoProducto":{"idTipoProducto":' + tipoProducto + '}}}';
+    let params = new HttpParams();
+
+    params = params.append('Content-Type', "application/json");    
+
+    params = params.append('ejemplo', argumento);
+    let retorno =  this.httpClient.get<ListaProductos>(this.baseUrl, {params: params} );
+    console.log("retorno: ",retorno);
+    return retorno;
+  }
+
   createProducto(objeto: any) {
 
     console.log("createProducto");
-    // this.cuerpo = JSON.stringify(producto);
-    // console.log("cuerpo: ", this.cuerpo);
+
     let respuesta = this.httpClient.post<Productos>(this.baseUrl, objeto, this.httpOptions );
     console.log("respuesta: ",respuesta);
     console.log("obeto es: ", objeto);
@@ -105,17 +117,10 @@ export class ProductosService {
 
   editProducto(objecto: any): Observable<Productos> {
     console.log("editProducto");
-    // var cuerpo = {
-    //   'nombre' : producto.nombre,
-    //   'descripcion' : producto.descripcion,
-    //   'idProducto' : {"idProducto":producto.nombre},
-    //   'idPresentacionProducto' : producto.idPresentacionProducto
-    // };
+    
     const params = new HttpParams().set('Content-Type', 'application/json');
     const options = { params: params };
-    // console.log("producto: ", producto);
-    // this.cuerpo = JSON.stringify(producto);
-    // console.log("cuerpo: ", this.cuerpo);
+    
     return this.httpClient.put<Productos>(this.baseUrl, objecto, this.httpOptions );
   }
 

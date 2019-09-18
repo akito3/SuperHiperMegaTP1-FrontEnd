@@ -1,0 +1,16 @@
+<h2 mat-dialog-title *ngIf="data.accion=='eliminacion'">
+  {{data.titulo}} Paciente
+</h2>
+
+<mat-dialog-content>
+  <p *ngIf="data.accion =='eliminacion'">
+    ¿Estás seguro de que deseas eliminar al paciente {{data.paciente.nombre}}?
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">Cancelar</button>
+  <button *ngIf="data.accion=='eliminacion'" class="mat-raised-button mat-primary" (click)="eliminar()">Eliminar</button>
+  <button *ngIf="data.accion=='modificacion'" class="mat-raised-button mat-primary" (click)="editar()">Modificar</button>
+  <button *ngIf="data.accion=='creacion'" class="mat-raised-button mat-primary" (click)="crear()">Guardar</button>
+</mat-dialog-actions>

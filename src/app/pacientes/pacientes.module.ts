@@ -8,6 +8,7 @@ import { PacientesRoutes } from './pacientes.routing';
 import { ListarPacientesComponent } from './listar-pacientes/listar-pacientes.component';
 import { CrearPacientesComponent } from './crear-pacientes/crear-pacientes.component';
 import { EditarPacientesComponent } from './editar-pacientes/editar-pacientes.component';
+import { DialogPacientesComponent  } from './dialog-pacientes/dialog-pacientes.component';
 
 @NgModule({
     imports: [

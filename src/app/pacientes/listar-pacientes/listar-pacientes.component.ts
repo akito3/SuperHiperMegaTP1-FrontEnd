@@ -1,14 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/table';
 import swal from 'sweetalert2';
-
+// import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { PacientesService } from '../../services/pacientes/pacientes.service';
 import { Pacientes } from '../../services/pacientes/pacientes';
-
+import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
 declare const $: any;
 
 @Component({
@@ -46,7 +46,7 @@ export class ListarPacientesComponent implements OnInit {
   private orderBy: any ;
   private orderDir: any ;
 
-  constructor(private router: Router, public dataService: PacientesService) { }
+  constructor(private router: Router, public dataService: PacientesService, public dialog: MatDialog,) { }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
@@ -168,31 +168,24 @@ export class ListarPacientesComponent implements OnInit {
     this.router.navigate(['dashboard/pacientes/editar/' + idPersona]);
   }
 
-  onClickBorrar(idPersona: number) {
-    if (confirm('¿Está seguro de que desea eliminar al paciente?')) {
-      this.dataService.deletePaciente(idPersona)
-        .subscribe(response => {
-          console.log('paciente borrado');
-          swal({
-          title: 'Eliminado',
-          text: 'El paciente se ha eliminado correctamente',
-          buttonsStyling: false,
-          confirmButtonClass: 'btn btn-success',
-          // tslint:disable-next-line: deprecation
-        }).catch(swal.noop);
+  onClickBorrar(paciente: Pacientes, accion: string, titulo: string) {
+    console.log(paciente);
+    const dialogRef = this.dialog.open(DialogPacientesComponent, {
+      data: {
+        paciente,
+        titulo,
+        accion
+      },
+    }).afterClosed().subscribe((response) => {
+      console.log(response);
+      if (response === 'eliminado') {
         this.getPacientes();
-      }, (error) => {
-        console.log('paciente error');
-          swal({
-          title: 'Error',
-          text: 'El paciente esta en uso',
-          buttonsStyling: false,
-          confirmButtonClass: 'btn btn-danger',
-          // tslint:disable-next-line: deprecation
-        }).catch(swal.noop);
+      } else if (response === 'cancelado') {
         this.getPacientes();
-      });
-    }
+      }
+    });
   }
+
+
 
 }
