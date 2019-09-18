@@ -1,5 +1,6 @@
 import { ConfigurarExcepcionesComponent } from './configurar-excepciones/configurar-excepciones.component';
 import { Routes } from '@angular/router';
+import { AgregarExcepcionComponent } from './agregar-excepciones/agregar-excepciones.component';
 
 export const ExcepcionesRoutes: Routes = [
 {
@@ -13,7 +14,7 @@ export const ExcepcionesRoutes: Routes = [
   path: '',
   children: [{
     path: 'crear',
-    component: ConfigurarExcepcionesComponent
+    component: AgregarExcepcionComponent
   }]
 },
 {
