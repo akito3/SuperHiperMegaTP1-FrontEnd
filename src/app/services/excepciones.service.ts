@@ -77,7 +77,7 @@ export class ExcepcionesService {
           'usuario' : 'gustavo',
       });
 
-      const url: string = API_ENDPOINT + 'stock-pwfe/reserva/' + idReserva ;
+      const url: string = API_ENDPOINT + 'stock-pwfe/horarioExcepcion/' + idReserva ;
       return this.httpClient.delete(url, { headers: header });
 
 

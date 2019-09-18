@@ -275,9 +275,11 @@ export class ConfigurarExcepcionesComponent implements OnInit {
         let horas = this.objetoAgregar.horaAperturaCadena.toString().substring(0, 2);
         let minutos = this.objetoAgregar.horaAperturaCadena.toString().substring(3, 5);
         this.objetoAgregar.horaAperturaCadena = horas + minutos;
+        console.log(this.objetoAgregar.horaAperturaCadena);
         horas = this.objetoAgregar.horaCierreCadena.toString().substring(0, 2);
         minutos = this.objetoAgregar.horaCierreCadena.toString().substring(3, 5);
         this.objetoAgregar.horaCierreCadena = horas + minutos;
+        console.log(this.objetoAgregar.horaCierreCadena);
       }
       this.excepcionService.agregarExcepcion(this.objetoAgregar).subscribe(() => {
         this.cargarListaReservas();
