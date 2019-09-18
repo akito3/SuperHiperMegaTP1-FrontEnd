@@ -153,10 +153,17 @@ export class ListarCategoriasComponent implements OnInit {
   </h2>
 
 <mat-dialog-content>
+<mat-form-field *ngIf="data.accion=='modificacion'">
+<input matInput 
+        placeholder="Nro Categoria"
+        [(ngModel)]="data.idCategoria"
+        disabled>
+</mat-form-field>
 
     <p *ngIf="data.accion=='eliminacion'">
       Esta seguro de querer eliminar esta Categoría?
-	</p>
+  </p>
+  
     <mat-form-field *ngIf="data.accion=='modificacion'">
         <input matInput
                 placeholder="Descripcion"

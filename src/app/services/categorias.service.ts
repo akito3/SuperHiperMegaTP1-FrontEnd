@@ -39,23 +39,33 @@ export class CategoriasService {
   }
 
   agregarCategoria(objeto: any) {
+    const header = new HttpHeaders({
+      'Content-Type': "application/json",
+      'Accept': 'application/json',
+      'usuario' : localStorage.getItem("usuarioLogin"),
+  });
     const url = this.basePath + 'categoria';
-    return this.httpClient.post(url, objeto);
+    return this.httpClient.post(url, objeto, { headers: header });
   }
 
   editarCategoria1(objeto) {
+    const header = new HttpHeaders({
+      'Content-Type': "application/json",
+      'Accept': 'application/json',
+      'usuario' : localStorage.getItem("usuarioLogin"),
+  });
     const url = this.basePath + 'categoria';
-    return this.httpClient.put(url, objeto, this.httpOptions);
+    return this.httpClient.put(url, objeto, { headers: header });
   }
 
 
 
   editarCategoria(objeto){
     const header = new HttpHeaders({
-        'Content-Type': "application/json",
-        'Accept': 'application/json',
-        'usuario' :'gustavo',
-    });
+      'Content-Type': "application/json",
+      'Accept': 'application/json',
+      'usuario' : localStorage.getItem("usuarioLogin"),
+  });
 
     const url: string = 'https://gy7228.myfoscam.org:8443/' + 'stock-pwfe/categoria';
     return this.httpClient.put(url, objeto, { headers: header });

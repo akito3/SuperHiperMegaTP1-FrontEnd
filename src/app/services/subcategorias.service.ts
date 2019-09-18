@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,23 @@ export class SubcategoriasService {
   }
 
   agregarSubcategoria(data) {
+    const header = new HttpHeaders({
+      'Content-Type': "application/json",
+      'Accept': 'application/json',
+      'usuario' : localStorage.getItem("usuarioLogin"),
+  });
     const url = this.base_path + 'tipoProducto';
-    return this.http.post(url, data);
+    return this.http.post(url, data, { headers: header });
   }
 
   modificarSubcategoria(data) {
+    const header = new HttpHeaders({
+      'Content-Type': "application/json",
+      'Accept': 'application/json',
+      'usuario' : localStorage.getItem("usuarioLogin"),
+  });
     const url = this.base_path + 'tipoProducto';
-    return this.http.put(url, data);
+    return this.http.put(url, data, { headers: header });
   }
 
   borrarSubcategoria(id) {
