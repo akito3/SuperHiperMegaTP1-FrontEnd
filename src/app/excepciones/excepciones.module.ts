@@ -13,6 +13,7 @@ import { MatAutocompleteModule } from '@angular/material';
 import { MdModule } from '../md/md.module';
 import { ExcepcionesRoutes } from './excepciones.routing';
 import { ConfigurarExcepcionesComponent, DialogOverviewExampleDialog } from './configurar-excepciones/configurar-excepciones.component';
+import { AgregarExcepcionComponent } from '../excepciones/agregar-excepciones/agregar-excepciones.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,7 @@ import { ConfigurarExcepcionesComponent, DialogOverviewExampleDialog } from './c
         MatAutocompleteModule,
         MdModule
     ],
-    declarations: [ConfigurarExcepcionesComponent, DialogOverviewExampleDialog],
+    declarations: [ConfigurarExcepcionesComponent, DialogOverviewExampleDialog, AgregarExcepcionComponent],
     providers: [
         {
           provide: MatPaginatorIntl,

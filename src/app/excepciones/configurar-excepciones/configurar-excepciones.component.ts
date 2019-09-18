@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, SystemJsNgModuleLoader } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { ExcepcionesService } from 'src/app/services/excepciones.service';
@@ -15,8 +15,21 @@ export class ConfigurarExcepcionesComponent implements OnInit {
   private showSpinner = null;
   private fisioterapeutas: any[];
   public reservas: any[];
+  public inicio = 0;
+  public cantidad = 10;
+  private orderBy = 'idHorarioExcepcion';
+  private orderDir = 'asc';
+  count: Number = 0;
+  totalExcepciones: Number = 0;
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  private pagination = {
+    inicio: 0,
+    cantidad: 10,
+  };
   // inicializar en null 
-  private parametros_busqueda = { 'idFisioterapeuta': null, 'fechadesde': null, 'fechahasta': null };
+  private parametros_busqueda = { 'idFisioterapeuta': null, 'fechadesde': null, 'fechahasta': null, 'cantidad':null, 'orderBy':null, 'orderDir':null };
 
   constructor(
     // Dependency injection
@@ -25,11 +38,42 @@ export class ConfigurarExcepcionesComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) { }
-
+  private objetoAgregar : any = {
+    fechaCadena: null,
+    horaAperturaCadena: null,
+    horaCierreCadena: null,
+    flagEsHabilitar: null,
+    idEmpleado: {
+      idPersona: null
+    },
+    intervaloMinutos: null,
+  };
+  private objetoEditar: any = {
+    idHorarioExcepcion: null,
+    fechaCadena: null,
+    horaApertura: null,
+    horaCierre: null,
+    flagEsHabilitar: null,
+    idEmpleado: {
+      idPersona: null
+    },
+    intervaloMinutos: null,
+  };
+  private objetoEliminar: any = {
+    idHorarioExcepcion: null,
+    fechaCadena: null,
+    horaApertura: null,
+    horaCierre: null,
+    flagEsHabilitar: null,
+    idEmpleado: {
+      idPersona: null
+    },
+    intervaloMinutos: null,
+  };
   ngOnInit() {
     this.fisioterapeutas = [];
     this.reservas = [];
-    this.parametros_busqueda = { 'idFisioterapeuta': null, 'fechadesde': null, 'fechahasta': null };
+    this.parametros_busqueda = { 'idFisioterapeuta': null, 'fechadesde': null, 'fechahasta': null, 'cantidad':null, 'orderBy':null, 'orderDir':null};
     this.cargarListaReservas();
     this.cargarComboBoxFisioterapeutas();
   }
@@ -64,11 +108,28 @@ export class ConfigurarExcepcionesComponent implements OnInit {
     }
   }
 
+  get_page(event) {
+    this.cantidad = event.pageSize;
+    this.inicio = event.pageSize * event.pageIndex;
+    this.cargarListaReservas();
+  }
+
+ /* get_page(event) {
+    console.log('Entro a get_page');
+    this.pagination.cantidad = event.pageSize;
+    this.pagination.inicio = event.pageSize * event.pageIndex;
+    this.cargarListaReservas();
+  }*/
+
 
   public cargarListaReservas() {
+    console.log('Entro a cargarListaReservas');
     this.showSpinner = true;
     this.excepcionService.getExcepciones().subscribe((response: any) => {
       this.reservas = response.lista;
+      this.count = response.totalDatos;
+      this.totalExcepciones = response['totalDatos']
+      console.log('count ' + this.count);
       console.log('Las reservas son', this.reservas);
     }, (error: any) => {
       console.log('Error al obtener reservas', error.message);
@@ -89,7 +150,6 @@ export class ConfigurarExcepcionesComponent implements OnInit {
 
   public filtrarReservas() {
     this.showSpinner = true;
-
     this.excepcionService.getReservasFiltradas(this.parametros_busqueda).subscribe((response: any) => {
       this.reservas = response.lista;
     }, error => {
@@ -106,19 +166,125 @@ export class ConfigurarExcepcionesComponent implements OnInit {
 
   }
 
-  public irAagregarReservaComponent() {
-
-    this.router.navigate(['../agregar-reservas'], { relativeTo: this.route });
-
-
-
-  }
+  //public irAagregarExcepcionComponent() {
+    //this.router.navigate(['../../agregar-excepciones'], { relativeTo: this.route });
+  //}
  
+  public irAagregarExcepcionComponent() {
+    this.router.navigate(['dashboard/excepciones/crear']);
+   }
 
+   fechaCadena(date): String {
+    const year = date.getFullYear().toString();
+    const month = (date.getMonth() + 1).toString();
+    const day = date.getDate().toString();
+    console.log(year, month, day);
+    let mString: String;
+    let dString: String;
+    if (month < 10) {mString = '0' + month.toString();}
+    else {mString = month.toString();}
+    if (day < 10) {dString = '0' + day.toString();} 
+    else {
+    dString = day.toString();}
+    const dataText = year + mString + dString;
+    return dataText;
+  }
   irAcrearFicha(idEmpleado, idCliente){
     this.router.navigate(['./../../fichas-clinicas/agregar-nueva-ficha-clinica', idEmpleado, idCliente], {relativeTo : this.route});
   }
 
+  editar(to_edit) {
+    this.objetoEditar = JSON.parse(JSON.stringify(to_edit));
+    $('#editModal').modal('show');
+  }
+
+  closeEdit(send) {
+    if (send) {
+      this.objetoEditar.fechaCadena = this.fechaCadena(this.objetoEditar.fechaCadena);
+      if (this.objetoEditar.flagEsHabilitar === 'S' &&
+        this.objetoEditar.horaAperturaCadena !== null &&
+        this.objetoEditar.horaCierreCadena !== null) {
+        let horas = this.objetoEditar.horaAperturaCadena.toString().substring(0, 2);
+        let minutos = this.objetoEditar.horaAperturaCadena.toString().substring(3, 5);
+        this.objetoEditar.horaAperturaCadena = horas + minutos;
+        horas = this.objetoEditar.horaCierreCadena.toString().substring(0, 2);
+        minutos = this.objetoEditar.horaCierreCadena.toString().substring(3, 5);
+        this.objetoEditar.horaCierreCadena = horas + minutos;
+      }
+      this.objetoEditar.horaApertura = null;
+      this.objetoEditar.horaCierre = null;
+      this.objetoEditar.fecha = null;
+      this.objetoEditar.idLocal = null;
+      const idP = this.objetoEditar.idEmpleado.idPersona;
+      this.objetoEditar.idEmpleado = {
+        idPersona: idP,
+      }
+      this.excepcionService.modificarExcepcion(this.objetoEditar).subscribe(() => {
+        this.cargarListaReservas();
+      });
+    }
+    this.objetoEditar = {
+      idHorarioExcepcion: null,
+      fechaCadena: null,
+      horaAperturaCadena: null,
+      horaCierreCadena: null,
+      flagEsHabilitar: null,
+      idEmpleado: {
+        idPersona: null
+      },
+      intervaloMinutos: null,
+    };
+    $('#editModal').modal('hide');
+  }
+
+  eliminar(to_delete) {
+    console.log("Entro en eliminar");
+    this.objetoEliminar = JSON.parse(JSON.stringify(to_delete));
+    console.log(this.objetoEliminar);
+    $('#deleteModal').modal('show');
+  }
+
+  closeDelete(send) {
+    if (send) {
+      this.excepcionService.eliminarExcepcion(this.objetoEliminar['idHorarioExcepcion']).subscribe(() => {
+        this.cargarListaReservas();
+      });
+    }
+    this.objetoEliminar = {
+      idHorarioExcepcion: null,
+      fechaCadena: null,
+      horaAperturaCadena: null,
+      horaCierreCadena: null,
+      flagEsHabilitar: null,
+      idEmpleado: {
+        idPersona: null
+      },
+      intervaloMinutos: null,
+    };
+    $('#deleteModal').modal('hide');
+  }
+
+
+  modalAgregarExcepcion(objeto) {
+    if (objeto) {
+      this.objetoAgregar.fechaCadena = this.fechaCadena(this.objetoAgregar.fechaCadena);
+      if (this.objetoAgregar.flagEsHabilitar === 'S' &&
+        this.objetoAgregar.horaAperturaCadena !== null &&
+        this.objetoAgregar.horaCierreCadena !== null) {
+        let horas = this.objetoAgregar.horaAperturaCadena.toString().substring(0, 2);
+        let minutos = this.objetoAgregar.horaAperturaCadena.toString().substring(3, 5);
+        this.objetoAgregar.horaAperturaCadena = horas + minutos;
+        horas = this.objetoAgregar.horaCierreCadena.toString().substring(0, 2);
+        minutos = this.objetoAgregar.horaCierreCadena.toString().substring(3, 5);
+        this.objetoAgregar.horaCierreCadena = horas + minutos;
+      }
+      this.excepcionService.agregarExcepcion(this.objetoAgregar).subscribe(() => {
+        this.cargarListaReservas();
+      });
+    }
+    this.objetoAgregar = {idHorarioExcepcion: null,fechaCadena: null,horaAperturaCadena: null,horaCierreCadena: null,flagEsHabilitar: null,idEmpleado: {idPersona: null},intervaloMinutos: null,};
+    $('#modalExcepcionAdd').modal('hide');
+  }
 
 
 }
@@ -245,6 +411,7 @@ export class DialogOverviewExampleDialog implements OnInit {
     this.dialogRef.close("cancelado")
   }
 
+  
 
 
 }
