@@ -70,6 +70,12 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'games',
 },
 {
+    path: './atencion/listar',
+    title: 'Horario Atencion',
+    type: 'link',
+    icontype: 'list_alt',
+},
+{
     path: './reservas/listar-reservas',
     title: 'Reservas',
     type: 'link',

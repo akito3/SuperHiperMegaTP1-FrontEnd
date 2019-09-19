@@ -1,0 +1,371 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-icon card-header-rose">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title ">Atencion</h4>
+            </div>
+            <div class="card-body">
+  
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="btn-group">
+                    <form class="form-inline">
+                      <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" data-toggle="modal" data-target="#empleadoModal"  (click)="openEmpleado()">
+                        <span *ngIf="empleado">{{empleadoNombre}}</span>
+                        <span *ngIf="!empleado">Empleado</span>
+                      </button>
+                    </form>
+                    <div class="col-md-2">
+                    <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button" data-toggle="dropdown" 
+                      aria-haspopup="true" aria-expanded="false">
+                      <span *ngIf="diaCadena">{{diaCadena}}</span>
+                      <span *ngIf="!diaCadena">Dia</span>
+                    </button>
+                 
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" (click)="mostrarDia(0)">Domingo</a>
+                      <a class="dropdown-item" (click)="mostrarDia(1)">Lunes</a>
+                      <a class="dropdown-item" (click)="mostrarDia(2)">Martes</a>
+                      <a class="dropdown-item" (click)="mostrarDia(3)">Miércoles</a>
+                      <a class="dropdown-item" (click)="mostrarDia(4)">Jueves</a>
+                      <a class="dropdown-item" (click)="mostrarDia(5)">Viernes</a>
+                      <a class="dropdown-item" (click)="mostrarDia(6)">Sábado</a>
+                    </div>
+                  </div>
+  
+                  </div>
+                  <div class="col-md-2">
+                      <div class="btn-group">
+                        <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"   data-toggle="modal" data-target="#addModal">
+                          Nuevo Horario
+                        </button>
+                      </div>
+                    </div>
+                </div>
+              </div>
+  
+             
+              <div class="d-flex justify-content-end">
+              </div>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="text-primary">
+                    <tr (click)="ordernar($event.target['textContent'])">
+                      <th>Nro </th>
+                      <th>Empleado</th>
+                      <th>Dia</th>
+                      <th>Hora Inicio</th>
+                      <th>Hora Fin</th>
+                      <th>Local</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of atencion">
+                      <td >{{row.idPersonaHorarioAgenda}} </td>
+                      <td>{{row.idEmpleado.nombreCompleto}}</td>
+                      <td>{{row.diaCadena}}</td>
+                      <td>{{row.horaApertura}}</td>
+                      <td>{{row.horaCierre}}</td>
+                      <td>{{row.idLocal.nombre}}</td>
+                      <td>
+                        <div class="btn-group">
+                            <button mat-raised-button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal" (click)="openEdit(row)">
+                                <i class="material-icons">edit</i>
+                              </button>
+                          <button mat-raised-button type="button" class="btn btn-danger " data-toggle="modal" data-target="#deleteModal" (click)="openDelete(row)">
+                              <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-8">
+                <mat-paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                  (page)="get_page($event)">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Horario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"  data-toggle="modal" data-target="#addModal" click="closeAdd(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-select placeholder="Día" [(ngModel)]="nuevo_horario.dia">
+                <mat-option value=0>Domingo</mat-option>
+                <mat-option value=1>Lunes</mat-option>
+                <mat-option value=2>Martes</mat-option>
+                <mat-option value=3>Miércoles</mat-option>
+                <mat-option value=4>Jueves</mat-option>
+                <mat-option value=5>Viernes</mat-option>
+                <mat-option value=6>Sábado</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput type="time" placeholder="Horario de apertura" [(ngModel)]="nuevo_horario.horaAperturaCadena"
+                pattern="[0-9]{2}:[0-9]{2}">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput type="time" placeholder="Horario de cierre" [(ngModel)]="nuevo_horario.horaCierreCadena"
+                pattern="[0-9]{2}:[0-9]{2}">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="modal" data-target="#empleadoModal2" (click)="openEmpleado2()">
+              <span *ngIf="nuevo_horario.idEmpleado.idPersona">{{empNuevo}}</span>
+              <span *ngIf="!nuevo_horario.idEmpleado.idPersona">Seleccione Empleado</span>
+            </button>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput type="number" placeholder="Intérvalo minutos" [(ngModel)]="nuevo_horario.intervaloMinutos">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addModal" (click)="closeAdd(false)">Cerrar</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" (click)="closeAdd(true)" [disabled]="nuevo_horario.dia == null || nuevo_horario.dia.length == 0 || 
+            nuevo_horario.horaAperturaCadena == null || nuevo_horario.horaAperturaCadena.length == 0 ||
+            nuevo_horario.horaCierreCadena == null || nuevo_horario.horaCierreCadena.length == 0 ||
+            nuevo_horario.intervaloMinutos == null || nuevo_horario.intervaloMinutos.length == 0 ||
+            nuevo_horario.idEmpleado.idPersona == null || nuevo_horario.idEmpleado.idPersona.length == 0">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#editModal" click="closeEdit(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-select placeholder="Día" [(ngModel)]="edit_horario.dia" >
+                <mat-option value=0>Domingo</mat-option>
+                <mat-option value=1>Lunes</mat-option>
+                <mat-option value=2>Martes</mat-option>
+                <mat-option value=3>Miércoles</mat-option>
+                <mat-option value=4>Jueves</mat-option>
+                <mat-option value=5>Viernes</mat-option>
+                <mat-option value=6>Sábado</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput type="time" placeholder="Horario de apertura" [(ngModel)]="edit_horario.horaAperturaCadena"
+                pattern="[0-9]{2}:[0-9]{2}">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput type="time" placeholder="Horario de cierre" [(ngModel)]="edit_horario.horaCierreCadena"
+                pattern="[0-9]{2}:[0-9]{2}">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="modal" data-target="#empleadoModal3" (click)="openEmpleado3()">
+              <span *ngIf="edit_horario.idEmpleado.idPersona">{{empEdit}}</span>
+              <span *ngIf="!edit_horario.idEmpleado.idPersona">Seleccione Empleado</span>
+            </button>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput type="number" placeholder="Intérvalo minutos" [(ngModel)]="edit_horario.intervaloMinutos">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal" (click)="closeEdit(false)">Cerrar</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="closeEdit(true)" [disabled]="edit_horario.dia == null || edit_horario.dia.length == 0 || 
+            edit_horario.horaAperturaCadena == null || edit_horario.horaAperturaCadena.length == 0 ||
+            edit_horario.horaCierreCadena == null || edit_horario.horaCierreCadena.length == 0 ||
+            edit_horario.intervaloMinutos == null || edit_horario.intervaloMinutos.length == 0 ||
+            edit_horario.idEmpleado.idPersona == null || edit_horario.idEmpleado.idPersona.length == 0">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Borrar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#deleteModal" click="closeDelete(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            ¿Está seguro de querer borrar el horario {{delete_horario.idPersonaHorarioAgenda}}?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#deleteModal"(click)="closeDelete(false)">Cerrar</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" (click)="closeDelete(true)">Borrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Buscar empleado -->
+  
+  <div class="modal fade" id="empleadoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Elegir empleado</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#empleadoModal" click="closeEmpleado()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="empNombre">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="empApellido">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success"  (click)="buscarEmpleadoModal()" type="submit">Buscar</button>
+          </div>
+          <mat-nav-list>
+            <mat-list-item *ngFor="let empleado of empleados" data-toggle="modal" data-target="#empleadoModal" (click)="selectEmpleado(empleado)">
+              {{ empleado["nombreCompleto"] }}</mat-list-item>
+          </mat-nav-list>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#empleadoModal"  (click)="closeEmpleado()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Buscar empleado para nuevo -->
+  
+  <div class="modal fade" id="empleadoModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Seleccionar empleado</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#empleadoModal2"  click="closeEmpleado2()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="empNombre">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="empApellido">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success" (click)="buscarEmpleadoModal()" type="submit">Buscar</button>
+          </div>
+          <mat-nav-list>
+            <mat-list-item *ngFor="let empleado of empleados" data-toggle="modal" data-target="#empleadoModal2"  (click)="selectEmpleado2(empleado)">
+              {{ empleado["nombreCompleto"] }}</mat-list-item>
+          </mat-nav-list>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#empleadoModal2"  (click)="closeEmpleado2()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Buscar empleado para edit -->
+  
+  <div class="modal fade" id="empleadoModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Seleccionar empleado</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#empleadoModal3"  click="closeEmpleado3()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Nombre" [(ngModel)]="empNombre">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput class="form-control" placeholder="Apellido" [(ngModel)]="empApellido">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success" (click)="buscarEmpleadoModal()" type="submit">Buscar</button>
+          </div>
+          <mat-nav-list>
+            <mat-list-item *ngFor="let empleado of empleados" data-toggle="modal" data-target="#empleadoModal3" (click)="selectEmpleado3(empleado)">
+              {{ empleado["nombreCompleto"] }}</mat-list-item>
+          </mat-nav-list>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#empleadoModal3" (click)="closeEmpleado3()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

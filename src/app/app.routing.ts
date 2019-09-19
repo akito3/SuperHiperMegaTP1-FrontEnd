@@ -118,6 +118,10 @@ export const AppRoutes: Routes = [
                 loadChildren: './excepciones/excepciones.module#ExcepcionesModule'
             },
             {
+                path: 'atencion',
+                loadChildren: './atenciones/atencion/atencion.module#AtencionModule'
+            },
+            {
                 path: 'maps',
                 loadChildren: './maps/maps.module#MapsModule'
             },
