@@ -8,7 +8,7 @@ import { PacientesRoutes } from './pacientes.routing';
 import { ListarPacientesComponent } from './listar-pacientes/listar-pacientes.component';
 import { CrearPacientesComponent } from './crear-pacientes/crear-pacientes.component';
 import { EditarPacientesComponent } from './editar-pacientes/editar-pacientes.component';
-import { DialogPacientesComponent  } from './dialog-pacientes/dialog-pacientes.component';
+import { DialogPacientesComponent } from './dialog-pacientes/dialog-pacientes.component';
 
 @NgModule({
     imports: [
@@ -18,7 +18,12 @@ import { DialogPacientesComponent  } from './dialog-pacientes/dialog-pacientes.c
         ReactiveFormsModule,
         MaterialModule,
     ],
-    declarations: [ListarPacientesComponent, CrearPacientesComponent, EditarPacientesComponent]
+    declarations: [ListarPacientesComponent,
+        CrearPacientesComponent,
+        EditarPacientesComponent,
+        DialogPacientesComponent
+    ],
+    entryComponents: [DialogPacientesComponent]
 })
 
 export class PacientesModule { }
