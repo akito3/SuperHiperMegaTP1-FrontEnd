@@ -1,3 +1,4 @@
+import { AgregarArchivosComponent } from './fichasclinicas/agregararchivos/agregararchivos.component';
 import { ListarCategoriasComponent } from './categorias/listar-categorias/listar-categorias.component';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +29,7 @@ import { ListarDetallesAsociadosComponent, DialogAgregarNuevoDetalle, DialogElim
 import { ReportesComponent } from './reportes/reportes.component';
 import { ModalFisioterapeutasComponent } from './util/modal-fisioterapeutas/modal-fisioterapeutas.component';
 import { ModalClientesComponent } from './util/modal-clientes/modal-clientes.component';
+import { ArchivosComponent } from './fichasclinicas/archivos/archivos.component';
 
 
 @NgModule({
@@ -52,6 +54,8 @@ import { ModalClientesComponent } from './util/modal-clientes/modal-clientes.com
     LoginComponent,
     ListarfichasComponent,
     AgregarfichasComponent,
+    AgregarArchivosComponent,
+    ArchivosComponent,
     ListarComponent,
     AgregarReservasComponent,
     //AGREGAR AQUI EL DIALOG DE MATERIAL DESIGN

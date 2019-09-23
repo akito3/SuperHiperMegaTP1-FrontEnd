@@ -225,6 +225,64 @@ export class FichasClinicasService {
 
     }
 
+    enviarArchivo(archivo: File): Observable<string>{
+        let formData:FormData = new FormData();
+        formData.append('file', archivo, archivo.name);
+        let headers= new HttpHeaders();
+        headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');      
+        return this.httpClient.post(API_ENDPOINT + '/stock-pwfe/fichaArchivo',formData,{headers: headers,observe: 'response', responseType:'text'}).pipe(map(result=>result.body));
+    }
 
+
+
+    getFichasArchivo(): Observable<any> {
+        const headers = new HttpHeaders({
+
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/fichaArchivo';
+        return this.httpClient.get(url, { headers: headers })
+    }
+
+    getArchivoApartirDeFicha(idFicha:any){
+        console.log(idFicha);
+        const header = new HttpHeaders({
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+            'usuario' : localStorage.getItem("usuarioLogin"),
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/fichaArchivo?idFichaClinica='+idFicha;
+        console.log(url);
+        return this.httpClient.get(url);
+
+    }
+
+    geta1(idTipoProducto): Observable<any> {
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/fichaClinica';
+        let params: HttpParams = new HttpParams({ encoder: new CustomURLEncoder() }).set("ejemplo", "{\"idTipoProducto\":{\"idTipoProducto\":" + idTipoProducto + "}}")
+        console.log("params", params)
+        return this.httpClient.get(url, { params: params, headers: headers })
+    }
+
+    borrarArchivo(id:any) {
+        const header = new HttpHeaders({
+            'Content-Type': "application/json",
+            'Accept': 'application/json',
+            'usuario' : localStorage.getItem("usuarioLogin"),
+        });
+        const url: string = API_ENDPOINT + 'stock-pwfe/fichaArchivo/'+id;
+        console.log('url ' + url);
+        return this.httpClient.delete(url);
+      }
+    
 
 }

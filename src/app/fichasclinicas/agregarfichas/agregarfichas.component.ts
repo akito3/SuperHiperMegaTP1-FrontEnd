@@ -14,6 +14,7 @@ export class AgregarfichasComponent implements OnInit {
 
   private fichasClinicas: any[];
   private fisioterapeutas: any[];
+  private fichaArchivo: any[];
   private pacientes: any[];
   private categorias: any[];
   private tipoProductos: any[];
@@ -34,6 +35,11 @@ export class AgregarfichasComponent implements OnInit {
     this.cargarComboBoxCategorias();
     this.route.snapshot.paramMap.get("idEmpleado") == "null" ? this.selectedFisioterapeuta = null : this.selectedFisioterapeuta = parseInt(this.route.snapshot.paramMap.get("idEmpleado"));
     this.route.snapshot.paramMap.get("idCliente") == "null" ? this.selectedPaciente = null : this.selectedPaciente = parseInt(this.route.snapshot.paramMap.get("idCliente"));
+    this.fichasClinicasService.getFichasArchivo().subscribe((response:any)=>
+    {
+      this.fichaArchivo = response;
+      console.log("archivitos:",this.fichaArchivo);
+    })
 
   }
   public cargarComboBoxFisioterapeutas() {

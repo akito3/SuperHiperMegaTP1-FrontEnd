@@ -1,3 +1,4 @@
+import { AgregarArchivosComponent } from './fichasclinicas/agregararchivos/agregararchivos.component';
 import { ListarCategoriasComponent } from './categorias/listar-categorias/listar-categorias.component';
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,6 +13,8 @@ import { ListarServiciosComponent } from './servicios/listar-servicios/listar-se
 import { CrearModificarServiciosComponent } from './servicios/crear-modificar-servicios/crear-modificar-servicios.component';
 import { ListarDetallesAsociadosComponent } from './servicios/detalles/listar-detalles-asociados/listar-detalles-asociados.component';
 import { ReportesComponent } from './reportes/reportes.component';
+import { ArchivosComponent } from './fichasclinicas/archivos/archivos.component';
+
 export const AppRoutes: Routes = [
 
     {
@@ -46,6 +49,14 @@ export const AppRoutes: Routes = [
                         component: AgregarfichasComponent
 
 
+                    },
+                    {
+                        path:'listar-fichas-clinicas/listar-archivos',
+                        component: AgregarArchivosComponent
+                    },
+                    {
+                        path:'listar-fichas-clinicas/nuevo-archivo/:idFichaClinica',
+                        component: ArchivosComponent
                     }
                 ]
             },

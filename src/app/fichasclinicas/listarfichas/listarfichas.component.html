@@ -120,6 +120,10 @@
                   <div class="row">
                       <button mat-raised-button class="btn btn-primary" (click)="limpiar()">Limpiar</button>
                   </div></div>
+                  <div class="col-md-2">
+                      <div class="row">
+                          <button mat-raised-button class="btn btn-primary" [routerLink]="['listar-archivos']">Ver Archivos</button>
+                      </div></div>
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
@@ -159,7 +163,10 @@
                       Editar Ficha Clinica<i class="material-icons">edit</i>
                     </button><button mat-raised-button type="button" class="btn btn-danger" (click)="irAcrearServicio(ficha.idEmpleado.idPersona,ficha.idCliente.idPersona)">
                         Crear Servicio<i class="material-icons">add</i>
-                      </button></td>
+                      </button>
+                      <button mat-raised-button type="button" class="btn btn-rose" [routerLink]="['nuevo-archivo/'+ficha.idFichaClinica]">
+                          Agregar Archivo<i class="material-icons">add</i>
+                        </button></td>
                
 
 
