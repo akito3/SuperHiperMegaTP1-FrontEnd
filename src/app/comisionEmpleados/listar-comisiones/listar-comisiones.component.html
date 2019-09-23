@@ -1,0 +1,144 @@
+<div class="main-content">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-2">
+
+        <legend>Fisioterapeutas</legend>
+
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="Fisioterapeutas Disponibles"
+                (selectionChange)="onChange($event.value, 'idFisioterapeuta')" (click)="abrirModalFisioterapeutas()"
+                [(ngModel)]="parametros_busqueda.idFisioterapeuta" name="idFisioterapeuta">
+                <mat-option *ngFor="let fisioterapeuta of fisioterapeutas" [value]="fisioterapeuta.idPersona">
+                  {{fisioterapeuta.nombre}} {{fisioterapeuta.apellido}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <legend>Categoria</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="Categorias" (selectionChange)="onChange($event.value, 'idCategoria')"
+                [(ngModel)]="parametros_busqueda.idCategoria" name="idCategoria">
+                <mat-option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">
+                  {{categoria.descripcion}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <legend>Tipo de Producto</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="Tipo de productos" (selectionChange)="onChange($event.value, 'idTipoProducto')"
+                [(ngModel)]="parametros_busqueda.idTipoProducto">
+                <mat-option *ngFor="let tipoProducto of tipoProductos" [value]="tipoProducto.idTipoProducto">
+                  {{tipoProducto.descripcion}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <legend>Tipo de Servicio(Presentacion</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="Tipo de Servicio(Presentacion)"
+                (selectionChange)="onChange($event.value, 'presentacionProducto')"
+                [(ngModel)]="parametros_busqueda.idpresentacionproducto">
+                <mat-option *ngFor="let presentacionProducto of presentacionProductos"
+                  [value]="presentacionProducto.idPresentacionProducto">
+                  {{presentacionProducto.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <button mat-raised-button class="btn btn-primary" (click)="filtrar()">Buscar Comisiones</button>
+      <button mat-raised-button class="btn btn-primary" (click)="irAcrearNuevaComision()">Crear Nueva Comision</button>
+      <button mat-raised-button class="btn btn-primary" (click)="limpiar()">Limpiar</button>
+
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12" *ngIf="!showSpinner">
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title ">Listado de Detalles Asociados</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <th>Id comision empleado</th>
+                    <th>Empleado</th>
+                    <th>Presentacion Producto</th>
+                    <th>Porcentaje Comision</th>
+                    <th>acciones</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let comision of comisiones">
+                    <td>{{comision.idComisionEmpleado}}</td>
+                    <td><span *ngIf="comision.idEmpleado">
+                        {{comision.idEmpleado.nombreCompleto}}
+                      </span>
+                      <span *ngIf="!comision.idEmpleado">
+                        No establecido/No configurado
+                      </span></td>
+                    <td>{{comision.idPresentacionProducto.nombre}}</td>
+                    <td>{{comision.porcentajeComision}}</td>
+                    <td>
+                      <button mat-raised-button type="button" class="btn btn-info"
+                        (click)="abrirPopup(comision.idComisionEmpleado,comision.idEmpleado!=null ? comision.idEmpleado.idPersona : 'null', comision.idPresentacionProducto.idProducto.idTipoProducto.idCategoria.idCategoria,comision.idPresentacionProducto.idProducto.idTipoProducto.idTipoProducto,comision.idPresentacionProducto.idPresentacionProducto,comision.porcentajeComision)">
+                        Editar Ficha Clinica<i class="material-icons">edit</i></button>
+
+                    </td>
+
+
+
+
+
+
+
+
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-12" *ngIf="showSpinner" style="text-align: center">
+        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="margin:0 auto;" mode="indeterminate">
+        </mat-spinner>
+      </div>
+    </div>
+  
+  </div>
+</div>

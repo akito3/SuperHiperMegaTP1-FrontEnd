@@ -28,6 +28,8 @@ import { ListarDetallesAsociadosComponent, DialogAgregarNuevoDetalle, DialogElim
 import { ReportesComponent } from './reportes/reportes.component';
 import { ModalFisioterapeutasComponent } from './util/modal-fisioterapeutas/modal-fisioterapeutas.component';
 import { ModalClientesComponent } from './util/modal-clientes/modal-clientes.component';
+import { ListarComisionesComponent, DialogComisiones } from './comisionEmpleados/listar-comisiones/listar-comisiones.component';
+import { CrearComisionComponent } from './comisionEmpleados/crear-comision/crear-comision.component';
 
 
 @NgModule({
@@ -67,6 +69,9 @@ import { ModalClientesComponent } from './util/modal-clientes/modal-clientes.com
     ReportesComponent,
     ModalFisioterapeutasComponent,
     ModalClientesComponent,
+    ListarComisionesComponent,
+    CrearComisionComponent,
+    DialogComisiones
   ],
   entryComponents:[
     //AGREGAR COMO ENTRY POINT
@@ -78,6 +83,7 @@ import { ModalClientesComponent } from './util/modal-clientes/modal-clientes.com
     DialogEliminarDetalle,
     ModalFisioterapeutasComponent,
     ModalClientesComponent,
+    DialogComisiones
   ],
   bootstrap: [AppComponent],
 })

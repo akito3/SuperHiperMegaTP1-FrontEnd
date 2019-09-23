@@ -12,6 +12,8 @@ import { ListarServiciosComponent } from './servicios/listar-servicios/listar-se
 import { CrearModificarServiciosComponent } from './servicios/crear-modificar-servicios/crear-modificar-servicios.component';
 import { ListarDetallesAsociadosComponent } from './servicios/detalles/listar-detalles-asociados/listar-detalles-asociados.component';
 import { ReportesComponent } from './reportes/reportes.component';
+import { ListarComisionesComponent } from './comisionEmpleados/listar-comisiones/listar-comisiones.component';
+import { CrearComisionComponent } from './comisionEmpleados/crear-comision/crear-comision.component';
 export const AppRoutes: Routes = [
 
     {
@@ -64,6 +66,29 @@ export const AppRoutes: Routes = [
 
                 ]
 
+
+
+            },
+            {
+                path: 'comisiones',
+                children: [
+
+                    {
+                        path: 'listar-comisiones',
+                        component: ListarComisionesComponent
+
+
+                    },
+                    {
+                        
+                        path :'crear-comisiones/:accion/:idComision/:idEmpleado/:idCategoria/:idTipoProducto/:idPresentacionProducto/:porcentajeComision',
+                        component : CrearComisionComponent
+
+
+                    }
+
+
+                ]
 
 
             },

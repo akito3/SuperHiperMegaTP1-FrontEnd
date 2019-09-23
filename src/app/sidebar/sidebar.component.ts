@@ -82,6 +82,13 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'recent_actors',
 },
 {
+    path : './comisiones/listar-comisiones',
+    title : 'Comisiones',
+    type: 'link',
+    icontype : 'list_alt',
+
+},
+{
     path: './reportes',
     title: 'Reportes',
     type: 'link',
