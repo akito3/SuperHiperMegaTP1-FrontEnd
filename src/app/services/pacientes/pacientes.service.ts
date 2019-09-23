@@ -90,8 +90,7 @@ export class PacientesService {
     this.cuerpo["tipoPersona"] = paciente.tipoPersona;
     this.cuerpo["telefono"] = paciente.telefono;
 
-    const params = new HttpParams().set('Content-Type', 'application/json');
-    const options = { params: params };
+
     console.log("cuerpo: ", this.cuerpo);
     this.cuerpo = JSON.stringify(paciente);
     console.log("cuerpo: ", this.cuerpo);
@@ -113,9 +112,11 @@ export class PacientesService {
     this.cuerpo["telefono"] = paciente.telefono;
     this.cuerpo["idPersona"] = paciente.idPersona;
 
-    console.log(this.cuerpo);
+    console.log("cuerpo1: ",this.cuerpo);
     console.log("user: ", this.header["usuario"]);
-    return this.httpClient.put(this.baseUrl, this.cuerpo, { headers: this.header });
+    this.cuerpo = JSON.stringify(paciente);
+    console.log("cuerpo2: ", this.cuerpo);
+    return this.httpClient.put(this.baseUrl, this.cuerpo, this.httpOptions);
   }
 
   deletePaciente(idPersona: number) {

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 
-import { Productos, IdProducto, IdTipoProducto } from '../../services/productos/productos';
+import { Productos, IdProducto, IdTipoProducto, ExistenciaProducto } from '../../services/productos/productos';
 import { ProductosService } from '../../services/productos/productos.service';
 
 @Component({
@@ -14,7 +14,6 @@ import { ProductosService } from '../../services/productos/productos.service';
 export class EditarProductosComponent implements OnInit {
   public form: FormGroup;
   producto: Productos;
-  idPresentacionProducto : number;
   constructor(private formBuilder: FormBuilder,
     private servicioEditar: ProductosService,
     private route: Router,
@@ -34,23 +33,21 @@ export class EditarProductosComponent implements OnInit {
     
     if (this.form.valid) {
       console.log('if my log');
-      console.log(this.form.value);
+      console.log("this.form:", this.form);
       let entrada = this.form;
-      var objeto = {
-        "idPresentacionProducto": this.idPresentacionProducto,
-        "codigo":entrada.get('codigo').value,
-        "flagServicio": entrada.get('flagServicio').value,
-        // "descripcion": this.producto.descripcion,
-        "idProducto": {
-          "idProducto": entrada.get('idProducto').value,
-        },
-        "nombre": entrada.get('nombre').value,
-        "existenciaProducto":{
-          "precioVenta":entrada.get('precioVenta').value
-        },
-      }
-      console.log("objeto: ", objeto);
-      this.servicioEditar.editProducto(objeto).subscribe( response => { console.log('Producto editado'); 
+      let producto : Productos = new Productos(null, null, null, null, null, null,null);
+      producto.codigo = entrada.value.codigo;
+      producto.idProducto = new IdProducto(null,null) 
+      producto.idProducto.idProducto = entrada.value.idProducto;
+      producto.idProducto.idTipoProducto = new IdTipoProducto( entrada.value.idTipoProducto);
+      producto.flagServicio = entrada.value.flagServicio;
+      producto.existenciaProducto = new ExistenciaProducto(entrada.value.precioVenta);
+      producto.idPresentacionProducto = entrada.value.idPresentacionProducto;
+      producto.descripcion = entrada.value.descripcion;
+      producto.nombre = entrada.value.nombre;
+
+      console.log("producto: ", producto);
+      this.servicioEditar.editProducto(producto).subscribe( response => { console.log('Producto editado'); 
         swal({
             title: 'Guardado',
             text: 'El Producto se ha editado correctamente',
@@ -92,28 +89,30 @@ export class EditarProductosComponent implements OnInit {
 
   cargarFormulario(producto: Productos) {
     console.log("cargando formulario");
-    this.idPresentacionProducto = producto.idPresentacionProducto;
+    console.log("producto: ", producto);
     if( producto.existenciaProducto !== null ){
       this.form = this.formBuilder.group({
+        idPresentacionProducto : new FormControl( producto.idPresentacionProducto),
         nombre: new FormControl(producto.nombre),
         descripcion: new FormControl(producto.descripcion),
         idProducto: new FormControl(producto.idProducto.idProducto),
         codigo : new FormControl(producto.codigo),
         precioVenta: new FormControl(producto.existenciaProducto.precioVenta) ,
-        flagServicio : new FormControl(producto.flagServicio)
-  
+        flagServicio : new FormControl(producto.flagServicio),
+        idTipoProducto : new FormControl(producto.idProducto.idTipoProducto.idTipoProducto),
       });
     }
     else
     {
       this.form = this.formBuilder.group({
+        idPresentacionProducto : new FormControl( producto.idPresentacionProducto),
         nombre: new FormControl(producto.nombre),
         descripcion: new FormControl(producto.descripcion),
         idProducto: new FormControl(producto.idProducto.idProducto),
         codigo : new FormControl(producto.codigo),
         precioVenta: new FormControl( null),
-        flagServicio : new FormControl(producto.flagServicio)
-  
+        flagServicio : new FormControl(producto.flagServicio),
+        idTipoProducto : new FormControl(producto.idProducto.idTipoProducto.idTipoProducto),
     }) 
   }
   console.log("formulario cargado");

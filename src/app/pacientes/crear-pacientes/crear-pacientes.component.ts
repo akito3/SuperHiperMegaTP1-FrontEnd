@@ -35,9 +35,10 @@ export class CrearPacientesComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.value.fechaNacimiento !== '') {
-      this.form.value.fechaNacimiento = this.form.value.fechaNacimiento + ' 00:00:00';
-    }
+    this.form.value.fechaNacimiento = this.form.value.fechaNacimiento + ' 00:00:00';
+    // if (this.form.value.fechaNacimiento !== '') {
+    //   this.form.value.fechaNacimiento = this.form.value.fechaNacimiento + ' 00:00:00';
+    // }
 
     console.log(this.form.value)
     this.paciente = new Pacientes(null, null, null, null, null, null, null, null, null);

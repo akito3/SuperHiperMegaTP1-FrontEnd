@@ -115,13 +115,12 @@ export class ProductosService {
     return  respuesta;
   }
 
-  editProducto(objecto: any): Observable<Productos> {
+  editProducto(producto: Productos): Observable<Productos> {
     console.log("editProducto");
-    
-    const params = new HttpParams().set('Content-Type', 'application/json');
-    const options = { params: params };
-    
-    return this.httpClient.put<Productos>(this.baseUrl, objecto, this.httpOptions );
+ 
+    this.cuerpo = JSON.stringify(producto);
+    console.log("cuerpo JSON: ",this.cuerpo);
+    return this.httpClient.put<Productos>(this.baseUrl, this.cuerpo, this.httpOptions );
   }
 
   deleteProducto(idPresentacionProducto: number) {

@@ -19,7 +19,7 @@ declare const $: any;
   styleUrls: ['./listar-productos.component.css']
 })
 export class ListarProductosComponent implements OnInit {
-  displayedColumns = ['nombre',  'codigo',  'idPresentacionProducto', 'idProducto', 'flagServicio' , 'accion' ];
+  displayedColumns = ['nombre',  'codigo',  'idPresentacionProducto', 'idProducto', 'flagServicio' , 'precioVenta', 'accion' ];
   dataSource: MatTableDataSource<Productos>;
   dataSourceIdProductos: MatTableDataSource<IdProducto>;
   // dataSourceEP: MatTableDataSource<IdProducto>;

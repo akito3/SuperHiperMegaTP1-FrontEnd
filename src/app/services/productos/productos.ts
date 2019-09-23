@@ -7,6 +7,7 @@ export class Productos {
         public nombre: string,
         public idProducto: IdProducto,
         public descripcion: string,
+        
     ){ }
 }
 

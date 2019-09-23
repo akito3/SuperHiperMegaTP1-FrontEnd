@@ -135,14 +135,18 @@
                 <mat-cell *matCellDef="let element"> {{element.flagServicio }} </mat-cell>
             </ng-container>
 
-               <!-- Columna idTipoProducto -->
-               <!-- <ng-container matColumnDef="idTipoProducto">
-                <mat-header-cell *matHeaderCellDef   > idTipoProducto 
-                    <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('idTipoProducto')">sort</i>
-                  </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.idProducto.idTipoProducto.idTipoProducto}} </mat-cell>
-            </ng-container>  -->
-
+            <!-- Columna precioVenta -->
+            <ng-container matColumnDef="precioVenta">
+              <mat-header-cell *matHeaderCellDef   > precioVenta 
+                <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('precioVenta')">sort</i>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> 
+                  <div class="col-md-12" *ngIf="element.existenciaProducto !== null">
+                   {{ element.existenciaProducto.precioVenta}} 
+                  </div>
+                  </mat-cell>
+              </ng-container> 
+            
 
                 <!-- Columna codigo -->
                 <ng-container matColumnDef="codigo">
@@ -151,6 +155,14 @@
                     </mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.codigo}} </mat-cell>
               </ng-container>
+
+              <!-- Columna Descripcion -->
+               <ng-container matColumnDef="descripcion">
+                <mat-header-cell *matHeaderCellDef   > descripcion 
+                    <i class="material-icons" style="color: #cecece; font-size:16px; padding: 5px" (click)="ordenar('descripcion')">sort</i>
+                  </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.descripcion}} </mat-cell>
+            </ng-container> 
 
                 <!-- <ng-container matColumnDef="descripcion">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>descripcion</mat-header-cell>

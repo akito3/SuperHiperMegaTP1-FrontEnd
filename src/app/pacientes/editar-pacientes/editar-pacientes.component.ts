@@ -29,18 +29,30 @@ export class EditarPacientesComponent implements OnInit {
 
   onSubmit() {
     console.log("onSubmit");
+    this.form.value.fechaNacimiento = this.form.value.fechaNacimiento + ' 00:00:00';
     console.log(this.form.value);
 
-    if (this.form.value.fechaNacimiento !== '') {
-      this.form.value.fechaNacimiento = this.form.value.fechaNacimiento + ' 00:00:00';
-    } else {
-      this.form.value.fechaNacimiento = this.form.value.fechaNacimiento + ' 00:00:00';
-    }
+    // if (this.form.value.fechaNacimiento !== '') {
+    //   this.form.value.fechaNacimiento = this.form.value.fechaNacimiento + ' 00:00:00';
+    // } 
+    // // else {
+    //   this.form.value.fechaNacimiento = this.form.value.fechaNacimiento + ' 00:00:00';
+    // }
     
     if (this.form.valid) {
       console.log('if my log');
       console.log(this);
-      this.servicioEditar.editPaciente(this.form.value).subscribe( response => { console.log('paciente editado'); 
+      let paciente:Pacientes = new Pacientes(null, null, null, null, null, null, null, null, null);
+      paciente.nombre = this.form.value.nombre;
+      paciente.apellido = this.form.value.apellido;
+      paciente.idPersona = this.form.value.idPersona;
+      paciente.fechaNacimiento = this.form.value.fechaNacimiento;
+      paciente.cedula = this.form.value.cedula;
+      paciente.tipoPersona = this.form.value.tipoPersona;
+      paciente.telefono = this.form.value.telefono;
+      paciente.ruc = this.form.value.ruc;
+      paciente.email = this.form.value.email;
+      this.servicioEditar.editPaciente(paciente).subscribe( response => { console.log('paciente editado'); 
         swal({
             title: 'Guardado',
             text: 'El paciente se ha editado correctamente',
@@ -82,6 +94,7 @@ export class EditarPacientesComponent implements OnInit {
 
   cargarFormulario(paciente: Pacientes) {
     console.log("cargando formulario");
+    console.log("paciente: ",paciente);
     this.form = this.formBuilder.group({
       idPersona: new FormControl(paciente.idPersona),
       nombre: new FormControl(paciente.nombre),
@@ -93,7 +106,9 @@ export class EditarPacientesComponent implements OnInit {
       tipoPersona: new FormControl(paciente.tipoPersona),
       fechaNacimiento: new FormControl(paciente.fechaNacimiento)
     });
+    
     console.log("formulario cargado");
+    console.log("nombre: ",this.form.get("nombre").value);
   }
 
   onClickListar() {
