@@ -32,6 +32,8 @@ import { ModalClientesComponent } from './util/modal-clientes/modal-clientes.com
 import { ArchivosComponent } from './fichasclinicas/archivos/archivos.component';
 import { ListarComisionesComponent, DialogComisiones } from './comisionEmpleados/listar-comisiones/listar-comisiones.component';
 import { CrearComisionComponent } from './comisionEmpleados/crear-comision/crear-comision.component';
+import { ReactiveFormsModule} from '@angular/forms';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 @NgModule({
@@ -48,6 +50,8 @@ import { CrearComisionComponent } from './comisionEmpleados/crear-comision/crear
     FixedpluginModule,
     AppRoutingModule,
     MaterialModule,
+    ReactiveFormsModule,
+    LayoutModule, 
   ],
   declarations: [
     AppComponent,

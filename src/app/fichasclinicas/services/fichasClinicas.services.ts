@@ -231,7 +231,7 @@ export class FichasClinicasService {
         let headers= new HttpHeaders();
         headers.append('Content-Type', 'multipart/form-data');
         headers.append('Accept', 'application/json');      
-        return this.httpClient.post(API_ENDPOINT + '/stock-pwfe/fichaArchivo',formData,{headers: headers,observe: 'response', responseType:'text'}).pipe(map(result=>result.body));
+        return this.httpClient.post(API_ENDPOINT + 'stock-pwfe/fichaArchivo',formData,{headers: headers,observe: 'response', responseType:'text'}).pipe(map(result=>result.body));
     }
 
 
@@ -284,5 +284,13 @@ export class FichasClinicasService {
         return this.httpClient.delete(url);
       }
     
-
+      agregar(objeto: any) {
+        const header = new HttpHeaders({
+          'Content-Type': "application/json",
+          'Accept': 'application/json',
+          'usuario' : localStorage.getItem("usuarioLogin"),
+      });
+        const url = API_ENDPOINT + 'stock-pwfe/fichaArchivo/';
+        return this.httpClient.post(url, objeto, { headers: header });
+      }
 }
