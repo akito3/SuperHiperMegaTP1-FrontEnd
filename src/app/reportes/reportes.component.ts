@@ -105,8 +105,8 @@ pdfSinDetallar() {
   this.serviciosService.getServicios().subscribe((response: any) => {
     this.servicios = response.lista;
   // columnas labels
-    const cols = ["Fecha","Flag Estado","Id Ficha","Fecha Ficha","Profesional",
-    "Cliente","Categoria","Subcategoria","Observacion","Presupuesto"];
+    const cols = ["FECHA","FALG ESTADO","ID FICHA","FECHA DE FICHA","PROFESIONAL",
+    "CLIENTE","CATEGORIA","SUBCATEGORIA","OBSERVACION","PRESUPUESTO"];
   // filas datos
     let rows: any = [];
 
@@ -136,8 +136,8 @@ pdfDetallado() {
     this.serviciosDetallados = response.lista;
     var servicio = this.serviciosService;
 
-    const cols = ["fecha","profesional","cliente","subCategoria(Descripcion)","presupuesto","cantidad",
-    "nombrepresentacion","precioVenta","preciototal"];
+    const cols = ["FECHA","PROFESIONAL","CLIENTE","SUBCATEGORIA(Descripcion)","PRESUPUESTO","PRECIO VENTA UNITARIO","CANTIDAD","PRECIO TOTAL",
+    "NOMBRE PRESTACION"];
     let rows: any = [];
 
     this.serviciosDetallados.forEach(function (element) {
