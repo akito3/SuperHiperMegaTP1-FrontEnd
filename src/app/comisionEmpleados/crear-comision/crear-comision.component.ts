@@ -38,7 +38,7 @@ export class CrearComisionComponent implements OnInit {
     if (this.route.snapshot.paramMap.get("idComision") != "null") {
       this.parametros_busqueda["idComision"] = parseInt(this.route.snapshot.paramMap.get("idComision"));
     }
-    if (this.route.snapshot.paramMap.get("idEmpleado") != "null" ) {
+    if (this.route.snapshot.paramMap.get("idEmpleado") != "null") {
       this.parametros_busqueda["idFisioterapeuta"] = parseInt(this.route.snapshot.paramMap.get("idEmpleado"));
     }
     if (this.route.snapshot.paramMap.get("idCategoria") != "null") {
@@ -197,7 +197,7 @@ export class CrearComisionComponent implements OnInit {
       objeto["porcentajeComision"] = porcentajeComision;
     }
 
-    if (this.accion == "crear")
+    if (this.accion == "crear") {
       this.comisionesServices.agregarComision(objeto).subscribe((response: any) => {
         this.openSnackBar("Comision creada con exito", "Aviso");
 
@@ -209,7 +209,10 @@ export class CrearComisionComponent implements OnInit {
 
       })
 
-      if (this.accion == "modificar")
+    }
+
+    if (this.accion == "modificar") {
+      objeto["idComisionEmpleado"] = parseInt(this.parametros_busqueda.idComision);
       this.comisionesServices.modificarComision(objeto).subscribe((response: any) => {
         this.openSnackBar("Comision modificada con exito", "Aviso");
 
@@ -220,6 +223,7 @@ export class CrearComisionComponent implements OnInit {
 
 
       })
+    }
 
   }
 
