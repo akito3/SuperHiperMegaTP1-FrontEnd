@@ -6,6 +6,9 @@ import * as XLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 @Component({
   selector: 'app-reportes',
@@ -24,6 +27,7 @@ export class ReportesComponent implements OnInit {
   private servicios: any[];
   private presentaciones: any[];
   private parametros_busqueda = { 'idFisioterapeuta': null, 'idPaciente': null, 'fechadesde': null, 'fechahasta': null, 'idpresentacionproducto': null, "mostrarConDetalles": false };
+  name = 'Angular';
 
 
   public tabla_exportar_a_excel_detallado: any = [];
@@ -96,7 +100,72 @@ export class ReportesComponent implements OnInit {
 
     }
   }
+pdfSinDetallar() {
 
+  this.serviciosService.getServicios().subscribe((response: any) => {
+    this.servicios = response.lista;
+  // columnas labels
+    const cols = ["Fecha","Flag Estado","Id Ficha","Fecha Ficha","Profesional",
+    "Cliente","Categoria","Subcategoria","Observacion","Presupuesto"];
+  // filas datos
+    let rows: any = [];
+
+    this.servicios.forEach((element) => {
+      const obj = [element.fechaHora, element.flagEstado, element.idFichaClinica.idFichaClinica, element.idFichaClinica.fechaHora,
+        element.idEmpleado.nombreCompleto, element.idFichaClinica.idCliente.nombreCompleto,
+         element.idFichaClinica.idTipoProducto.idCategoria.descripcion, element.idFichaClinica.idTipoProducto.descripcion,
+         element.observacion, element.presupuesto];
+      rows.push(obj);
+    });
+    let pdf = new jsPDF('1', 'pt');
+    pdf.autoTable(cols, rows);
+    pdf.save('sinDetalle.pdf');
+
+    console.log('cargar lista servicios sin detallar ', this.servicios);
+    console.log('B', rows);
+
+  }, (error: any) => {
+    console.log('Error : ', error.message);
+  }).add(() => {
+    this.showSpinner = false;
+  });
+}
+pdfDetallado() {
+
+  this.serviciosService.getServiciosReportes().subscribe((response: any) => {
+    this.serviciosDetallados = response.lista;
+    var servicio = this.serviciosService;
+
+    const cols = ["fecha","profesional","cliente","subCategoria(Descripcion)","presupuesto","cantidad",
+    "nombrepresentacion","precioVenta","preciototal"];
+    let rows: any = [];
+
+    this.serviciosDetallados.forEach(function (element) {
+      var const1;
+      var const2;
+      let idpresentacionproducto = element.idPresentacionProducto.idPresentacionProducto;
+      servicio.getPrecio(idpresentacionproducto).subscribe(( response : any) => {
+        element['precioVenta'] = response.lista[0].precioVenta;
+        const1 = element['precioVenta'];
+        const2 = parseInt( const1 ) * parseInt( element.cantidad );
+      }, error => {
+        console.log('Error', error.message);
+      });
+      const objeto = [element.idServicio.fechaHora, element.idServicio.idEmpleado.nombreCompleto,
+        element.idServicio.idFichaClinica.idCliente.nombreCompleto, element.idServicio.idFichaClinica.idTipoProducto.descripcion,
+        element.idServicio.presupuesto, const1, element.cantidad, const2, element.idPresentacionProducto.nombre];
+      rows.push(objeto);
+    });
+    let pdf = new jsPDF('1', 'pt');
+    pdf.autoTable(cols, rows);
+    pdf.save('Detallado.pdf');
+    console.log('B pdf', rows);
+  }, error => {
+    console.log('Error', error.message);
+  }).add(() => {
+    this.showSpinner = false;
+  });
+}
   public getFichasPorPaciente(idPaciente) {
     this.showSpinner = true;
     this.serviciosService.getFichasPorPaciente(idPaciente).subscribe((response: any) => {

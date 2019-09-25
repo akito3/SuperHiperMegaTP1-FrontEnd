@@ -1,3 +1,5 @@
+<script src="bower_components/jspdf/dist/jspdf.min.js"></script>
+<script src="bower_components/jspdf-autotable/jspdf.plugin.autotable.js"></script>
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
@@ -114,16 +116,18 @@
                   <button mat-raised-button class="btn btn-rose btn-fill btn-wd mat-raised-button"
                     (click)="importarAexcelSinDetallar()" *ngIf="!parametros_busqueda.mostrarConDetalles">Exportar Sin Detalles a
                     EXCEL</button>
-
                   <button mat-raised-button class="btn btn-primary" (click)="irAfichaComponent()">Agregar Nueva
                     Ficha</button>
 
                 </div>
               </div>
             </div>
-            <ng-container *ngIf="parametros_busqueda.mostrarConDetalles">
-
-              <div class="table-responsive" *ngIf="!showSpinner">
+            <ng-container *ngIf="parametros_busqueda.mostrarConDetalles" >
+              <button label= 'Pdf'(click)="pdfDetallado()"
+                class="btn btn-primary d-flex align-items-center justify-content-center">
+                <i class="material-icons">cloud_download</i><span>Download PDF</span>
+              </button>
+              <div class="table-responsive" *ngIf="!showSpinner" >
                 <table class="table">
                   <thead class="text-primary">
                     <tr>
@@ -139,7 +143,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let servicio of serviciosDetallados">
+                    <tr *ngFor="let servicio of serviciosDetallados" style="text-rendering: auto">
                       <td>{{servicio.idServicio.fechaHora}}</td>
                       <td>{{servicio.idServicio.idEmpleado.nombreCompleto}}</td>
                       <td>{{servicio.idServicio.idFichaClinica.idCliente.nombreCompleto}}</td>
@@ -160,8 +164,12 @@
               </div>
             </ng-container>
             <ng-container *ngIf="!parametros_busqueda.mostrarConDetalles">
+            <button label= 'Pdf'(click)="pdfSinDetallar()"
+              class="btn btn-primary d-flex align-items-center justify-content-center">
+              <i class="material-icons">cloud_download</i><span>Download PDF</span>
+            </button>
 
-              <div class="table-responsive">
+              <div #content id="content" class="table-responsive">
                 <table class="table">
                   <thead class="text-primary">
                     <tr>
